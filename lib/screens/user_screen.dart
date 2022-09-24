@@ -189,18 +189,26 @@ class _UserScreenState extends State<UserScreen> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: const Text('Update'),
+            title: const Text(
+              'Update',
+            ),
             content: TextField(
               // onChanged: ((value) {
               //   _addressTextConroller.text;
               // }),
+              cursorColor: Colors.green,
               controller: _addressTextConroller,
               decoration: const InputDecoration(hintText: 'Your address'),
             ),
             actions: [
               TextButton(
                 onPressed: () {},
-                child: const Text('Update'),
+                child: TextWidget(
+                  color: Colors.green,
+                  text: 'Update',
+                  textSize: 18,
+                  isTitle: true,
+                ),
               )
             ],
           );
