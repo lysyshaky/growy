@@ -50,7 +50,7 @@ class CategoriesScreen extends StatelessWidget {
     final themeState = Provider.of<DarkThemeProvider>(context);
     bool _isDark = themeState.getDarkTheme;
     final utils = Utils(context);
-    Color color = utils.color;
+    Color color = utils.appBarcolor;
 
     return Scaffold(
       appBar: AppBar(
