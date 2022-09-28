@@ -2,7 +2,9 @@ import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:growy/inner_screens/on_sale_screen.dart';
 import 'package:growy/provider/dart_theme_provider.dart';
+import 'package:growy/services/global_methods.dart';
 import 'package:growy/widgets/feed_items.dart';
 import 'package:growy/widgets/on_sale_widget.dart';
 import 'package:iconly/iconly.dart';
@@ -31,7 +33,6 @@ class _HomeScreenState extends State<HomeScreen> {
     final Utils utils = Utils(context);
     final themeState = utils.getTheme;
     final Color color = Utils(context).color;
-
     Size size = Utils(context).getScreenSize;
     return Scaffold(
       body: SingleChildScrollView(
@@ -60,7 +61,12 @@ class _HomeScreenState extends State<HomeScreen> {
               height: 6,
             ),
             TextButton(
-              onPressed: () {},
+              onPressed: () {
+                GlobalMethods.navigateTo(
+                  ctx: context,
+                  routeName: OnSaleScreen.routeName,
+                );
+              },
               child: TextWidget(
                 text: 'View all',
                 maxLines: 1,
@@ -135,10 +141,11 @@ class _HomeScreenState extends State<HomeScreen> {
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               crossAxisCount: 2,
+              padding: EdgeInsets.zero,
               // crossAxisSpacing: 10,
-              childAspectRatio: size.width / (size.height * 0.59),
+              childAspectRatio: size.width / (size.height * 0.65),
               children: List.generate(4, (index) {
-                return FeedsWidget();
+                return const FeedsWidget();
               }),
             )
           ],

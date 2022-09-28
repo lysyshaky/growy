@@ -40,7 +40,7 @@ class _UserScreenState extends State<UserScreen> {
               children: [
                 RichText(
                   text: TextSpan(
-                      text: 'Hi,  ',
+                      text: 'Hi, ',
                       style: const TextStyle(
                           color: Colors.green,
                           fontSize: 28,

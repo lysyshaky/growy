@@ -70,9 +70,18 @@ class _OnSaleWidgetState extends State<OnSaleWidget> {
                       ],
                     )
                   ]),
-                  const PriceWidget(),
+                  const PriceWidget(
+                      salePrice: 5.59,
+                      price: 2.99,
+                      textPrice: '1',
+                      isOnSale: true),
                   const SizedBox(height: 5),
-                  TextWidget(text: 'Product title', color: color, textSize: 16),
+                  TextWidget(
+                    text: 'Product title',
+                    color: color,
+                    textSize: 16,
+                    isTitle: true,
+                  ),
                   const SizedBox(height: 5),
                 ],
               ),

@@ -2,6 +2,7 @@ import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:growy/inner_screens/on_sale_screen.dart';
 import 'package:growy/provider/dart_theme_provider.dart';
 import 'package:growy/screens/btm_bard.dart';
 import 'package:growy/screens/home_screen.dart';
@@ -54,7 +55,10 @@ class _MyAppState extends State<MyApp> {
           debugShowCheckedModeBanner: false,
           title: 'Flutter Demo',
           theme: Styles.themeData(themeProvider.getDarkTheme, context),
-          home: BottomBarScreen(),
+          home: const BottomBarScreen(),
+          routes: {
+            OnSaleScreen.routeName: (context) => const OnSaleScreen(),
+          },
         );
       }),
     );
