@@ -8,7 +8,7 @@ import 'package:growy/screens/user_screen.dart';
 import 'package:iconly/iconly.dart';
 import 'package:provider/provider.dart';
 
-import 'cart_screen.dart';
+import 'cart/cart_screen.dart';
 
 class BottomBarScreen extends StatefulWidget {
   const BottomBarScreen({Key? key}) : super(key: key);
@@ -18,7 +18,7 @@ class BottomBarScreen extends StatefulWidget {
 }
 
 class _BottomBarScreenState extends State<BottomBarScreen> {
-  int _selectedIndex = 0;
+  int _selectedIndex = 2;
   final List<Map<String, dynamic>> _pages = [
     {'page': const HomeScreen(), 'title': 'Home'},
     {'page': CategoriesScreen(), 'title': 'Categories'},

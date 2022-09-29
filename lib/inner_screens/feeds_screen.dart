@@ -47,7 +47,7 @@ class _FeedsScreenState extends State<FeedsScreen> {
           backgroundColor: _isDark ? Colors.black12 : Colors.green,
           centerTitle: true,
           title: TextWidget(
-            text: 'All Products',
+            text: 'All products',
             color: color,
             textSize: 24,
             isTitle: true,
@@ -78,9 +78,14 @@ class _FeedsScreenState extends State<FeedsScreen> {
                           borderSide:
                               const BorderSide(color: Colors.green, width: 1),
                         ),
+                        prefixIcon: const Icon(
+                          Icons.search,
+                          size: 24,
+                          color: Colors.green,
+                        ),
                         hintText: "What's in your mind",
-                        prefix: const Icon(Icons.search),
-                        suffix: IconButton(
+                        suffixIcon: IconButton(
+                          padding: EdgeInsets.zero,
                           onPressed: () {
                             _searchTextController!.clear();
                             _searchTextFocusNode.unfocus();
