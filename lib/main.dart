@@ -7,6 +7,7 @@ import 'package:growy/provider/dart_theme_provider.dart';
 import 'package:growy/screens/btm_bard.dart';
 import 'package:growy/screens/home_screen.dart';
 import 'package:growy/services/dark_theme_prefs.dart';
+import 'package:growy/inner_screens/feeds_screen.dart';
 import 'package:provider/provider.dart';
 
 import 'consts/theme_data.dart';
@@ -57,7 +58,8 @@ class _MyAppState extends State<MyApp> {
           theme: Styles.themeData(themeProvider.getDarkTheme, context),
           home: const BottomBarScreen(),
           routes: {
-            OnSaleScreen.routeName: (context) => const OnSaleScreen(),
+            OnSaleScreen.routeName: (ctx) => const OnSaleScreen(),
+            FeedsScreen.routeName: (ctx) => const FeedsScreen(),
           },
         );
       }),

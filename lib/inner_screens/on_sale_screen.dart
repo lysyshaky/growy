@@ -15,6 +15,8 @@ class OnSaleScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool _isEmpty = false;
+
     final Utils utils = Utils(context);
     final Color color = Utils(context).appBarcolor;
     Size size = Utils(context).getScreenSize;
@@ -32,6 +34,7 @@ class OnSaleScreen extends StatelessWidget {
           ),
           elevation: 0,
           backgroundColor: _isDark ? Colors.black12 : Colors.green,
+          centerTitle: true,
           title: TextWidget(
             text: 'Products on sale',
             color: color,
@@ -39,14 +42,37 @@ class OnSaleScreen extends StatelessWidget {
             isTitle: true,
           ),
         ),
-        body: GridView.count(
-          crossAxisCount: 2,
-          padding: EdgeInsets.zero,
-          // crossAxisSpacing: 10,
-          childAspectRatio: size.width / (size.height * 0.45),
-          children: List.generate(16, (index) {
-            return const OnSaleWidget();
-          }),
-        ));
+        body: _isEmpty
+            ? Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(18.0),
+                        child: Image.asset(
+                            '/Users/yuralysyshak/growy/assets/images/box.png'),
+                      ),
+                      Text(
+                        'No products on sale yet!\nStay tuned',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: _isDark ? Colors.white : Colors.black,
+                            fontSize: 28,
+                            fontWeight: FontWeight.w700),
+                      ),
+                    ],
+                  ),
+                ),
+              )
+            : GridView.count(
+                crossAxisCount: 2,
+                padding: EdgeInsets.zero,
+                // crossAxisSpacing: 10,
+                childAspectRatio: size.width / (size.height * 0.45),
+                children: List.generate(16, (index) {
+                  return const OnSaleWidget();
+                }),
+              ));
   }
 }

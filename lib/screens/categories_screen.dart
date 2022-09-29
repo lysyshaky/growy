@@ -56,6 +56,7 @@ class CategoriesScreen extends StatelessWidget {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: _isDark ? Colors.black12 : Colors.green,
+        centerTitle: true,
         title: TextWidget(
           text: 'Categories',
           color: color,

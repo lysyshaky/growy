@@ -2,6 +2,7 @@ import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:growy/inner_screens/feeds_screen.dart';
 import 'package:growy/inner_screens/on_sale_screen.dart';
 import 'package:growy/provider/dart_theme_provider.dart';
 import 'package:growy/services/global_methods.dart';
@@ -62,7 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             TextButton(
               onPressed: () {
-                GlobalMethods.navigateTo(
+                GlobalMethods.navigateToViewAll(
                   ctx: context,
                   routeName: OnSaleScreen.routeName,
                 );
@@ -126,7 +127,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   //const Spacer(), //vertical
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      GlobalMethods.navigateToBrowseAll(
+                          ctx: context, routeName: FeedsScreen.routeName);
+                    },
                     child: TextWidget(
                       text: 'Browse all',
                       maxLines: 1,
