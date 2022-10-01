@@ -7,7 +7,9 @@ import 'package:flutter/src/widgets/framework.dart';
 
 import 'package:provider/provider.dart';
 
+import '../../inner_screens/product_details.dart';
 import '../../provider/dart_theme_provider.dart';
+import '../../services/global_methods.dart';
 import '../../services/utils.dart';
 import '../../widgets/heart_btn.dart';
 import '../../widgets/text_widget.dart';
@@ -42,7 +44,10 @@ class _CartWidgetState extends State<CartWidget> {
     final themeState = Provider.of<DarkThemeProvider>(context);
     bool _isDark = themeState.getDarkTheme;
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        GlobalMethods.navigateToProductDetails(
+            ctx: context, routeName: ProductDetails.routeName);
+      },
       child: Row(
         children: [
           Expanded(

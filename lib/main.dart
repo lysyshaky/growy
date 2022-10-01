@@ -3,6 +3,7 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:growy/inner_screens/on_sale_screen.dart';
+import 'package:growy/inner_screens/product_details.dart';
 import 'package:growy/provider/dart_theme_provider.dart';
 import 'package:growy/screens/btm_bard.dart';
 import 'package:growy/screens/home_screen.dart';
@@ -60,6 +61,7 @@ class _MyAppState extends State<MyApp> {
           routes: {
             OnSaleScreen.routeName: (ctx) => const OnSaleScreen(),
             FeedsScreen.routeName: (ctx) => const FeedsScreen(),
+            ProductDetails.routeName: (context) => const ProductDetails(),
           },
         );
       }),

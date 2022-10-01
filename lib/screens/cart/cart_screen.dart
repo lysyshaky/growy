@@ -4,7 +4,9 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:iconly/iconly.dart';
 import 'package:provider/provider.dart';
 
+import '../../inner_screens/product_details.dart';
 import '../../provider/dart_theme_provider.dart';
+import '../../services/global_methods.dart';
 import '../../services/utils.dart';
 import '../../widgets/text_widget.dart';
 import 'cart_widget.dart';
@@ -45,7 +47,7 @@ class CartScreen extends StatelessWidget {
       ),
       body: Column(
         children: [
-          _checkout(ctx: context),
+          _checkout(context: context),
           Expanded(
             child: ListView.builder(
                 itemCount: 10,
@@ -58,10 +60,10 @@ class CartScreen extends StatelessWidget {
     );
   }
 
-  Widget _checkout({required BuildContext ctx}) {
-    final utils = Utils(ctx);
+  Widget _checkout({required BuildContext context}) {
+    final utils = Utils(context);
     Color color = utils.color;
-    Size size = Utils(ctx).getScreenSize;
+    Size size = Utils(context).getScreenSize;
     return SizedBox(
       width: double.infinity,
       height: size.height * 0.1,
@@ -91,7 +93,7 @@ class CartScreen extends StatelessWidget {
               child: TextWidget(
                 text: "Total: \$0.259",
                 color: color,
-                textSize: 18,
+                textSize: 20,
                 isTitle: true,
               ),
             ),
