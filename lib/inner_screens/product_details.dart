@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 
 import '../provider/dart_theme_provider.dart';
 import '../services/utils.dart';
+import '../widgets/back_widget.dart';
 import '../widgets/text_widget.dart';
 
 class ProductDetails extends StatefulWidget {
@@ -41,13 +42,7 @@ class _ProductDetailsState extends State<ProductDetails> {
     bool _isDark = themeState.getDarkTheme;
     return Scaffold(
       appBar: AppBar(
-        leading: InkWell(
-          borderRadius: BorderRadius.circular(12),
-          onTap: () {
-            Navigator.canPop(context) ? Navigator.pop(context) : null;
-          },
-          child: Icon(IconlyLight.arrow_left_2, color: appBarcolor),
-        ),
+        leading: const BackWidget(),
         elevation: 0,
         backgroundColor: _isDark ? Colors.black12 : Colors.green,
         centerTitle: true,
@@ -162,7 +157,17 @@ class _ProductDetailsState extends State<ProductDetails> {
                     _quantityController(
                       icon: CupertinoIcons.minus,
                       color: Colors.red,
-                      fct: () {},
+                      fct: () {
+                        if (_quantityTextController.text == '1') {
+                          return;
+                        } else {
+                          setState(() {
+                            _quantityTextController.text =
+                                (int.parse(_quantityTextController.text) - 1)
+                                    .toString();
+                          });
+                        }
+                      },
                     ),
                     Flexible(
                       flex: 1,
@@ -195,7 +200,13 @@ class _ProductDetailsState extends State<ProductDetails> {
                     _quantityController(
                         color: Colors.green,
                         icon: CupertinoIcons.plus,
-                        fct: () {}),
+                        fct: () {
+                          setState(() {
+                            _quantityTextController.text =
+                                (int.parse(_quantityTextController.text) + 1)
+                                    .toString();
+                          });
+                        }),
                   ],
                 ),
                 const Spacer(),
@@ -235,7 +246,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                                       isTitle: true,
                                     ),
                                     TextWidget(
-                                      text: '/1Kg',
+                                      text:
+                                          '/${_quantityTextController.text}Kg',
                                       color: color,
                                       textSize: 16,
                                       isTitle: false,

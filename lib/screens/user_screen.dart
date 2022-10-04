@@ -2,11 +2,13 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:growy/screens/wishlist/wishlist_screen.dart';
 import 'package:growy/widgets/text_widget.dart';
 import 'package:iconly/iconly.dart';
 import 'package:provider/provider.dart';
 
 import '../provider/dart_theme_provider.dart';
+import '../services/global_methods.dart';
 
 class UserScreen extends StatefulWidget {
   const UserScreen({Key? key}) : super(key: key);
@@ -93,7 +95,10 @@ class _UserScreenState extends State<UserScreen> {
                     title: 'Wishlist',
                     icon: IconlyLight.heart,
                     color: color,
-                    onPressed: () {}),
+                    onPressed: () {
+                      GlobalMethods.navigateToWishlist(
+                          ctx: context, routeName: WishlistScreen.routeName);
+                    }),
                 _listTiles(
                     title: 'Viewed',
                     icon: IconlyLight.show,

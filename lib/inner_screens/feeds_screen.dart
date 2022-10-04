@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 
 import '../provider/dart_theme_provider.dart';
 import '../services/utils.dart';
+import '../widgets/back_widget.dart';
 import '../widgets/feed_items.dart';
 import '../widgets/text_widget.dart';
 
@@ -36,13 +37,7 @@ class _FeedsScreenState extends State<FeedsScreen> {
     bool _isDark = themeState.getDarkTheme;
     return Scaffold(
         appBar: AppBar(
-          leading: InkWell(
-            borderRadius: BorderRadius.circular(12),
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: Icon(IconlyLight.arrow_left_2, color: color),
-          ),
+          leading: const BackWidget(),
           elevation: 0,
           backgroundColor: _isDark ? Colors.black12 : Colors.green,
           centerTitle: true,

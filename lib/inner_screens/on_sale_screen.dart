@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:growy/widgets/back_widget.dart';
 import 'package:growy/widgets/on_sale_widget.dart';
 import 'package:iconly/iconly.dart';
 import 'package:provider/provider.dart';
@@ -25,13 +26,7 @@ class OnSaleScreen extends StatelessWidget {
 
     return Scaffold(
         appBar: AppBar(
-          leading: InkWell(
-            borderRadius: BorderRadius.circular(12),
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: Icon(IconlyLight.arrow_left_2, color: color),
-          ),
+          leading: const BackWidget(),
           elevation: 0,
           backgroundColor: _isDark ? Colors.black12 : Colors.green,
           centerTitle: true,
