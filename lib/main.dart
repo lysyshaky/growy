@@ -7,12 +7,14 @@ import 'package:growy/inner_screens/product_details.dart';
 import 'package:growy/provider/dart_theme_provider.dart';
 import 'package:growy/screens/btm_bard.dart';
 import 'package:growy/screens/home_screen.dart';
+import 'package:growy/screens/viewed/viewed_screen.dart';
 import 'package:growy/screens/wishlist/wishlist_screen.dart';
 import 'package:growy/services/dark_theme_prefs.dart';
 import 'package:growy/inner_screens/feeds_screen.dart';
 import 'package:provider/provider.dart';
 
 import 'consts/theme_data.dart';
+import 'screens/orders/orders_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -63,7 +65,9 @@ class _MyAppState extends State<MyApp> {
             OnSaleScreen.routeName: (ctx) => const OnSaleScreen(),
             FeedsScreen.routeName: (ctx) => const FeedsScreen(),
             ProductDetails.routeName: (ctx) => const ProductDetails(),
-            WishlistScreen.routeName: (ctx) => const WishlistScreen()
+            WishlistScreen.routeName: (ctx) => const WishlistScreen(),
+            OrdersScreen.routeName: (ctx) => const OrdersScreen(),
+            ViewedScreen.routeName: (ctx) => const ViewedScreen(),
           },
         );
       }),

@@ -2,6 +2,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:growy/screens/orders/orders_screen.dart';
+import 'package:growy/screens/viewed/viewed_screen.dart';
 import 'package:growy/screens/wishlist/wishlist_screen.dart';
 import 'package:growy/widgets/text_widget.dart';
 import 'package:iconly/iconly.dart';
@@ -90,7 +92,10 @@ class _UserScreenState extends State<UserScreen> {
                     title: 'Orders',
                     icon: IconlyLight.wallet,
                     color: color,
-                    onPressed: () {}),
+                    onPressed: () {
+                      GlobalMethods.navigateToOrders(
+                          ctx: context, routeName: OrdersScreen.routeName);
+                    }),
                 _listTiles(
                     title: 'Wishlist',
                     icon: IconlyLight.heart,
@@ -103,7 +108,10 @@ class _UserScreenState extends State<UserScreen> {
                     title: 'Viewed',
                     icon: IconlyLight.show,
                     color: color,
-                    onPressed: () {}),
+                    onPressed: () {
+                      GlobalMethods.navigateToViewed(
+                          ctx: context, routeName: ViewedScreen.routeName);
+                    }),
                 _listTiles(
                     title: 'Forget password',
                     icon: IconlyLight.unlock,
@@ -135,7 +143,11 @@ class _UserScreenState extends State<UserScreen> {
                     icon: IconlyLight.logout,
                     color: color,
                     onPressed: () async {
-                      await _showLogoutDialog();
+                      await GlobalMethods.warningDialog(
+                          title: 'Sign out',
+                          subtitle: 'Do you wanna sign out ?',
+                          fct: () {},
+                          context: context);
                     }),
               ],
             ),
@@ -143,50 +155,6 @@ class _UserScreenState extends State<UserScreen> {
         ),
       ),
     );
-  }
-
-  Future<void> _showLogoutDialog() async {
-    await showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Row(
-              children: [
-                Image.asset('assets/images/warning-sign.png',
-                    height: 24, width: 24, fit: BoxFit.fill),
-                const SizedBox(
-                  width: 8,
-                ),
-                const Text('Sign out'),
-              ],
-            ),
-            content: const Text('Do you want to Sing out?'),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  if (Navigator.canPop(context)) {
-                    Navigator.pop(context);
-                  }
-                },
-                child: TextWidget(
-                  color: Colors.green,
-                  text: 'Cancel',
-                  textSize: 18,
-                  isTitle: true,
-                ),
-              ),
-              TextButton(
-                onPressed: () {},
-                child: TextWidget(
-                  color: Colors.red,
-                  text: 'Logout',
-                  textSize: 18,
-                  isTitle: true,
-                ),
-              ),
-            ],
-          );
-        });
   }
 
   Future<void> _showAddressDialog() async {

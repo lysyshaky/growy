@@ -27,7 +27,13 @@ class CartScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(right: 12),
             child: IconButton(
-              onPressed: () {},
+              onPressed: () async {
+                await GlobalMethods.warningDialog(
+                    title: 'Clear cart',
+                    subtitle: 'Do you wanna clear your cart?',
+                    fct: () {},
+                    context: context);
+              },
               icon: Icon(
                 IconlyLight.delete,
                 color: color,
