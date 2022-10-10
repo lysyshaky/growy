@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:growy/screens/viewed/viewed_widget.dart';
+import 'package:growy/widgets/empty_screen.dart';
 import 'package:iconly/iconly.dart';
 import 'package:provider/provider.dart';
 
@@ -23,45 +24,55 @@ class ViewedScreen extends StatelessWidget {
     Color color = utils.color;
     Color appBarcolor = utils.appBarcolor;
     Size size = Utils(context).getScreenSize;
-    return Scaffold(
-        appBar: AppBar(
-          leading: const BackWidget(),
-          actions: [
-            Padding(
-              padding: const EdgeInsets.only(right: 12),
-              child: IconButton(
-                onPressed: () async {
-                  await GlobalMethods.warningDialog(
-                      title: 'Clear history',
-                      subtitle: 'Do you wanna clear your history?',
-                      fct: () {},
-                      context: context);
-                },
-                icon: Icon(
-                  IconlyLight.delete,
-                  color: appBarcolor,
+    bool _isEmpty = true;
+
+    if (_isEmpty == true) {
+      return const EmptyScreen(
+          buttonText: 'Show now',
+          title: 'Your history is empty',
+          subtitle: 'No products has been viewed yet!',
+          imagePath: '/Users/yuralysyshak/growy/assets/images/history.png');
+    } else {
+      return Scaffold(
+          appBar: AppBar(
+            leading: const BackWidget(),
+            actions: [
+              Padding(
+                padding: const EdgeInsets.only(right: 12),
+                child: IconButton(
+                  onPressed: () async {
+                    await GlobalMethods.warningDialog(
+                        title: 'Clear history',
+                        subtitle: 'Do you wanna clear your history?',
+                        fct: () {},
+                        context: context);
+                  },
+                  icon: Icon(
+                    IconlyLight.delete,
+                    color: appBarcolor,
+                  ),
                 ),
-              ),
-            )
-          ],
-          elevation: 0,
-          backgroundColor: _isDark ? Colors.black12 : Colors.green,
-          centerTitle: true,
-          title: TextWidget(
-            text: 'History',
-            color: appBarcolor,
-            textSize: 24,
-            isTitle: true,
+              )
+            ],
+            elevation: 0,
+            backgroundColor: _isDark ? Colors.black12 : Colors.green,
+            centerTitle: true,
+            title: TextWidget(
+              text: 'History',
+              color: appBarcolor,
+              textSize: 24,
+              isTitle: true,
+            ),
           ),
-        ),
-        body: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: ListView.builder(
-            itemCount: 10,
-            itemBuilder: (context, index) {
-              return const ViewedWidget();
-            },
-          ),
-        ));
+          body: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ListView.builder(
+              itemCount: 10,
+              itemBuilder: (context, index) {
+                return const ViewedWidget();
+              },
+            ),
+          ));
+    }
   }
 }

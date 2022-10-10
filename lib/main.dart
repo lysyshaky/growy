@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:growy/inner_screens/on_sale_screen.dart';
 import 'package:growy/inner_screens/product_details.dart';
 import 'package:growy/provider/dart_theme_provider.dart';
+import 'package:growy/screens/auth/login.dart';
 import 'package:growy/screens/btm_bard.dart';
 import 'package:growy/screens/home_screen.dart';
 import 'package:growy/screens/viewed/viewed_screen.dart';
@@ -60,7 +61,7 @@ class _MyAppState extends State<MyApp> {
           debugShowCheckedModeBanner: false,
           title: 'Flutter Demo',
           theme: Styles.themeData(themeProvider.getDarkTheme, context),
-          home: const BottomBarScreen(),
+          home: const LoginScreen(),
           routes: {
             OnSaleScreen.routeName: (ctx) => const OnSaleScreen(),
             FeedsScreen.routeName: (ctx) => const FeedsScreen(),

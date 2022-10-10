@@ -10,6 +10,7 @@ import '../../services/global_methods.dart';
 import '../../services/utils.dart';
 import '../../widgets/text_widget.dart';
 import 'cart_widget.dart';
+import '../../widgets/empty_screen.dart';
 
 class CartScreen extends StatelessWidget {
   const CartScreen({Key? key}) : super(key: key);
@@ -21,49 +22,59 @@ class CartScreen extends StatelessWidget {
     final utils = Utils(context);
     Color color = utils.appBarcolor;
     Size size = Utils(context).getScreenSize;
-    return Scaffold(
-      appBar: AppBar(
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 12),
-            child: IconButton(
-              onPressed: () async {
-                await GlobalMethods.warningDialog(
-                    title: 'Clear cart',
-                    subtitle: 'Do you wanna clear your cart?',
-                    fct: () {},
-                    context: context);
-              },
-              icon: Icon(
-                IconlyLight.delete,
-                color: color,
+    bool _isEmpty = true;
+    if (_isEmpty == true) {
+      return const EmptyScreen(
+        title: 'Your car is empty!',
+        subtitle: 'Add something to your cart',
+        buttonText: 'Shop now',
+        imagePath: '/Users/yuralysyshak/growy/assets/images/cart.png',
+      );
+    } else {
+      return Scaffold(
+        appBar: AppBar(
+          actions: [
+            Padding(
+              padding: const EdgeInsets.only(right: 12),
+              child: IconButton(
+                onPressed: () async {
+                  await GlobalMethods.warningDialog(
+                      title: 'Clear cart',
+                      subtitle: 'Do you wanna clear your cart?',
+                      fct: () {},
+                      context: context);
+                },
+                icon: Icon(
+                  IconlyLight.delete,
+                  color: color,
+                ),
               ),
-            ),
-          )
-        ],
-        elevation: 0,
-        backgroundColor: _isDark ? Colors.black12 : Colors.green,
-        centerTitle: true,
-        title: TextWidget(
-          text: 'Cart(2)',
-          color: color,
-          textSize: 24,
-          isTitle: true,
-        ),
-      ),
-      body: Column(
-        children: [
-          _checkout(context: context),
-          Expanded(
-            child: ListView.builder(
-                itemCount: 10,
-                itemBuilder: (ctx, index) {
-                  return CartWidget();
-                }),
+            )
+          ],
+          elevation: 0,
+          backgroundColor: _isDark ? Colors.black12 : Colors.green,
+          centerTitle: true,
+          title: TextWidget(
+            text: 'Cart(2)',
+            color: color,
+            textSize: 24,
+            isTitle: true,
           ),
-        ],
-      ),
-    );
+        ),
+        body: Column(
+          children: [
+            _checkout(context: context),
+            Expanded(
+              child: ListView.builder(
+                  itemCount: 10,
+                  itemBuilder: (ctx, index) {
+                    return CartWidget();
+                  }),
+            ),
+          ],
+        ),
+      );
+    }
   }
 
   Widget _checkout({required BuildContext context}) {

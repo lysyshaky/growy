@@ -1,3 +1,4 @@
+import 'package:badges/badges.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
@@ -69,8 +70,17 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
               label: 'Categories'),
           BottomNavigationBarItem(
               backgroundColor: _isDark ? Colors.black12 : Colors.green,
-              icon:
-                  Icon(_selectedIndex == 2 ? IconlyBold.buy : IconlyLight.buy),
+              icon: Badge(
+                  toAnimate: true,
+                  shape: BadgeShape.circle,
+                  badgeColor: Colors.red,
+                  borderRadius: BorderRadius.circular(8),
+                  badgeContent: Text(
+                    '1',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  child: Icon(
+                      _selectedIndex == 2 ? IconlyBold.buy : IconlyLight.buy)),
               label: 'Cart'),
           BottomNavigationBarItem(
               backgroundColor: _isDark ? Colors.black12 : Colors.green,

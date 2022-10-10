@@ -11,6 +11,7 @@ import '../../provider/dart_theme_provider.dart';
 import '../../services/global_methods.dart';
 import '../../services/utils.dart';
 import '../../widgets/back_widget.dart';
+import '../../widgets/empty_screen.dart';
 import '../../widgets/text_widget.dart';
 import '../cart/cart_widget.dart';
 
@@ -25,42 +26,51 @@ class WishlistScreen extends StatelessWidget {
     final utils = Utils(context);
     Color color = utils.appBarcolor;
     Size size = Utils(context).getScreenSize;
-    return Scaffold(
-        appBar: AppBar(
-          leading: const BackWidget(),
-          actions: [
-            Padding(
-              padding: const EdgeInsets.only(right: 12),
-              child: IconButton(
-                onPressed: () async {
-                  await GlobalMethods.warningDialog(
-                      title: 'Clear wishlist',
-                      subtitle: 'Do you wanna clear your wishlist?',
-                      fct: () {},
-                      context: context);
-                },
-                icon: Icon(
-                  IconlyLight.delete,
-                  color: color,
+    bool _isEmpty = true;
+    if (_isEmpty == true) {
+      return const EmptyScreen(
+          buttonText: 'Add a wish',
+          title: 'You wishlist is empty',
+          subtitle: 'Add to your wishlist something',
+          imagePath: '/Users/yuralysyshak/growy/assets/images/wishlist.png');
+    } else {
+      return Scaffold(
+          appBar: AppBar(
+            leading: const BackWidget(),
+            actions: [
+              Padding(
+                padding: const EdgeInsets.only(right: 12),
+                child: IconButton(
+                  onPressed: () async {
+                    await GlobalMethods.warningDialog(
+                        title: 'Clear wishlist',
+                        subtitle: 'Do you wanna clear your wishlist?',
+                        fct: () {},
+                        context: context);
+                  },
+                  icon: Icon(
+                    IconlyLight.delete,
+                    color: color,
+                  ),
                 ),
-              ),
-            )
-          ],
-          elevation: 0,
-          backgroundColor: _isDark ? Colors.black12 : Colors.green,
-          centerTitle: true,
-          title: TextWidget(
-            text: 'Wishlist',
-            color: color,
-            textSize: 24,
-            isTitle: true,
+              )
+            ],
+            elevation: 0,
+            backgroundColor: _isDark ? Colors.black12 : Colors.green,
+            centerTitle: true,
+            title: TextWidget(
+              text: 'Wishlist',
+              color: color,
+              textSize: 24,
+              isTitle: true,
+            ),
           ),
-        ),
-        body: MasonryGridView.count(
-            crossAxisCount: 2,
-            itemBuilder: (context, index) {
-              return const WishlistWidget();
-            }));
+          body: MasonryGridView.count(
+              crossAxisCount: 2,
+              itemBuilder: (context, index) {
+                return const WishlistWidget();
+              }));
+    }
     //       ListView.builder(
     //           itemCount: 10,
     //           itemBuilder: (ctx, index) {
