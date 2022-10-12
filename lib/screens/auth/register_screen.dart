@@ -3,38 +3,51 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:growy/screens/auth/login_screen.dart';
 import 'package:growy/widgets/text_widget.dart';
+import 'package:iconly/iconly.dart';
 
 import '../../consts/consts.dart';
 import '../../widgets/auth_button.dart';
 import '../../widgets/google_button.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class RegisterScreen extends StatefulWidget {
+  static const routeName = '/RegisterScreen';
+  const RegisterScreen({Key? key}) : super(key: key);
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _RegisterScreenState extends State<RegisterScreen> {
+  final _formKey = GlobalKey<FormState>();
+
+  final _fullNameController = TextEditingController();
   final _emailTextController = TextEditingController();
   final _passTextController = TextEditingController();
+  final _adressTextController = TextEditingController();
+  final _addressFocusNode = FocusNode();
+  final _emailFocusNode = FocusNode();
   final _passFocusNode = FocusNode();
-  final _formKey = GlobalKey<FormState>();
-  var _obscureText = true;
+
+  bool _obscureText = true;
   @override
   void dispose() {
+    _fullNameController.dispose();
+    _addressFocusNode.dispose();
+    _adressTextController.dispose();
+    _emailFocusNode.dispose();
     _emailTextController.dispose();
     _passTextController.dispose();
     _passFocusNode.dispose();
     super.dispose();
   }
 
-  void _sumbitFromOnLogin() {
+  void _sumbitFromOnRegister() {
     final isValid = _formKey.currentState!.validate();
     FocusScope.of(context).unfocus();
     if (isValid) {
-      print("The form is valid");
+      _formKey.currentState!.save();
     }
   }
 
@@ -68,16 +81,28 @@ class _LoginScreenState extends State<LoginScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  const SizedBox(height: 120.0),
+                  const SizedBox(height: 60.0),
+                  InkWell(
+                    borderRadius: BorderRadius.circular(12),
+                    onTap: () {
+                      Navigator.canPop(context) ? Navigator.pop(context) : null;
+                    },
+                    child: const Icon(
+                      IconlyLight.arrow_left_2,
+                      size: 24,
+                      color: Colors.white,
+                    ),
+                  ),
+                  const SizedBox(height: 40.0),
                   TextWidget(
-                    text: "Welcome Back",
+                    text: "Welcome",
                     color: Colors.white,
                     textSize: 30,
                     isTitle: true,
                   ),
                   const SizedBox(height: 8.0),
                   TextWidget(
-                    text: "Sign in to continue",
+                    text: "Sign un to continue",
                     color: Colors.white,
                     textSize: 18,
                     isTitle: false,
@@ -87,6 +112,34 @@ class _LoginScreenState extends State<LoginScreen> {
                     key: _formKey,
                     child: Column(
                       children: [
+                        TextFormField(
+                          textInputAction: TextInputAction.next,
+                          onEditingComplete: () => FocusScope.of(context)
+                              .requestFocus(_emailFocusNode),
+                          controller: _fullNameController,
+                          keyboardType: TextInputType.emailAddress,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'This field is mising';
+                            } else {
+                              return null;
+                            }
+                          },
+                          style: const TextStyle(color: Colors.white),
+                          decoration: const InputDecoration(
+                            hintText: 'Full name',
+                            hintStyle: TextStyle(color: Colors.white),
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white),
+                            ),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.green),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 12.0,
+                        ),
                         TextFormField(
                           textInputAction: TextInputAction.next,
                           onEditingComplete: () => FocusScope.of(context)
@@ -118,7 +171,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         TextFormField(
                           textInputAction: TextInputAction.done,
                           onEditingComplete: () {
-                            _sumbitFromOnLogin();
+                            _sumbitFromOnRegister();
                           },
                           controller: _passTextController,
                           focusNode: _passFocusNode,
@@ -155,6 +208,37 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                         ),
+                        const SizedBox(
+                          height: 12.0,
+                        ),
+                        TextFormField(
+                          focusNode: _addressFocusNode,
+                          textInputAction: TextInputAction.done,
+                          onEditingComplete: _sumbitFromOnRegister,
+                          controller: _adressTextController,
+                          keyboardType: TextInputType.emailAddress,
+                          validator: (value) {
+                            if (value!.isEmpty || value.length < 3) {
+                              return 'Please enter a valid address';
+                            } else {
+                              return null;
+                            }
+                          },
+                          style: const TextStyle(color: Colors.white),
+                          decoration: const InputDecoration(
+                            hintText: 'Shipping address',
+                            hintStyle: TextStyle(color: Colors.white),
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white),
+                            ),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.green),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 12.0,
+                        ),
                       ],
                     ),
                   ),
@@ -180,65 +264,32 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: 15.0,
                   ),
                   AuthButton(
-                    ftc: () {},
-                    buttonText: 'Login',
+                    ftc: () {
+                      _sumbitFromOnRegister();
+                    },
+                    buttonText: 'Sign up',
                     primary: Colors.green.withOpacity(0.6),
-                  ),
-                  const SizedBox(
-                    height: 15.0,
-                  ),
-                  GoogleButton(),
-                  const SizedBox(
-                    height: 25,
-                  ),
-                  Row(
-                    children: [
-                      const Expanded(
-                        child: Divider(
-                          color: Colors.white,
-                          thickness: 2,
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      TextWidget(text: 'OR', color: Colors.white, textSize: 18),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      const Expanded(
-                        child: Divider(
-                          color: Colors.white,
-                          thickness: 2,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 15.0,
-                  ),
-                  AuthButton(
-                    ftc: () {},
-                    buttonText: 'Continue as a guest',
-                    primary: Colors.black.withOpacity(0.6),
                   ),
                   const SizedBox(
                     height: 15.0,
                   ),
                   RichText(
                     text: TextSpan(
-                        text: 'Don\'t have an account?',
+                        text: 'Already a user?',
                         style:
                             const TextStyle(color: Colors.white, fontSize: 18),
                         children: [
                           TextSpan(
-                              text: '  Sign up',
+                              text: '  Sign in',
                               style: const TextStyle(
                                   color: Colors.lightGreen,
                                   fontSize: 18,
                                   fontWeight: FontWeight.w600),
                               recognizer: TapGestureRecognizer()
-                                ..onTap = () {}),
+                                ..onTap = () {
+                                  Navigator.pushReplacementNamed(
+                                      context, LoginScreen.routeName);
+                                }),
                         ]),
                   ),
                 ],

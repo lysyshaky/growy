@@ -6,6 +6,7 @@ import 'package:growy/screens/viewed/viewed_screen.dart';
 import 'package:growy/screens/wishlist/wishlist_screen.dart';
 
 import '../inner_screens/on_sale_screen.dart';
+import '../screens/auth/register_screen.dart';
 import '../widgets/text_widget.dart';
 
 class GlobalMethods {
@@ -37,6 +38,11 @@ class GlobalMethods {
   static navigateToViewed(
       {required BuildContext ctx, required String routeName}) {
     Navigator.pushNamed(ctx, ViewedScreen.routeName);
+  }
+
+  static navigateToRegister(
+      {required BuildContext ctx, required String routeName}) {
+    Navigator.pushNamed(ctx, RegisterScreen.routeName);
   }
 
   static Future<void> warningDialog({

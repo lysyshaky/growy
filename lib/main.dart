@@ -5,7 +5,9 @@ import 'package:flutter/services.dart';
 import 'package:growy/inner_screens/on_sale_screen.dart';
 import 'package:growy/inner_screens/product_details.dart';
 import 'package:growy/provider/dart_theme_provider.dart';
-import 'package:growy/screens/auth/login.dart';
+import 'package:growy/screens/auth/forget_pass_screen.dart';
+import 'package:growy/screens/auth/login_screen.dart';
+import 'package:growy/screens/auth/register_screen.dart';
 import 'package:growy/screens/btm_bard.dart';
 import 'package:growy/screens/home_screen.dart';
 import 'package:growy/screens/viewed/viewed_screen.dart';
@@ -69,6 +71,10 @@ class _MyAppState extends State<MyApp> {
             WishlistScreen.routeName: (ctx) => const WishlistScreen(),
             OrdersScreen.routeName: (ctx) => const OrdersScreen(),
             ViewedScreen.routeName: (ctx) => const ViewedScreen(),
+            RegisterScreen.routeName: (ctx) => const RegisterScreen(),
+            LoginScreen.routeName: (ctx) => const LoginScreen(),
+            ForgetPasswordScreen.routeName: (ctx) =>
+                const ForgetPasswordScreen(),
           },
         );
       }),
