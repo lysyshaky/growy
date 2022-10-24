@@ -4,15 +4,19 @@ import 'package:flutter/services.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:growy/inner_screens/product_details.dart';
+import 'package:growy/models/product_model.dart';
 import 'package:growy/widgets/price_widget.dart';
 import 'package:growy/widgets/text_widget.dart';
+import 'package:provider/provider.dart';
 
 import '../services/global_methods.dart';
 import '../services/utils.dart';
 import 'heart_btn.dart';
 
 class FeedsWidget extends StatefulWidget {
-  const FeedsWidget({Key? key}) : super(key: key);
+  const FeedsWidget({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<FeedsWidget> createState() => _FeedsWidgetState();
@@ -35,6 +39,7 @@ class _FeedsWidgetState extends State<FeedsWidget> {
   Widget build(BuildContext context) {
     final Color color = Utils(context).color;
     Size size = Utils(context).getScreenSize;
+    final productModel = Provider.of<ProductModel>(context);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Material(
@@ -49,7 +54,7 @@ class _FeedsWidgetState extends State<FeedsWidget> {
           child: Column(
             children: [
               FancyShimmerImage(
-                imageUrl: 'https://i.ibb.co/F0s3FHQ/Apricots.png',
+                imageUrl: productModel.imageUrl,
                 height: size.width * 0.21,
                 width: size.width * 0.2,
                 boxFit: BoxFit.fill,
@@ -59,13 +64,17 @@ class _FeedsWidgetState extends State<FeedsWidget> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    TextWidget(
-                      text: 'Title',
-                      color: color,
-                      textSize: 20,
-                      isTitle: true,
+                    Flexible(
+                      flex: 3,
+                      child: TextWidget(
+                        text: productModel.title,
+                        color: color,
+                        textSize: 18,
+                        maxLines: 1,
+                        isTitle: true,
+                      ),
                     ),
-                    const HeartBTN(),
+                    const Flexible(flex: 1, child: HeartBTN()),
                   ],
                 ),
               ),
@@ -79,8 +88,8 @@ class _FeedsWidgetState extends State<FeedsWidget> {
                         Flexible(
                           flex: 3,
                           child: PriceWidget(
-                            salePrice: 5.59,
-                            price: 2.99,
+                            salePrice: productModel.salePrice,
+                            price: productModel.price,
                             textPrice: _quantityTextController.text,
                             isOnSale: false,
                           ),
@@ -139,7 +148,7 @@ class _FeedsWidgetState extends State<FeedsWidget> {
                         Flexible(
                           child: FittedBox(
                             child: TextWidget(
-                              text: 'KG',
+                              text: productModel.isPiece ? 'Piece' : 'KG',
                               color: color,
                               textSize: 20,
                               isTitle: true,

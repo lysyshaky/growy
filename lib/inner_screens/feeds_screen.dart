@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:growy/consts/consts.dart';
 import 'package:iconly/iconly.dart';
 import 'package:provider/provider.dart';
 
+import '../models/product_model.dart';
 import '../provider/dart_theme_provider.dart';
+import '../providers/products_provider.dart';
 import '../services/utils.dart';
 import '../widgets/back_widget.dart';
 import '../widgets/feed_items.dart';
@@ -35,6 +38,8 @@ class _FeedsScreenState extends State<FeedsScreen> {
     Size size = Utils(context).getScreenSize;
     final themeState = Provider.of<DarkThemeProvider>(context);
     bool _isDark = themeState.getDarkTheme;
+    final productProviders = Provider.of<ProductsProvider>(context);
+    List<ProductModel> allProducts = productProviders.getProducts;
     return Scaffold(
         appBar: AppBar(
           leading: const BackWidget(),
@@ -104,8 +109,9 @@ class _FeedsScreenState extends State<FeedsScreen> {
                 padding: EdgeInsets.zero,
                 // crossAxisSpacing: 10,
                 childAspectRatio: size.width / (size.height * 0.65),
-                children: List.generate(10, (index) {
-                  return const FeedsWidget();
+                children: List.generate(allProducts.length, (index) {
+                  return ChangeNotifierProvider.value(
+                      value: allProducts[index], child: const FeedsWidget());
                 }),
               )
             ],

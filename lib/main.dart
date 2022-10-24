@@ -5,10 +5,11 @@ import 'package:flutter/services.dart';
 import 'package:growy/inner_screens/on_sale_screen.dart';
 import 'package:growy/inner_screens/product_details.dart';
 import 'package:growy/provider/dart_theme_provider.dart';
+import 'package:growy/providers/products_provider.dart';
 import 'package:growy/screens/auth/forget_pass_screen.dart';
 import 'package:growy/screens/auth/login_screen.dart';
 import 'package:growy/screens/auth/register_screen.dart';
-import 'package:growy/screens/btm_bard.dart';
+import 'package:growy/screens/btm_bar.dart';
 import 'package:growy/screens/home_screen.dart';
 import 'package:growy/screens/viewed/viewed_screen.dart';
 import 'package:growy/screens/wishlist/wishlist_screen.dart';
@@ -55,7 +56,10 @@ class _MyAppState extends State<MyApp> {
       providers: [
         ChangeNotifierProvider(create: (_) {
           return themeChangeProvider;
-        })
+        }),
+        ChangeNotifierProvider(
+          create: (_) => ProductsProvider(),
+        ),
       ],
       child:
           Consumer<DarkThemeProvider>(builder: (context, themeProvider, child) {
@@ -63,7 +67,7 @@ class _MyAppState extends State<MyApp> {
           debugShowCheckedModeBanner: false,
           title: 'Flutter Demo',
           theme: Styles.themeData(themeProvider.getDarkTheme, context),
-          home: const LoginScreen(),
+          home: const BottomBarScreen(),
           routes: {
             OnSaleScreen.routeName: (ctx) => const OnSaleScreen(),
             FeedsScreen.routeName: (ctx) => const FeedsScreen(),

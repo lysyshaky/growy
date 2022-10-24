@@ -1,3 +1,5 @@
+import '../models/product_model.dart';
+
 class Consts {
   static final List<String> offerImages = [
     '/Users/yuralysyshak/growy/assets/images/offres/Offer1.jpg',

@@ -12,6 +12,8 @@ import 'package:iconly/iconly.dart';
 import 'package:provider/provider.dart';
 
 import '../consts/consts.dart';
+import '../models/product_model.dart';
+import '../providers/products_provider.dart';
 import '../services/utils.dart';
 import '../widgets/text_widget.dart';
 
@@ -29,6 +31,8 @@ class _HomeScreenState extends State<HomeScreen> {
     final themeState = utils.getTheme;
     final Color color = Utils(context).color;
     Size size = Utils(context).getScreenSize;
+    final productProviders = Provider.of<ProductsProvider>(context);
+    List<ProductModel> allProducts = productProviders.getProducts;
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -142,8 +146,10 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: EdgeInsets.zero,
               // crossAxisSpacing: 10,
               childAspectRatio: size.width / (size.height * 0.65),
-              children: List.generate(4, (index) {
-                return const FeedsWidget();
+              children: List.generate(
+                  allProducts.length < 4 ? allProducts.length : 4, (index) {
+                return ChangeNotifierProvider.value(
+                    value: allProducts[index], child: const FeedsWidget());
               }),
             )
           ],
