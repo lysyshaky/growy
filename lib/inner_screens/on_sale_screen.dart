@@ -6,7 +6,9 @@ import 'package:growy/widgets/on_sale_widget.dart';
 import 'package:iconly/iconly.dart';
 import 'package:provider/provider.dart';
 
+import '../models/product_model.dart';
 import '../provider/dart_theme_provider.dart';
+import '../providers/products_provider.dart';
 import '../services/utils.dart';
 import '../widgets/text_widget.dart';
 
@@ -17,7 +19,8 @@ class OnSaleScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool _isEmpty = false;
-
+    final productProviders = Provider.of<ProductsProvider>(context);
+    List<ProductModel> productsOnSale = productProviders.getProducts;
     final Utils utils = Utils(context);
     final Color color = Utils(context).appBarcolor;
     Size size = Utils(context).getScreenSize;
@@ -37,7 +40,7 @@ class OnSaleScreen extends StatelessWidget {
             isTitle: true,
           ),
         ),
-        body: _isEmpty
+        body: productsOnSale.isEmpty
             ? Center(
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -65,8 +68,10 @@ class OnSaleScreen extends StatelessWidget {
                 padding: EdgeInsets.zero,
                 // crossAxisSpacing: 10,
                 childAspectRatio: size.width / (size.height * 0.45),
-                children: List.generate(16, (index) {
-                  return const OnSaleWidget();
+                children: List.generate(productsOnSale.length, (index) {
+                  return ChangeNotifierProvider.value(
+                      value: productsOnSale[index],
+                      child: const OnSaleWidget());
                 }),
               ));
   }
