@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:growy/providers/products_provider.dart';
 import 'package:growy/widgets/heart_btn.dart';
 import 'package:growy/widgets/price_widget.dart';
 import 'package:iconly/iconly.dart';
@@ -40,6 +41,13 @@ class _ProductDetailsState extends State<ProductDetails> {
     Size size = Utils(context).getScreenSize;
     final themeState = Provider.of<DarkThemeProvider>(context);
     bool _isDark = themeState.getDarkTheme;
+    final productProvider = Provider.of<ProductsProvider>(context);
+    final productId = ModalRoute.of(context)!.settings.arguments as String;
+    final getCurrentProduct = productProvider.findProductById(productId);
+    double usedPrice = getCurrentProduct.isOnSale
+        ? getCurrentProduct.salePrice
+        : getCurrentProduct.price;
+    double totalPrice = usedPrice * double.parse(_quantityTextController.text);
     return Scaffold(
       appBar: AppBar(
         leading: const BackWidget(),
@@ -57,7 +65,7 @@ class _ProductDetailsState extends State<ProductDetails> {
         Flexible(
           flex: 2,
           child: FancyShimmerImage(
-            imageUrl: 'https://i.ibb.co/F0s3FHQ/Apricots.png',
+            imageUrl: getCurrentProduct.imageUrl,
             height: size.width,
             width: size.width,
             boxFit: BoxFit.scaleDown,
@@ -87,7 +95,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                     children: [
                       Flexible(
                         child: TextWidget(
-                          text: 'Title',
+                          text: getCurrentProduct.title,
                           color: color,
                           textSize: 24,
                           isTitle: true,
@@ -104,13 +112,13 @@ class _ProductDetailsState extends State<ProductDetails> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       TextWidget(
-                        text: '\$2.59',
+                        text: "\$${usedPrice.toStringAsFixed(2)}/",
                         color: Colors.green,
                         textSize: 22,
                         isTitle: true,
                       ),
                       TextWidget(
-                        text: '/Kg',
+                        text: getCurrentProduct.isPiece ? "Piece" : "Kg",
                         color: color,
                         textSize: 14,
                       ),
@@ -118,9 +126,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                         width: 10,
                       ),
                       Visibility(
-                        visible: true,
+                        visible: getCurrentProduct.isOnSale ? true : false,
                         child: Text(
-                          '\$3.9',
+                          "\$${getCurrentProduct.price.toStringAsFixed(2)}",
                           style: TextStyle(
                             fontSize: 16,
                             color: color,
@@ -240,14 +248,15 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 child: Row(
                                   children: [
                                     TextWidget(
-                                      text: '\$2.59',
+                                      text:
+                                          '\$${totalPrice.toStringAsFixed(2)}/',
                                       color: color,
                                       textSize: 20,
                                       isTitle: true,
                                     ),
                                     TextWidget(
                                       text:
-                                          '/${_quantityTextController.text}Kg',
+                                          '${_quantityTextController.text} ${getCurrentProduct.isPiece ? "Piece" : "Kg"}',
                                       color: color,
                                       textSize: 16,
                                       isTitle: false,

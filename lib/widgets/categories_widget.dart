@@ -5,6 +5,8 @@ import 'package:growy/provider/dart_theme_provider.dart';
 import 'package:growy/widgets/text_widget.dart';
 import 'package:provider/provider.dart';
 
+import '../inner_screens/cat_screen.dart';
+
 class CategoriesWidget extends StatelessWidget {
   const CategoriesWidget(
       {Key? key,
@@ -24,7 +26,8 @@ class CategoriesWidget extends StatelessWidget {
 
     return InkWell(
       onTap: () {
-        print('Category passed');
+        Navigator.pushNamed(context, CategoryScreen.routeName,
+            arguments: catText);
       },
       child: Container(
         height: _screenWidht * 0.6,

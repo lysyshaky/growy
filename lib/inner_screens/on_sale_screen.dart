@@ -10,6 +10,7 @@ import '../models/product_model.dart';
 import '../provider/dart_theme_provider.dart';
 import '../providers/products_provider.dart';
 import '../services/utils.dart';
+import '../widgets/empty_product_widget.dart';
 import '../widgets/text_widget.dart';
 
 class OnSaleScreen extends StatelessWidget {
@@ -41,28 +42,8 @@ class OnSaleScreen extends StatelessWidget {
           ),
         ),
         body: productsOnSale.isEmpty
-            ? Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(18.0),
-                        child: Image.asset(
-                            '/Users/yuralysyshak/growy/assets/images/box.png'),
-                      ),
-                      Text(
-                        'No products on sale yet!\nStay tuned',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            color: _isDark ? Colors.white : Colors.black,
-                            fontSize: 28,
-                            fontWeight: FontWeight.w700),
-                      ),
-                    ],
-                  ),
-                ),
-              )
+            ? const EmptyProductWidget(
+                text: 'No products on sale yet!\nStay tuned')
             : GridView.count(
                 crossAxisCount: 2,
                 padding: EdgeInsets.zero,

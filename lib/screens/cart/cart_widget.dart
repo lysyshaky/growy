@@ -4,10 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:growy/models/cart_model.dart';
+import 'package:growy/providers/products_provider.dart';
 
 import 'package:provider/provider.dart';
 
 import '../../inner_screens/product_details.dart';
+import '../../models/product_model.dart';
 import '../../provider/dart_theme_provider.dart';
 import '../../services/global_methods.dart';
 import '../../services/utils.dart';
@@ -43,6 +46,14 @@ class _CartWidgetState extends State<CartWidget> {
     Size size = Utils(context).getScreenSize;
     final themeState = Provider.of<DarkThemeProvider>(context);
     bool _isDark = themeState.getDarkTheme;
+    final productProvider = Provider.of<ProductsProvider>(context);
+    final cartModel = Provider.of<CartModel>(context);
+
+    final getCurrentProduct =
+        productProvider.findProductById(cartModel.productId);
+    double usedPrice = getCurrentProduct.isOnSale
+        ? getCurrentProduct.salePrice
+        : getCurrentProduct.price;
     return GestureDetector(
       onTap: () {
         GlobalMethods.navigateToProductDetails(
@@ -67,7 +78,7 @@ class _CartWidgetState extends State<CartWidget> {
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: FancyShimmerImage(
-                        imageUrl: 'https://i.ibb.co/F0s3FHQ/Apricots.png',
+                        imageUrl: getCurrentProduct.imageUrl,
                         boxFit: BoxFit.fill,
                       ),
                     ),
@@ -75,7 +86,7 @@ class _CartWidgetState extends State<CartWidget> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         TextWidget(
-                          text: 'Title',
+                          text: getCurrentProduct.title,
                           color: color,
                           textSize: 20,
                           isTitle: true,
@@ -134,7 +145,8 @@ class _CartWidgetState extends State<CartWidget> {
                               _quantityController(
                                 fct: () {
                                   setState(() {
-                                    _quantityTextController.text = (int.parse(
+                                    _quantityTextController
+                                        .text = (double.parse(
                                                 _quantityTextController.text) +
                                             1)
                                         .toString();
@@ -163,7 +175,7 @@ class _CartWidgetState extends State<CartWidget> {
                           ),
                           HeartBTN(),
                           TextWidget(
-                            text: '\$0.29',
+                            text: '\$${usedPrice.toStringAsFixed(2)}',
                             color: color,
                             textSize: 18,
                             maxLines: 1,

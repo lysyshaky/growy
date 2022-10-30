@@ -9,6 +9,7 @@ import 'package:iconly/iconly.dart';
 import 'package:provider/provider.dart';
 
 import '../models/product_model.dart';
+import '../providers/cart_provider.dart';
 import '../services/global_methods.dart';
 import '../services/utils.dart';
 import 'heart_btn.dart';
@@ -27,6 +28,7 @@ class _OnSaleWidgetState extends State<OnSaleWidget> {
     final theme = Utils(context).getTheme;
     Size size = Utils(context).getScreenSize;
     final productModel = Provider.of<ProductModel>(context);
+    final cartProvider = Provider.of<CartProvider>(context);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Material(
@@ -35,10 +37,12 @@ class _OnSaleWidgetState extends State<OnSaleWidget> {
           child: InkWell(
             borderRadius: BorderRadius.circular(12),
             onTap: () {
-              GlobalMethods.navigateToProductDetails(
-                ctx: context,
-                routeName: ProductDetails.routeName,
-              );
+              Navigator.pushNamed(context, ProductDetails.routeName,
+                  arguments: productModel.id);
+              // GlobalMethods.navigateToProductDetails(
+              //   ctx: context,
+              //   routeName: ProductDetails.routeName,
+              // );
             },
             child: Padding(
               padding: const EdgeInsets.all(8.0),
@@ -67,7 +71,10 @@ class _OnSaleWidgetState extends State<OnSaleWidget> {
                         Row(
                           children: [
                             GestureDetector(
-                              onTap: () {},
+                              onTap: () {
+                                cartProvider.addProductsToCart(
+                                    productId: productModel.id, quanitiy: 1.0);
+                              },
                               child: Icon(
                                 IconlyLight.bag_2,
                                 size: 24,

@@ -2,9 +2,11 @@ import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:growy/inner_screens/cat_screen.dart';
 import 'package:growy/inner_screens/on_sale_screen.dart';
 import 'package:growy/inner_screens/product_details.dart';
 import 'package:growy/provider/dart_theme_provider.dart';
+import 'package:growy/providers/cart_provider.dart';
 import 'package:growy/providers/products_provider.dart';
 import 'package:growy/screens/auth/forget_pass_screen.dart';
 import 'package:growy/screens/auth/login_screen.dart';
@@ -60,6 +62,9 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(
           create: (_) => ProductsProvider(),
         ),
+        ChangeNotifierProvider(
+          create: (_) => CartProvider(),
+        ),
       ],
       child:
           Consumer<DarkThemeProvider>(builder: (context, themeProvider, child) {
@@ -79,6 +84,7 @@ class _MyAppState extends State<MyApp> {
             LoginScreen.routeName: (ctx) => const LoginScreen(),
             ForgetPasswordScreen.routeName: (ctx) =>
                 const ForgetPasswordScreen(),
+            CategoryScreen.routeName: (ctx) => const CategoryScreen(),
           },
         );
       }),
