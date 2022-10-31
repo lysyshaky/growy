@@ -12,12 +12,45 @@ class CartProvider with ChangeNotifier {
   void addProductsToCart(
       {required String productId,
       //maybe double
-      required double quanitiy}) {
+      required double quantity}) {
     _cartItems.putIfAbsent(
         productId,
         () => CartModel(
             id: DateTime.now().toString(),
             productId: productId,
-            quantity: quanitiy));
+            quantity: quantity));
+    notifyListeners();
+  }
+
+  void reduceQuantityByOne(String productId) {
+    _cartItems.update(
+        productId,
+        (value) => CartModel(
+              id: value.id,
+              productId: productId,
+              quantity: value.quantity - 1,
+            ));
+    notifyListeners();
+  }
+
+  void increaseQuantityByOne(String productId) {
+    _cartItems.update(
+        productId,
+        (value) => CartModel(
+              id: value.id,
+              productId: productId,
+              quantity: value.quantity + 1,
+            ));
+    notifyListeners();
+  }
+
+  void removeOneItem(String productId) {
+    _cartItems.remove(productId);
+    notifyListeners();
+  }
+
+  void clearCart() {
+    _cartItems.clear();
+    notifyListeners();
   }
 }

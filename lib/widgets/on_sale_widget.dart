@@ -10,6 +10,7 @@ import 'package:provider/provider.dart';
 
 import '../models/product_model.dart';
 import '../providers/cart_provider.dart';
+import '../providers/wishlist_provider.dart';
 import '../services/global_methods.dart';
 import '../services/utils.dart';
 import 'heart_btn.dart';
@@ -29,6 +30,10 @@ class _OnSaleWidgetState extends State<OnSaleWidget> {
     Size size = Utils(context).getScreenSize;
     final productModel = Provider.of<ProductModel>(context);
     final cartProvider = Provider.of<CartProvider>(context);
+    final wishlistProvider = Provider.of<WishlistProvider>(context);
+    bool? _isInCart = cartProvider.getCartItems.containsKey(productModel.id);
+    bool? _isInWishlist =
+        wishlistProvider.getWishlistItems.containsKey(productModel.id);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Material(
@@ -73,15 +78,20 @@ class _OnSaleWidgetState extends State<OnSaleWidget> {
                             GestureDetector(
                               onTap: () {
                                 cartProvider.addProductsToCart(
-                                    productId: productModel.id, quanitiy: 1.0);
+                                    productId: productModel.id, quantity: 1.0);
                               },
                               child: Icon(
-                                IconlyLight.bag_2,
+                                _isInCart
+                                    ? IconlyBold.bag_2
+                                    : IconlyLight.bag_2,
                                 size: 24,
-                                color: color,
+                                color: _isInCart ? Colors.green : color,
                               ),
                             ),
-                            const HeartBTN(),
+                            HeartBTN(
+                              productId: productModel.id,
+                              isInWishlist: _isInWishlist,
+                            ),
                           ],
                         )
                       ],

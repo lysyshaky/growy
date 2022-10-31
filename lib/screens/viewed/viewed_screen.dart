@@ -7,72 +7,77 @@ import 'package:iconly/iconly.dart';
 import 'package:provider/provider.dart';
 
 import '../../provider/dart_theme_provider.dart';
+import '../../providers/viewed_product_provider.dart';
 import '../../services/global_methods.dart';
 import '../../services/utils.dart';
 import '../../widgets/back_widget.dart';
 import '../../widgets/text_widget.dart';
 
-class ViewedScreen extends StatelessWidget {
+class ViewedScreen extends StatefulWidget {
   static const routeName = '/ViewedScreen';
   const ViewedScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    final themeState = Provider.of<DarkThemeProvider>(context);
-    bool _isDark = themeState.getDarkTheme;
-    final utils = Utils(context);
-    Color color = utils.color;
-    Color appBarcolor = utils.appBarcolor;
-    Size size = Utils(context).getScreenSize;
-    bool _isEmpty = true;
+  State<ViewedScreen> createState() => _ViewedScreenState();
+}
 
-    if (_isEmpty == true) {
+class _ViewedScreenState extends State<ViewedScreen> {
+  bool check = true;
+  @override
+  Widget build(BuildContext context) {
+    Color color = Utils(context).color;
+    final viewedProdProvider = Provider.of<ViewedProdProvider>(context);
+    final viewedProdItemsList = viewedProdProvider.getViewedProdlistItems.values
+        .toList()
+        .reversed
+        .toList();
+    if (viewedProdItemsList.isEmpty) {
       return const EmptyScreen(
-          buttonText: 'Show now',
-          title: 'Your history is empty',
-          subtitle: 'No products has been viewed yet!',
-          imagePath: '/Users/yuralysyshak/growy/assets/images/history.png');
+        title: 'Your history is empty',
+        subtitle: 'No products has been viewed yet!',
+        buttonText: 'Shop now',
+        imagePath: 'assets/images/history.png',
+      );
     } else {
       return Scaffold(
-          appBar: AppBar(
-            leading: const BackWidget(),
-            actions: [
-              Padding(
-                padding: const EdgeInsets.only(right: 12),
-                child: IconButton(
-                  onPressed: () async {
-                    await GlobalMethods.warningDialog(
-                        title: 'Clear history',
-                        subtitle: 'Do you wanna clear your history?',
-                        fct: () {},
-                        context: context);
-                  },
-                  icon: Icon(
-                    IconlyLight.delete,
-                    color: appBarcolor,
-                  ),
-                ),
-              )
-            ],
-            elevation: 0,
-            backgroundColor: _isDark ? Colors.black12 : Colors.green,
-            centerTitle: true,
-            title: TextWidget(
-              text: 'History',
-              color: appBarcolor,
-              textSize: 24,
-              isTitle: true,
-            ),
-          ),
-          body: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ListView.builder(
-              itemCount: 10,
-              itemBuilder: (context, index) {
-                return const ViewedWidget();
+        appBar: AppBar(
+          actions: [
+            IconButton(
+              onPressed: () {
+                GlobalMethods.warningDialog(
+                    title: 'Empty your history?',
+                    subtitle: 'Are you sure?',
+                    fct: () {},
+                    context: context);
               },
-            ),
-          ));
+              icon: Icon(
+                IconlyBroken.delete,
+                color: color,
+              ),
+            )
+          ],
+          leading: const BackWidget(),
+          automaticallyImplyLeading: false,
+          elevation: 0,
+          centerTitle: true,
+          title: TextWidget(
+            text: 'History',
+            color: color,
+            textSize: 24.0,
+          ),
+          backgroundColor:
+              Theme.of(context).scaffoldBackgroundColor.withOpacity(0.9),
+        ),
+        body: ListView.builder(
+            itemCount: viewedProdItemsList.length,
+            itemBuilder: (ctx, index) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 6),
+                child: ChangeNotifierProvider.value(
+                    value: viewedProdItemsList[index], child: ViewedWidget()),
+              );
+            }),
+      );
     }
   }
 }

@@ -24,7 +24,8 @@ class CartScreen extends StatelessWidget {
     Color color = utils.appBarcolor;
     Size size = Utils(context).getScreenSize;
     final cartProvider = Provider.of<CartProvider>(context);
-    final cartItemsList = cartProvider.getCartItems.values.toList();
+    final cartItemsList =
+        cartProvider.getCartItems.values.toList().reversed.toList();
 
     return cartItemsList.isEmpty
         ? const EmptyScreen(
@@ -43,7 +44,9 @@ class CartScreen extends StatelessWidget {
                       await GlobalMethods.warningDialog(
                           title: 'Clear cart',
                           subtitle: 'Do you wanna clear your cart?',
-                          fct: () {},
+                          fct: () {
+                            cartProvider.clearCart();
+                          },
                           context: context);
                     },
                     icon: Icon(
@@ -71,7 +74,10 @@ class CartScreen extends StatelessWidget {
                       itemCount: cartItemsList.length,
                       itemBuilder: (ctx, index) {
                         return ChangeNotifierProvider.value(
-                            value: cartItemsList[index], child: CartWidget());
+                            value: cartItemsList[index],
+                            child: CartWidget(
+                              quantity: cartItemsList[index].quantity,
+                            ));
                       }),
                 ),
               ],

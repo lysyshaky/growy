@@ -3,9 +3,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:growy/models/viewed_model.dart';
+import 'package:growy/models/wishlist_model.dart';
+import 'package:growy/providers/viewed_product_provider.dart';
 import 'package:growy/widgets/text_widget.dart';
+import 'package:iconly/iconly.dart';
+import 'package:provider/provider.dart';
 
 import '../../inner_screens/product_details.dart';
+import '../../models/cart_model.dart';
+import '../../providers/cart_provider.dart';
+import '../../providers/products_provider.dart';
 import '../../services/global_methods.dart';
 import '../../services/utils.dart';
 
@@ -19,8 +27,18 @@ class ViewedWidget extends StatefulWidget {
 class _ViewedWidgetState extends State<ViewedWidget> {
   @override
   Widget build(BuildContext context) {
-    final Utils utils = Utils(context);
-    final Color color = Utils(context).color;
+    final productProvider = Provider.of<ProductsProvider>(context);
+
+    final viewedProdModel = Provider.of<ViewedProdModel>(context);
+
+    final getCurrProduct =
+        productProvider.findProductById(viewedProdModel.productId);
+    double usedPrice = getCurrProduct.isOnSale
+        ? getCurrProduct.salePrice
+        : getCurrProduct.price;
+    final cartProvider = Provider.of<CartProvider>(context);
+    bool? _isInCart = cartProvider.getCartItems.containsKey(getCurrProduct.id);
+    Color color = Utils(context).color;
     Size size = Utils(context).getScreenSize;
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -34,10 +52,10 @@ class _ViewedWidgetState extends State<ViewedWidget> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             FancyShimmerImage(
-              imageUrl: 'https://i.ibb.co/F0s3FHQ/Apricots.png',
+              imageUrl: getCurrProduct.imageUrl,
               boxFit: BoxFit.fill,
-              width: size.width * 0.28,
-              height: size.width * 0.28,
+              height: size.width * 0.27,
+              width: size.width * 0.25,
             ),
             const SizedBox(
               width: 12,
@@ -45,15 +63,20 @@ class _ViewedWidgetState extends State<ViewedWidget> {
             Column(
               children: [
                 TextWidget(
-                    text: 'Title', color: color, textSize: 24, isTitle: true),
+                  text: getCurrProduct.title,
+                  color: color,
+                  textSize: 24,
+                  isTitle: true,
+                ),
                 const SizedBox(
-                  height: 5,
+                  height: 12,
                 ),
                 TextWidget(
-                    text: '\$12.88',
-                    color: color,
-                    textSize: 20,
-                    isTitle: false),
+                  text: '\$${usedPrice.toStringAsFixed(2)}',
+                  color: color,
+                  textSize: 20,
+                  isTitle: false,
+                ),
               ],
             ),
             const Spacer(),
@@ -63,14 +86,23 @@ class _ViewedWidgetState extends State<ViewedWidget> {
                 borderRadius: BorderRadius.circular(12),
                 color: Colors.green,
                 child: InkWell(
-                  borderRadius: BorderRadius.circular(12),
-                  onTap: () {},
-                  child: const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Icon(CupertinoIcons.plus,
-                        color: Colors.white, size: 20),
-                  ),
-                ),
+                    borderRadius: BorderRadius.circular(12),
+                    onTap: _isInCart
+                        ? null
+                        : () {
+                            cartProvider.addProductsToCart(
+                              productId: getCurrProduct.id,
+                              quantity: 1,
+                            );
+                          },
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Icon(
+                        _isInCart ? Icons.check : IconlyBold.plus,
+                        color: Colors.white,
+                        size: 20,
+                      ),
+                    )),
               ),
             ),
           ],
