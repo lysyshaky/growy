@@ -36,7 +36,7 @@ class WishlistScreen extends StatelessWidget {
             buttonText: 'Add a wish',
             title: 'You wishlist is empty',
             subtitle: 'Add to your wishlist something',
-            imagePath: '/Users/yuralysyshak/growy/assets/images/wishlist.png')
+            imagePath: 'assets/images/wishlist.png')
         : Scaffold(
             appBar: AppBar(
               leading: const BackWidget(),
@@ -48,7 +48,9 @@ class WishlistScreen extends StatelessWidget {
                       await GlobalMethods.warningDialog(
                           title: 'Clear wishlist',
                           subtitle: 'Do you wanna clear your wishlist?',
-                          fct: () {},
+                          fct: () {
+                            wishlistProvider.clearWishlist();
+                          },
                           context: context);
                     },
                     icon: Icon(

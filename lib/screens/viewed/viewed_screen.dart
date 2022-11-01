@@ -25,7 +25,10 @@ class _ViewedScreenState extends State<ViewedScreen> {
   bool check = true;
   @override
   Widget build(BuildContext context) {
-    Color color = Utils(context).color;
+    final themeState = Provider.of<DarkThemeProvider>(context);
+    bool _isDark = themeState.getDarkTheme;
+    final utils = Utils(context);
+    Color color = utils.appBarcolor;
     final viewedProdProvider = Provider.of<ViewedProdProvider>(context);
     final viewedProdItemsList = viewedProdProvider.getViewedProdlistItems.values
         .toList()
@@ -41,32 +44,36 @@ class _ViewedScreenState extends State<ViewedScreen> {
     } else {
       return Scaffold(
         appBar: AppBar(
+          leading: const BackWidget(),
           actions: [
-            IconButton(
-              onPressed: () {
-                GlobalMethods.warningDialog(
-                    title: 'Empty your history?',
-                    subtitle: 'Are you sure?',
-                    fct: () {},
-                    context: context);
-              },
-              icon: Icon(
-                IconlyBroken.delete,
-                color: color,
+            Padding(
+              padding: const EdgeInsets.only(right: 12),
+              child: IconButton(
+                onPressed: () async {
+                  await GlobalMethods.warningDialog(
+                      title: 'Empty your history?',
+                      subtitle: 'Are you sure to clear history?',
+                      fct: () {
+                        viewedProdProvider.clearHistory();
+                      },
+                      context: context);
+                },
+                icon: Icon(
+                  IconlyLight.delete,
+                  color: color,
+                ),
               ),
             )
           ],
-          leading: const BackWidget(),
-          automaticallyImplyLeading: false,
           elevation: 0,
+          backgroundColor: _isDark ? Colors.black12 : Colors.green,
           centerTitle: true,
           title: TextWidget(
             text: 'History',
             color: color,
-            textSize: 24.0,
+            textSize: 24,
+            isTitle: true,
           ),
-          backgroundColor:
-              Theme.of(context).scaffoldBackgroundColor.withOpacity(0.9),
         ),
         body: ListView.builder(
             itemCount: viewedProdItemsList.length,

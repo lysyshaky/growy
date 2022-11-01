@@ -31,7 +31,7 @@ class OrdersScreen extends StatelessWidget {
           buttonText: 'Show now',
           title: 'You didn\'t place any orders',
           subtitle: 'Order something',
-          imagePath: '/Users/yuralysyshak/growy/assets/images/cart.png');
+          imagePath: 'assets/images/cart.png');
     } else {
       return Scaffold(
         appBar: AppBar(

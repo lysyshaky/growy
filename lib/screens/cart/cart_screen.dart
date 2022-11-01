@@ -32,7 +32,7 @@ class CartScreen extends StatelessWidget {
             title: 'Your car is empty!',
             subtitle: 'Add something to your cart',
             buttonText: 'Shop now',
-            imagePath: '/Users/yuralysyshak/growy/assets/images/cart.png',
+            imagePath: 'assets/images/cart.png',
           )
         : Scaffold(
             appBar: AppBar(

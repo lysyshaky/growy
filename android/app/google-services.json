@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "390146175797",
+    "project_id": "growy-185cf",
+    "storage_bucket": "growy-185cf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:390146175797:android:46b5bc96f0f8dc5ebe527c",
+        "android_client_info": {
+          "package_name": "com.example.growy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "390146175797-41391t2rue9a5aq7q5cehjgnc6fs1n9e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.growy",
+            "certificate_hash": "87888f7f38ca501a192d4b4bfda9f022cf1ab4e5"
+          }
+        },
+        {
+          "client_id": "390146175797-qndhllcjvubmsb7n31g41pcgmqqs6js3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCqtXm_Y_XdT2Dyz-SGmX-n9z3sQ3I6lA4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "390146175797-qndhllcjvubmsb7n31g41pcgmqqs6js3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
