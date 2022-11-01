@@ -92,7 +92,7 @@ class _ViewedWidgetState extends State<ViewedWidget> {
                         : () {
                             cartProvider.addProductsToCart(
                               productId: getCurrProduct.id,
-                              quantity: 1,
+                              quantity: 1.0,
                             );
                           },
                     child: Padding(

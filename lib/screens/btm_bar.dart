@@ -9,9 +9,11 @@ import 'package:growy/screens/user_screen.dart';
 import 'package:iconly/iconly.dart';
 import 'package:provider/provider.dart';
 
+import '../providers/cart_provider.dart';
 import 'cart/cart_screen.dart';
 
 class BottomBarScreen extends StatefulWidget {
+  static const routeName = '/HomeScreen';
   const BottomBarScreen({Key? key}) : super(key: key);
 
   @override
@@ -37,6 +39,7 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
   Widget build(BuildContext context) {
     final themeState = Provider.of<DarkThemeProvider>(context);
     bool _isDark = themeState.getDarkTheme;
+
     return Scaffold(
       //App bar for all screens
       // appBar: AppBar(
@@ -70,17 +73,20 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
               label: 'Categories'),
           BottomNavigationBarItem(
               backgroundColor: _isDark ? Colors.black12 : Colors.green,
-              icon: Badge(
-                  toAnimate: true,
-                  shape: BadgeShape.circle,
-                  badgeColor: Colors.red,
-                  borderRadius: BorderRadius.circular(8),
-                  badgeContent: Text(
-                    '1',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  child: Icon(
-                      _selectedIndex == 2 ? IconlyBold.buy : IconlyLight.buy)),
+              icon: Consumer<CartProvider>(builder: (_, myCart, ch) {
+                return Badge(
+                    toAnimate: true,
+                    shape: BadgeShape.circle,
+                    badgeColor: Colors.red,
+                    borderRadius: BorderRadius.circular(8),
+                    badgeContent: Text(
+                      myCart.getCartItems.length.toString(),
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    child: Icon(_selectedIndex == 2
+                        ? IconlyBold.buy
+                        : IconlyLight.buy));
+              }),
               label: 'Cart'),
           BottomNavigationBarItem(
               backgroundColor: _isDark ? Colors.black12 : Colors.green,

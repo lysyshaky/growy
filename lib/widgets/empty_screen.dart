@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:growy/inner_screens/feeds_screen.dart';
+import 'package:growy/screens/home_screen.dart';
 
+import '../screens/btm_bar.dart';
 import '../services/global_methods.dart';
 import '../services/utils.dart';
 import 'text_widget.dart';
@@ -71,8 +73,8 @@ class EmptyScreen extends StatelessWidget {
                       const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
                 ),
                 onPressed: () {
-                  GlobalMethods.navigateToBrowseAll(
-                      ctx: context, routeName: FeedsScreen.routeName);
+                  GlobalMethods.navigateToHomeScreen(
+                      ctx: context, routeName: BottomBarScreen.routeName);
                 },
                 child: TextWidget(
                   text: buttonText,

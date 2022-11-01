@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:growy/models/viewed_model.dart';
-import 'package:growy/models/wishlist_model.dart';
-
-import '../models/cart_model.dart';
 
 class ViewedProdProvider with ChangeNotifier {
   Map<String, ViewedProdModel> _viewedProdlistItems = {};

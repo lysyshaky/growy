@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:growy/inner_screens/feeds_screen.dart';
 import 'package:growy/inner_screens/product_details.dart';
+import 'package:growy/screens/home_screen.dart';
 import 'package:growy/screens/orders/orders_screen.dart';
 import 'package:growy/screens/viewed/viewed_screen.dart';
 import 'package:growy/screens/wishlist/wishlist_screen.dart';
 
 import '../inner_screens/on_sale_screen.dart';
 import '../screens/auth/register_screen.dart';
+import '../screens/btm_bar.dart';
 import '../widgets/text_widget.dart';
 
 class GlobalMethods {
@@ -38,6 +40,11 @@ class GlobalMethods {
   static navigateToViewed(
       {required BuildContext ctx, required String routeName}) {
     Navigator.pushNamed(ctx, ViewedScreen.routeName);
+  }
+
+  static navigateToHomeScreen(
+      {required BuildContext ctx, required String routeName}) {
+    Navigator.pushNamed(ctx, BottomBarScreen.routeName);
   }
 
   static navigateToRegister(

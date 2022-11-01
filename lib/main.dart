@@ -82,6 +82,7 @@ class _MyAppState extends State<MyApp> {
           theme: Styles.themeData(themeProvider.getDarkTheme, context),
           home: const BottomBarScreen(),
           routes: {
+            BottomBarScreen.routeName: (ctx) => const BottomBarScreen(),
             OnSaleScreen.routeName: (ctx) => const OnSaleScreen(),
             FeedsScreen.routeName: (ctx) => const FeedsScreen(),
             ProductDetails.routeName: (ctx) => const ProductDetails(),

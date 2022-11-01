@@ -64,7 +64,7 @@ class _FeedsWidgetState extends State<FeedsWidget> {
             children: [
               FancyShimmerImage(
                 imageUrl: productModel.imageUrl,
-                height: size.width * 0.21,
+                height: size.width * 0.17,
                 width: size.width * 0.2,
                 boxFit: BoxFit.fill,
               ),

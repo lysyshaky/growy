@@ -18,7 +18,7 @@ class GoogleButton extends StatelessWidget {
             Container(
               color: Colors.white,
               child: Image.asset(
-                '/Users/yuralysyshak/growy/assets/images/google.png',
+                'assets/images/google.png',
                 width: 40.0,
               ),
             ),

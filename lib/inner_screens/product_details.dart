@@ -58,10 +58,10 @@ class _ProductDetailsState extends State<ProductDetails> {
     final wishlistProvider = Provider.of<WishlistProvider>(context);
     bool? _isInWishlist =
         wishlistProvider.getWishlistItems.containsKey(getCurrentProduct.id);
-    final viewedProductlistProvider = Provider.of<ViewedProdProvider>(context);
+    final viewedProdProvider = Provider.of<ViewedProdProvider>(context);
     return WillPopScope(
       onWillPop: () async {
-        viewedProductlistProvider.addProductToHistory(productId: productId);
+        viewedProdProvider.addProductToHistory(productId: productId);
         return true;
       },
       child: Scaffold(
