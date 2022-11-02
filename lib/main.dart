@@ -72,13 +72,13 @@ class _MyAppState extends State<MyApp> {
               ),
             );
           } else if (snapshot.hasError) {
-            return const MaterialApp(
-              home: Scaffold(
-                body: Center(
-                  child: Text("An error occured"),
-                ),
-              ),
-            );
+            // return const MaterialApp(
+            //   home: Scaffold(
+            //     body: Center(
+            //       child: Text("An error occured"),
+            //     ),
+            //   ),
+            // );
           }
           return MultiProvider(
             providers: [
@@ -104,7 +104,7 @@ class _MyAppState extends State<MyApp> {
                 debugShowCheckedModeBanner: false,
                 title: 'Flutter Demo',
                 theme: Styles.themeData(themeProvider.getDarkTheme, context),
-                home: const BottomBarScreen(),
+                home: const LoginScreen(),
                 routes: {
                   BottomBarScreen.routeName: (ctx) => const BottomBarScreen(),
                   OnSaleScreen.routeName: (ctx) => const OnSaleScreen(),

@@ -4,12 +4,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:growy/screens/auth/login_screen.dart';
+import 'package:growy/screens/loading_manager.dart';
+import 'package:growy/services/global_methods.dart';
 import 'package:growy/widgets/text_widget.dart';
 import 'package:iconly/iconly.dart';
 
 import '../../consts/consts.dart';
+import '../../consts/firebase_consts.dart';
+import '../../services/utils.dart';
 import '../../widgets/auth_button.dart';
 import '../../widgets/google_button.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+import 'forget_pass_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
   static const routeName = '/RegisterScreen';
@@ -25,89 +32,127 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final _fullNameController = TextEditingController();
   final _emailTextController = TextEditingController();
   final _passTextController = TextEditingController();
-  final _adressTextController = TextEditingController();
-  final _addressFocusNode = FocusNode();
-  final _emailFocusNode = FocusNode();
+  final _addressTextController = TextEditingController();
   final _passFocusNode = FocusNode();
-
+  final _emailFocusNode = FocusNode();
+  final _addressFocusNode = FocusNode();
   bool _obscureText = true;
   @override
   void dispose() {
     _fullNameController.dispose();
-    _addressFocusNode.dispose();
-    _adressTextController.dispose();
-    _emailFocusNode.dispose();
     _emailTextController.dispose();
     _passTextController.dispose();
+    _addressTextController.dispose();
+    _emailFocusNode.dispose();
     _passFocusNode.dispose();
+    _addressFocusNode.dispose();
     super.dispose();
   }
 
-  void _sumbitFromOnRegister() {
+  bool _isLoading = false;
+  void _submitFormOnRegister() async {
     final isValid = _formKey.currentState!.validate();
     FocusScope.of(context).unfocus();
+    setState(() {
+      _isLoading = true;
+    });
     if (isValid) {
       _formKey.currentState!.save();
+
+      try {
+        await authInstance.createUserWithEmailAndPassword(
+            email: _emailTextController.text.toLowerCase().trim(),
+            password: _passTextController.text.trim());
+        print('Succefully registered');
+      } on FirebaseException catch (error) {
+        GlobalMethods.errorDialog(
+            subtitle: '${error.message}', context: context);
+        setState(() {
+          _isLoading = false;
+        });
+      } catch (error) {
+        GlobalMethods.errorDialog(subtitle: '$error', context: context);
+        setState(() {
+          _isLoading = false;
+        });
+      } finally {
+        setState(() {
+          _isLoading = false;
+        });
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final theme = Utils(context).getTheme;
+    Color color = Utils(context).color;
+
     return Scaffold(
-      body: Stack(
-        children: [
-          Swiper(
-            duration: 800,
-            autoplayDelay: 4000,
-            itemBuilder: (BuildContext context, int index) {
-              return Image.asset(
-                Consts.authImagesPaths[index],
-                fit: BoxFit.cover,
-              );
-            },
-            itemCount: Consts.authImagesPaths.length,
-            autoplay: true,
-          ),
-          //contoller buttons for ImagesSlider
-          //control: SwiperControl(),
-          Container(
-            color: Colors.black.withOpacity(0.7),
-          ),
-          SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(20.0),
+      body: LoadingManager(
+        isLoading: _isLoading,
+        child: Stack(
+          children: <Widget>[
+            Swiper(
+              duration: 800,
+              autoplayDelay: 6000,
+
+              itemBuilder: (BuildContext context, int index) {
+                return Image.asset(
+                  Consts.authImagesPaths[index],
+                  fit: BoxFit.cover,
+                );
+              },
+              autoplay: true,
+              itemCount: Consts.authImagesPaths.length,
+
+              // control: const SwiperControl(),
+            ),
+            Container(
+              color: Colors.black.withOpacity(0.7),
+            ),
+            SingleChildScrollView(
+              padding: const EdgeInsets.all(20),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.max,
-                children: [
-                  const SizedBox(height: 60.0),
+                children: <Widget>[
+                  const SizedBox(
+                    height: 60.0,
+                  ),
                   InkWell(
                     borderRadius: BorderRadius.circular(12),
-                    onTap: () {
-                      Navigator.canPop(context) ? Navigator.pop(context) : null;
-                    },
-                    child: const Icon(
+                    onTap: () => Navigator.canPop(context)
+                        ? Navigator.pop(context)
+                        : null,
+                    child: Icon(
                       IconlyLight.arrow_left_2,
+                      color: theme == true ? Colors.white : Colors.black,
                       size: 24,
-                      color: Colors.white,
                     ),
                   ),
-                  const SizedBox(height: 40.0),
+                  const SizedBox(
+                    height: 40.0,
+                  ),
                   TextWidget(
-                    text: "Welcome",
+                    text: 'Welcome',
                     color: Colors.white,
                     textSize: 30,
                     isTitle: true,
                   ),
-                  const SizedBox(height: 8.0),
+                  const SizedBox(
+                    height: 8,
+                  ),
                   TextWidget(
-                    text: "Sign un to continue",
+                    text: "Sign up to continue",
                     color: Colors.white,
                     textSize: 18,
                     isTitle: false,
                   ),
-                  const SizedBox(height: 30.0),
+                  const SizedBox(
+                    height: 30.0,
+                  ),
                   Form(
                     key: _formKey,
                     child: Column(
@@ -116,11 +161,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           textInputAction: TextInputAction.next,
                           onEditingComplete: () => FocusScope.of(context)
                               .requestFocus(_emailFocusNode),
+                          keyboardType: TextInputType.name,
                           controller: _fullNameController,
-                          keyboardType: TextInputType.emailAddress,
                           validator: (value) {
                             if (value!.isEmpty) {
-                              return 'This field is mising';
+                              return "This Field is missing";
                             } else {
                               return null;
                             }
@@ -133,22 +178,26 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               borderSide: BorderSide(color: Colors.white),
                             ),
                             focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.green),
+                              borderSide: BorderSide(color: Colors.white),
+                            ),
+                            errorBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.red),
                             ),
                           ),
                         ),
                         const SizedBox(
-                          height: 12.0,
+                          height: 20,
                         ),
                         TextFormField(
+                          focusNode: _emailFocusNode,
                           textInputAction: TextInputAction.next,
                           onEditingComplete: () => FocusScope.of(context)
                               .requestFocus(_passFocusNode),
-                          controller: _emailTextController,
                           keyboardType: TextInputType.emailAddress,
+                          controller: _emailTextController,
                           validator: (value) {
-                            if (value!.isEmpty || !value.contains('@')) {
-                              return 'Please enter a valid email address';
+                            if (value!.isEmpty || !value.contains("@")) {
+                              return "Please enter a valid Email adress";
                             } else {
                               return null;
                             }
@@ -161,70 +210,78 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               borderSide: BorderSide(color: Colors.white),
                             ),
                             focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.green),
+                              borderSide: BorderSide(color: Colors.white),
+                            ),
+                            errorBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.red),
                             ),
                           ),
                         ),
                         const SizedBox(
-                          height: 12.0,
+                          height: 20,
                         ),
+                        //Password
                         TextFormField(
-                          textInputAction: TextInputAction.done,
-                          onEditingComplete: () {
-                            _sumbitFromOnRegister();
-                          },
-                          controller: _passTextController,
                           focusNode: _passFocusNode,
                           obscureText: _obscureText,
                           keyboardType: TextInputType.visiblePassword,
+                          controller: _passTextController,
                           validator: (value) {
                             if (value!.isEmpty || value.length < 7) {
-                              return 'Please enter a valid password';
+                              return "Please enter a valid password";
                             } else {
                               return null;
                             }
                           },
                           style: const TextStyle(color: Colors.white),
+                          onEditingComplete: () => FocusScope.of(context)
+                              .requestFocus(_addressFocusNode),
                           decoration: InputDecoration(
                             suffixIcon: GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    _obscureText = !_obscureText;
-                                  });
-                                },
-                                child: Icon(
-                                  _obscureText
-                                      ? Icons.visibility
-                                      : Icons.visibility_off,
-                                  color: Colors.white,
-                                )),
+                              onTap: () {
+                                setState(() {
+                                  _obscureText = !_obscureText;
+                                });
+                              },
+                              child: Icon(
+                                _obscureText
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                                color: Colors.white,
+                              ),
+                            ),
                             hintText: 'Password',
                             hintStyle: const TextStyle(color: Colors.white),
                             enabledBorder: const UnderlineInputBorder(
                               borderSide: BorderSide(color: Colors.white),
                             ),
                             focusedBorder: const UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.green),
+                              borderSide: BorderSide(color: Colors.white),
+                            ),
+                            errorBorder: const UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.red),
                             ),
                           ),
                         ),
                         const SizedBox(
-                          height: 12.0,
+                          height: 20,
                         ),
+
                         TextFormField(
                           focusNode: _addressFocusNode,
                           textInputAction: TextInputAction.done,
-                          onEditingComplete: _sumbitFromOnRegister,
-                          controller: _adressTextController,
-                          keyboardType: TextInputType.emailAddress,
+                          onEditingComplete: _submitFormOnRegister,
+                          controller: _addressTextController,
                           validator: (value) {
                             if (value!.isEmpty || value.length < 3) {
-                              return 'Please enter a valid address';
+                              return "Please enter a valid  address";
                             } else {
                               return null;
                             }
                           },
                           style: const TextStyle(color: Colors.white),
+                          maxLines: 2,
+                          textAlign: TextAlign.start,
                           decoration: const InputDecoration(
                             hintText: 'Shipping address',
                             hintStyle: TextStyle(color: Colors.white),
@@ -232,57 +289,59 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               borderSide: BorderSide(color: Colors.white),
                             ),
                             focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.green),
+                              borderSide: BorderSide(color: Colors.white),
+                            ),
+                            errorBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.red),
                             ),
                           ),
-                        ),
-                        const SizedBox(
-                          height: 12.0,
                         ),
                       ],
                     ),
                   ),
                   const SizedBox(
-                    height: 15.0,
+                    height: 5.0,
                   ),
                   Align(
                     alignment: Alignment.centerRight,
                     child: TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushReplacementNamed(
+                            context, ForgetPasswordScreen.routeName);
+                      },
                       child: const Text(
-                        "Forget password",
+                        'Forget password?',
                         maxLines: 1,
                         style: TextStyle(
-                            color: Colors.green,
+                            color: Colors.lightBlue,
+                            fontSize: 18,
                             decoration: TextDecoration.underline,
-                            fontStyle: FontStyle.italic,
-                            fontSize: 18),
+                            fontStyle: FontStyle.italic),
                       ),
                     ),
                   ),
+                  _isLoading
+                      ? const CircularProgressIndicator()
+                      : AuthButton(
+                          buttonText: 'Sign up',
+                          fct: () {
+                            _submitFormOnRegister();
+                          },
+                          primary: Colors.green,
+                        ),
                   const SizedBox(
-                    height: 15.0,
-                  ),
-                  AuthButton(
-                    ftc: () {
-                      _sumbitFromOnRegister();
-                    },
-                    buttonText: 'Sign up',
-                    primary: Colors.green.withOpacity(0.6),
-                  ),
-                  const SizedBox(
-                    height: 15.0,
+                    height: 10,
                   ),
                   RichText(
                     text: TextSpan(
                         text: 'Already a user?',
                         style:
                             const TextStyle(color: Colors.white, fontSize: 18),
-                        children: [
+                        children: <TextSpan>[
                           TextSpan(
-                              text: '  Sign in',
+                              text: ' Sign in',
                               style: const TextStyle(
-                                  color: Colors.lightGreen,
+                                  color: Colors.green,
                                   fontSize: 18,
                                   fontWeight: FontWeight.w600),
                               recognizer: TapGestureRecognizer()
@@ -295,8 +354,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ],
               ),
             ),
-          )
-        ],
+          ],
+        ),
       ),
     );
   }

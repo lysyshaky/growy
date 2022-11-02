@@ -187,7 +187,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: 15.0,
                   ),
                   AuthButton(
-                    ftc: () {
+                    fct: () {
                       _sumbitFromOnLogin();
                     },
                     buttonText: 'Login',
@@ -227,7 +227,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: 15.0,
                   ),
                   AuthButton(
-                    ftc: () {},
+                    fct: () {},
                     buttonText: 'Continue as a guest',
                     primary: Colors.black.withOpacity(0.6),
                   ),

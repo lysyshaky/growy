@@ -6,11 +6,11 @@ import 'package:growy/widgets/text_widget.dart';
 class AuthButton extends StatelessWidget {
   const AuthButton(
       {Key? key,
-      required this.ftc,
+      required this.fct,
       required this.buttonText,
       required this.primary})
       : super(key: key);
-  final Function ftc;
+  final Function fct;
   final String buttonText;
   final Color primary;
 
@@ -23,7 +23,7 @@ class AuthButton extends StatelessWidget {
           primary: primary,
         ),
         onPressed: () {
-          ftc();
+          fct();
         },
         child: TextWidget(
           color: Colors.white,

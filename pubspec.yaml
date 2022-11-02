@@ -22,6 +22,7 @@ dependencies:
   badges: ^2.0.3
   #Firebase
   firebase_core: ^2.1.1
+  firebase_auth: ^4.1.0
 
 
 dev_dependencies:
@@ -37,6 +38,7 @@ flutter:
     - assets/images/
     - assets/images/offres/
     - assets/images/landing/
+    - assets/images/cat/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

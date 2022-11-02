@@ -21,27 +21,27 @@ class CategoriesScreen extends StatelessWidget {
   ];
   List<Map<String, dynamic>> catInfo = [
     {
-      'imgPath': '/Users/yuralysyshak/growy/assets/images/cat/fruits.png',
+      'imgPath': 'assets/images/cat/fruits.png',
       'catText': 'Fruits',
     },
     {
-      'imgPath': '/Users/yuralysyshak/growy/assets/images/cat/veg.png',
+      'imgPath': 'assets/images/cat/veg.png',
       'catText': 'Vegetables',
     },
     {
-      'imgPath': '/Users/yuralysyshak/growy/assets/images/cat/Spinach.png',
+      'imgPath': 'assets/images/cat/Spinach.png',
       'catText': 'Herbs',
     },
     {
-      'imgPath': '/Users/yuralysyshak/growy/assets/images/cat/nuts.png',
+      'imgPath': 'assets/images/cat/nuts.png',
       'catText': 'Nuts',
     },
     {
-      'imgPath': '/Users/yuralysyshak/growy/assets/images/cat/spices.png',
+      'imgPath': 'assets/images/cat/spices.png',
       'catText': 'Spices',
     },
     {
-      'imgPath': '/Users/yuralysyshak/growy/assets/images/cat/grains.png',
+      'imgPath': 'assets/images/cat/grains.png',
       'catText': 'Grains',
     },
   ];

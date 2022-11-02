@@ -108,7 +108,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                     height: 15.0,
                   ),
                   AuthButton(
-                    ftc: () {
+                    fct: () {
                       _forgetPasFCT();
                     },
                     buttonText: 'Reset now',
