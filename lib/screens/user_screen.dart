@@ -1,7 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:growy/screens/auth/login_screen.dart';
 import 'package:growy/screens/orders/orders_screen.dart';
 import 'package:growy/screens/viewed/viewed_screen.dart';
 import 'package:growy/screens/wishlist/wishlist_screen.dart';
@@ -9,6 +11,7 @@ import 'package:growy/widgets/text_widget.dart';
 import 'package:iconly/iconly.dart';
 import 'package:provider/provider.dart';
 
+import '../consts/firebase_consts.dart';
 import '../provider/dart_theme_provider.dart';
 import '../services/global_methods.dart';
 
@@ -28,6 +31,8 @@ class _UserScreenState extends State<UserScreen> {
     _addressTextConroller.dispose();
     super.dispose();
   }
+
+  final User? user = authInstance.currentUser;
 
   @override
   Widget build(BuildContext context) {
@@ -139,14 +144,24 @@ class _UserScreenState extends State<UserScreen> {
                   ),
                 ),
                 _listTiles(
-                    title: 'Logout',
-                    icon: IconlyLight.logout,
+                    title: user == null ? 'Login' : 'Logout',
+                    icon: user == null ? IconlyLight.login : IconlyLight.logout,
                     color: color,
                     onPressed: () async {
+                      if (user == null) {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const LoginScreen(),
+                        ));
+                        return;
+                      }
                       await GlobalMethods.warningDialog(
                           title: 'Sign out',
                           subtitle: 'Do you wanna sign out ?',
-                          fct: () {},
+                          fct: () async {
+                            await authInstance.signOut();
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => const LoginScreen()));
+                          },
                           context: context);
                     }),
               ],

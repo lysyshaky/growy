@@ -15,7 +15,7 @@ import '../widgets/feed_items.dart';
 import '../widgets/text_widget.dart';
 
 class CategoryScreen extends StatefulWidget {
-  static const routeName = "/FeedsScreenState";
+  static const routeName = "/CategoryScreen";
   const CategoryScreen({Key? key}) : super(key: key);
 
   @override

@@ -1,4 +1,5 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/src/foundation/key.dart';
@@ -9,6 +10,7 @@ import 'package:growy/widgets/price_widget.dart';
 import 'package:growy/widgets/text_widget.dart';
 import 'package:provider/provider.dart';
 
+import '../consts/firebase_consts.dart';
 import '../providers/cart_provider.dart';
 import '../providers/wishlist_provider.dart';
 import '../services/global_methods.dart';
@@ -185,6 +187,13 @@ class _FeedsWidgetState extends State<FeedsWidget> {
                           // if (_isInCart) {
                           //   return;
                           // }
+                          final User? user = authInstance.currentUser;
+                          if (user == null) {
+                            GlobalMethods.errorDialog(
+                                subtitle: "No user found, Please login first",
+                                context: context);
+                            return;
+                          }
                           cartProvider.addProductsToCart(
                               productId: productModel.id,
                               quantity:

@@ -16,6 +16,7 @@ import '../../widgets/auth_button.dart';
 import '../../widgets/google_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import '../btm_bar.dart';
 import 'forget_pass_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -63,6 +64,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
         await authInstance.createUserWithEmailAndPassword(
             email: _emailTextController.text.toLowerCase().trim(),
             password: _passTextController.text.trim());
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: ((context) => const BottomBarScreen()),
+          ),
+        );
         print('Succefully registered');
       } on FirebaseException catch (error) {
         GlobalMethods.errorDialog(
@@ -126,9 +132,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     onTap: () => Navigator.canPop(context)
                         ? Navigator.pop(context)
                         : null,
-                    child: Icon(
+                    child: const Icon(
                       IconlyLight.arrow_left_2,
-                      color: theme == true ? Colors.white : Colors.black,
+                      color: Colors.white,
                       size: 24,
                     ),
                   ),

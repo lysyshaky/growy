@@ -1,4 +1,5 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -7,6 +8,7 @@ import 'package:growy/widgets/text_widget.dart';
 import 'package:iconly/iconly.dart';
 import 'package:provider/provider.dart';
 
+import '../../consts/firebase_consts.dart';
 import '../../inner_screens/product_details.dart';
 import '../../models/product_model.dart';
 import '../../provider/dart_theme_provider.dart';
@@ -27,16 +29,19 @@ class WishlistWidget extends StatelessWidget {
     final utils = Utils(context);
     Color color = utils.color;
     Size size = Utils(context).getScreenSize;
-
+    //final productModel = Provider.of<ProductModel>(context);
     final cartProvider = Provider.of<CartProvider>(context);
     final wishlistProvider = Provider.of<WishlistProvider>(context);
     final wishlistModel = Provider.of<WishlistModel>(context);
     final productProvider = Provider.of<ProductsProvider>(context);
+
     final getCurrentProduct =
         productProvider.findProductById(wishlistModel.productId);
     double usedPrice = getCurrentProduct.isOnSale
         ? getCurrentProduct.salePrice
         : getCurrentProduct.price;
+    bool? _isInCart =
+        cartProvider.getCartItems.containsKey(getCurrentProduct.id);
 
     bool? _isInWishlist =
         wishlistProvider.getWishlistItems.containsKey(getCurrentProduct.id);
@@ -78,8 +83,24 @@ class WishlistWidget extends StatelessWidget {
                       child: Row(
                         children: [
                           IconButton(
-                            onPressed: () {},
-                            icon: Icon(IconlyLight.bag_2, color: color),
+                            onPressed: () {
+                              final User? user = authInstance.currentUser;
+                              if (user == null) {
+                                GlobalMethods.errorDialog(
+                                    subtitle:
+                                        "No user found, Please login first",
+                                    context: context);
+                                return;
+                              }
+                              cartProvider.addProductsToCart(
+                                  productId: getCurrentProduct.id,
+                                  quantity: 1.0);
+                            },
+                            icon: Icon(
+                              _isInCart ? IconlyBold.bag_2 : IconlyLight.bag_2,
+                              size: 24,
+                              color: _isInCart ? Colors.green : color,
+                            ),
                           ),
                           HeartBTN(
                             productId: getCurrentProduct.id,

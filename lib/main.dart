@@ -25,9 +25,10 @@ import 'package:provider/provider.dart';
 import 'consts/theme_data.dart';
 import 'screens/orders/orders_screen.dart';
 
-void main() {
+void main() async {
   //await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {
     runApp(MyApp());
@@ -104,7 +105,7 @@ class _MyAppState extends State<MyApp> {
                 debugShowCheckedModeBanner: false,
                 title: 'Flutter Demo',
                 theme: Styles.themeData(themeProvider.getDarkTheme, context),
-                home: const LoginScreen(),
+                home: const BottomBarScreen(),
                 routes: {
                   BottomBarScreen.routeName: (ctx) => const BottomBarScreen(),
                   OnSaleScreen.routeName: (ctx) => const OnSaleScreen(),

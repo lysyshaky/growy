@@ -1,4 +1,5 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,7 @@ import 'package:growy/widgets/text_widget.dart';
 import 'package:iconly/iconly.dart';
 import 'package:provider/provider.dart';
 
+import '../consts/firebase_consts.dart';
 import '../models/product_model.dart';
 import '../providers/cart_provider.dart';
 import '../providers/wishlist_provider.dart';
@@ -77,6 +79,14 @@ class _OnSaleWidgetState extends State<OnSaleWidget> {
                           children: [
                             GestureDetector(
                               onTap: () {
+                                final User? user = authInstance.currentUser;
+                                if (user == null) {
+                                  GlobalMethods.errorDialog(
+                                      subtitle:
+                                          "No user found, Please login first",
+                                      context: context);
+                                  return;
+                                }
                                 cartProvider.addProductsToCart(
                                     productId: productModel.id, quantity: 1.0);
                               },
