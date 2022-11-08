@@ -14,6 +14,7 @@ import 'package:growy/widgets/text_widget.dart';
 import '../../consts/consts.dart';
 import '../../services/global_methods.dart';
 import '../../widgets/auth_button.dart';
+import '../../widgets/fetch_screen.dart';
 import '../../widgets/google_button.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -54,7 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
             password: _passTextController.text.trim());
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
-            builder: ((context) => const BottomBarScreen()),
+            builder: ((context) => const FetchScreen()),
           ),
         );
         print('Succefully registered');
@@ -210,7 +211,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               context, ForgetPasswordScreen.routeName);
                         },
                         child: const Text(
-                          "Forget password",
+                          "Forget password?",
                           maxLines: 1,
                           style: TextStyle(
                               color: Colors.green,
@@ -267,7 +268,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     AuthButton(
                       fct: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const BottomBarScreen()));
+                            builder: (context) => const FetchScreen()));
                       },
                       buttonText: 'Continue as a guest',
                       primary: Colors.black.withOpacity(0.6),

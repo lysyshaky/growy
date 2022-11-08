@@ -20,6 +20,7 @@ import 'package:growy/screens/viewed/viewed_screen.dart';
 import 'package:growy/screens/wishlist/wishlist_screen.dart';
 import 'package:growy/services/dark_theme_prefs.dart';
 import 'package:growy/inner_screens/feeds_screen.dart';
+import 'package:growy/widgets/fetch_screen.dart';
 import 'package:provider/provider.dart';
 
 import 'consts/theme_data.dart';
@@ -66,6 +67,7 @@ class _MyAppState extends State<MyApp> {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const MaterialApp(
+              debugShowCheckedModeBanner: false,
               home: Scaffold(
                 body: Center(
                   child: CircularProgressIndicator(),
@@ -105,7 +107,7 @@ class _MyAppState extends State<MyApp> {
                 debugShowCheckedModeBanner: false,
                 title: 'Flutter Demo',
                 theme: Styles.themeData(themeProvider.getDarkTheme, context),
-                home: const BottomBarScreen(),
+                home: const FetchScreen(),
                 routes: {
                   BottomBarScreen.routeName: (ctx) => const BottomBarScreen(),
                   OnSaleScreen.routeName: (ctx) => const OnSaleScreen(),

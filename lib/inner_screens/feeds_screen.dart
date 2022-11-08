@@ -10,6 +10,7 @@ import '../provider/dart_theme_provider.dart';
 import '../providers/products_provider.dart';
 import '../services/utils.dart';
 import '../widgets/back_widget.dart';
+import '../widgets/empty_product_widget.dart';
 import '../widgets/feed_items.dart';
 import '../widgets/text_widget.dart';
 
@@ -24,11 +25,20 @@ class FeedsScreen extends StatefulWidget {
 class _FeedsScreenState extends State<FeedsScreen> {
   final TextEditingController? _searchTextController = TextEditingController();
   final FocusNode _searchTextFocusNode = FocusNode();
+  List<ProductModel> listProductSearch = [];
   @override
   void dispose() {
     _searchTextController!.dispose();
     _searchTextFocusNode.dispose();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    final productsProvider =
+        Provider.of<ProductsProvider>(context, listen: false);
+    productsProvider.fetchProducts();
+    super.initState();
   }
 
   @override
@@ -38,8 +48,8 @@ class _FeedsScreenState extends State<FeedsScreen> {
     Size size = Utils(context).getScreenSize;
     final themeState = Provider.of<DarkThemeProvider>(context);
     bool _isDark = themeState.getDarkTheme;
-    final productProviders = Provider.of<ProductsProvider>(context);
-    List<ProductModel> allProducts = productProviders.getProducts;
+    final productsProvider = Provider.of<ProductsProvider>(context);
+    List<ProductModel> allProducts = productsProvider.getProducts;
     return Scaffold(
         appBar: AppBar(
           leading: const BackWidget(),
@@ -65,7 +75,10 @@ class _FeedsScreenState extends State<FeedsScreen> {
                     focusNode: _searchTextFocusNode,
                     controller: _searchTextController,
                     onChanged: (valuee) {
-                      setState(() {});
+                      setState(() {
+                        listProductSearch =
+                            productsProvider.searchQuery(valuee);
+                      });
                     },
                     decoration: InputDecoration(
                         focusedBorder: OutlineInputBorder(
@@ -102,18 +115,28 @@ class _FeedsScreenState extends State<FeedsScreen> {
                   ),
                 ),
               ),
-              GridView.count(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                crossAxisCount: 2,
-                padding: EdgeInsets.zero,
-                // crossAxisSpacing: 10,
-                childAspectRatio: size.width / (size.height * 0.65),
-                children: List.generate(allProducts.length, (index) {
-                  return ChangeNotifierProvider.value(
-                      value: allProducts[index], child: const FeedsWidget());
-                }),
-              )
+              _searchTextController!.text.isNotEmpty &&
+                      listProductSearch.isEmpty
+                  ? EmptyProductWidget(
+                      text: 'No products found, please try another keyword!')
+                  : GridView.count(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      crossAxisCount: 2,
+                      padding: EdgeInsets.zero,
+                      // crossAxisSpacing: 10,
+                      childAspectRatio: size.width / (size.height * 0.65),
+                      children: List.generate(
+                          _searchTextController!.text.isNotEmpty
+                              ? listProductSearch.length
+                              : allProducts.length, (index) {
+                        return ChangeNotifierProvider.value(
+                            value: _searchTextController!.text.isNotEmpty
+                                ? listProductSearch[index]
+                                : allProducts[index],
+                            child: const FeedsWidget());
+                      }),
+                    ),
             ],
           ),
         ));

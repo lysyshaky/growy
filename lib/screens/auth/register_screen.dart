@@ -1,4 +1,5 @@
 import 'package:card_swiper/card_swiper.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
@@ -13,6 +14,7 @@ import '../../consts/consts.dart';
 import '../../consts/firebase_consts.dart';
 import '../../services/utils.dart';
 import '../../widgets/auth_button.dart';
+import '../../widgets/fetch_screen.dart';
 import '../../widgets/google_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -64,9 +66,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
         await authInstance.createUserWithEmailAndPassword(
             email: _emailTextController.text.toLowerCase().trim(),
             password: _passTextController.text.trim());
+        final User? user = authInstance.currentUser;
+        final _uid = user!.uid;
+        await FirebaseFirestore.instance.collection('users').doc(_uid).set({
+          'id': _uid,
+          'fullName': _fullNameController.text,
+          'email': _emailTextController.text.toLowerCase().trim(),
+          'shipping-address': _addressTextController.text,
+          'userWishList': [],
+          'userCart': [],
+          'createdAt': DateTime.now(),
+          'updatedAt': DateTime.now(),
+        });
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
-            builder: ((context) => const BottomBarScreen()),
+            builder: ((context) => const FetchScreen()),
           ),
         );
         print('Succefully registered');
@@ -316,13 +330,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             context, ForgetPasswordScreen.routeName);
                       },
                       child: const Text(
-                        'Forget password?',
+                        "Forget password?",
                         maxLines: 1,
                         style: TextStyle(
-                            color: Colors.lightBlue,
-                            fontSize: 18,
+                            color: Colors.green,
                             decoration: TextDecoration.underline,
-                            fontStyle: FontStyle.italic),
+                            fontStyle: FontStyle.italic,
+                            fontSize: 18),
                       ),
                     ),
                   ),
