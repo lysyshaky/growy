@@ -302,7 +302,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                               child: InkWell(
                                 onTap: _isInCart
                                     ? null
-                                    : () {
+                                    : () async {
                                         final User? user =
                                             authInstance.currentUser;
                                         if (user == null) {
@@ -312,10 +312,16 @@ class _ProductDetailsState extends State<ProductDetails> {
                                               context: context);
                                           return;
                                         }
-                                        cartProvider.addProductsToCart(
+                                        await GlobalMethods.addToCard(
                                             productId: getCurrentProduct.id,
                                             quantity: double.parse(
-                                                _quantityTextController.text));
+                                                _quantityTextController.text),
+                                            context: context);
+                                        await cartProvider.fetchCart();
+                                        // cartProvider.addProductsToCart(
+                                        //     productId: getCurrentProduct.id,
+                                        //     quantity: double.parse(
+                                        //         _quantityTextController.text));
                                       },
                                 child: Padding(
                                   padding: const EdgeInsets.all(12.0),

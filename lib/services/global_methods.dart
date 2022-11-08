@@ -1,11 +1,16 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:growy/inner_screens/feeds_screen.dart';
 import 'package:growy/inner_screens/product_details.dart';
 import 'package:growy/screens/home_screen.dart';
 import 'package:growy/screens/orders/orders_screen.dart';
 import 'package:growy/screens/viewed/viewed_screen.dart';
 import 'package:growy/screens/wishlist/wishlist_screen.dart';
+import 'package:uuid/uuid.dart';
 
+import '../consts/firebase_consts.dart';
 import '../inner_screens/on_sale_screen.dart';
 import '../screens/auth/register_screen.dart';
 import '../screens/btm_bar.dart';
@@ -142,5 +147,55 @@ class GlobalMethods {
             ],
           );
         });
+  }
+
+  static Future<void> addToCard({
+    required String productId,
+    required double quantity,
+    required BuildContext context,
+  }) async {
+    final User? user = authInstance.currentUser;
+    final _uid = user!.uid;
+    final cartId = const Uuid().v4();
+    try {
+      FirebaseFirestore.instance.collection('users').doc(_uid).update({
+        'userCart': FieldValue.arrayUnion([
+          {'cartId': cartId, 'productId': productId, 'quantity': quantity}
+        ])
+      });
+      await Fluttertoast.showToast(
+          msg: 'Item has been added to cart',
+          toastLength: Toast.LENGTH_SHORT,
+          backgroundColor: Colors.green,
+          gravity: ToastGravity.CENTER);
+    } catch (error) {
+      errorDialog(subtitle: error.toString(), context: context);
+    }
+  }
+
+  static Future<void> addToWishlist({
+    required String productId,
+    required BuildContext context,
+  }) async {
+    final User? user = authInstance.currentUser;
+    final _uid = user!.uid;
+    final wishlistId = const Uuid().v4();
+    try {
+      FirebaseFirestore.instance.collection('users').doc(_uid).update({
+        'userWish': FieldValue.arrayUnion([
+          {
+            'wishlistId': wishlistId,
+            'productId': productId,
+          }
+        ])
+      });
+      await Fluttertoast.showToast(
+          msg: 'Item has been added to your wishlist',
+          toastLength: Toast.LENGTH_SHORT,
+          backgroundColor: Colors.green,
+          gravity: ToastGravity.CENTER);
+    } catch (error) {
+      errorDialog(subtitle: error.toString(), context: context);
+    }
   }
 }

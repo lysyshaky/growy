@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:growy/providers/products_provider.dart';
 import 'package:iconly/iconly.dart';
 import 'package:provider/provider.dart';
 
@@ -44,8 +45,9 @@ class CartScreen extends StatelessWidget {
                       await GlobalMethods.warningDialog(
                           title: 'Clear cart',
                           subtitle: 'Do you wanna clear your cart?',
-                          fct: () {
-                            cartProvider.clearCart();
+                          fct: () async {
+                            await cartProvider.clearOnlineCart();
+                            cartProvider.clearLocalCart();
                           },
                           context: context);
                     },
@@ -90,6 +92,16 @@ Widget _checkout({required BuildContext context}) {
   final utils = Utils(context);
   Color color = utils.color;
   Size size = Utils(context).getScreenSize;
+  final cartProvider = Provider.of<CartProvider>(context);
+  final productProvider = Provider.of<ProductsProvider>(context);
+  double total = 0.0;
+  cartProvider.getCartItems.forEach((key, value) {
+    final getCurrentProduct = productProvider.findProductById(value.productId);
+    total += (getCurrentProduct.isOnSale
+            ? getCurrentProduct.salePrice
+            : getCurrentProduct.price) *
+        value.quantity;
+  });
   return SizedBox(
     width: double.infinity,
     height: size.height * 0.1,
@@ -117,7 +129,7 @@ Widget _checkout({required BuildContext context}) {
           const Spacer(),
           FittedBox(
             child: TextWidget(
-              text: "Total: \$0.259",
+              text: "Total: \$${total.toStringAsFixed(2)}",
               color: color,
               textSize: 20,
               isTitle: true,

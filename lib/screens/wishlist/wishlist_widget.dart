@@ -83,7 +83,7 @@ class WishlistWidget extends StatelessWidget {
                       child: Row(
                         children: [
                           IconButton(
-                            onPressed: () {
+                            onPressed: () async {
                               final User? user = authInstance.currentUser;
                               if (user == null) {
                                 GlobalMethods.errorDialog(
@@ -92,9 +92,14 @@ class WishlistWidget extends StatelessWidget {
                                     context: context);
                                 return;
                               }
-                              cartProvider.addProductsToCart(
+                              await GlobalMethods.addToCard(
                                   productId: getCurrentProduct.id,
-                                  quantity: 1.0);
+                                  quantity: 1.0,
+                                  context: context);
+                              await cartProvider.fetchCart();
+                              // cartProvider.addProductsToCart(
+                              //     productId: getCurrentProduct.id,
+                              //     quantity: 1.0);
                             },
                             icon: Icon(
                               _isInCart ? IconlyBold.bag_2 : IconlyLight.bag_2,

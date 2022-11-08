@@ -91,7 +91,7 @@ class _ViewedWidgetState extends State<ViewedWidget> {
                     borderRadius: BorderRadius.circular(12),
                     onTap: _isInCart
                         ? null
-                        : () {
+                        : () async {
                             final User? user = authInstance.currentUser;
                             if (user == null) {
                               GlobalMethods.errorDialog(
@@ -99,10 +99,15 @@ class _ViewedWidgetState extends State<ViewedWidget> {
                                   context: context);
                               return;
                             }
-                            cartProvider.addProductsToCart(
-                              productId: getCurrProduct.id,
-                              quantity: 1.0,
-                            );
+                            await GlobalMethods.addToCard(
+                                productId: getCurrProduct.id,
+                                quantity: 1.0,
+                                context: context);
+                            await cartProvider.fetchCart();
+                            // cartProvider.addProductsToCart(
+                            //   productId: getCurrProduct.id,
+                            //   quantity: 1.0,
+                            // );
                           },
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
