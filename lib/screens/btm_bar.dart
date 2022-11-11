@@ -2,7 +2,7 @@ import 'package:badges/badges.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
-import 'package:growy/provider/dart_theme_provider.dart';
+import 'package:growy/providers/dart_theme_provider.dart';
 import 'package:growy/screens/categories_screen.dart';
 import 'package:growy/screens/home_screen.dart';
 import 'package:growy/screens/user_screen.dart';

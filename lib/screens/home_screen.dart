@@ -4,7 +4,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:growy/inner_screens/feeds_screen.dart';
 import 'package:growy/inner_screens/on_sale_screen.dart';
-import 'package:growy/provider/dart_theme_provider.dart';
+import 'package:growy/providers/dart_theme_provider.dart';
 import 'package:growy/services/global_methods.dart';
 import 'package:growy/widgets/feed_items.dart';
 import 'package:growy/widgets/on_sale_widget.dart';

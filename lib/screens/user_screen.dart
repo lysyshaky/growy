@@ -15,7 +15,7 @@ import 'package:iconly/iconly.dart';
 import 'package:provider/provider.dart';
 
 import '../consts/firebase_consts.dart';
-import '../provider/dart_theme_provider.dart';
+import '../providers/dart_theme_provider.dart';
 import '../services/global_methods.dart';
 
 class UserScreen extends StatefulWidget {
@@ -87,7 +87,7 @@ class _UserScreenState extends State<UserScreen> {
         .doc(user!.uid)
         .get()
         .then((value) {
-      _addressTextConroller.text = value["address"];
+      // _addressTextConroller.text = value["address"];
     });
   }
 

@@ -7,11 +7,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:growy/models/orders_model.dart';
 
 import 'package:provider/provider.dart';
 
 import '../../inner_screens/product_details.dart';
-import '../../provider/dart_theme_provider.dart';
+import '../../providers/dart_theme_provider.dart';
+import '../../providers/orders_provider.dart';
+import '../../providers/products_provider.dart';
 import '../../services/global_methods.dart';
 import '../../services/utils.dart';
 import '../../widgets/heart_btn.dart';
@@ -25,13 +28,30 @@ class OrdersWidget extends StatefulWidget {
 }
 
 class _OrdersWidgetState extends State<OrdersWidget> {
+  late String orderDateToShow;
+
+  @override
+  void didChangeDependencies() {
+    final ordersModel = Provider.of<OrderModel>(context);
+    var orderDate = ordersModel.orderDate.toDate();
+    orderDateToShow = '${orderDate.day}/${orderDate.month}/${orderDate.year}';
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
+    final ordersModel = Provider.of<OrderModel>(context);
+    final productProvider = Provider.of<ProductsProvider>(context);
+
+    final getCurrentProduct =
+        productProvider.findProductById(ordersModel.productId);
     final Utils utils = Utils(context);
     final Color color = Utils(context).color;
     Size size = Utils(context).getScreenSize;
     return ListTile(
-      subtitle: const Text('Paid: \$12.88'),
+      subtitle:
+          Text('Paid: \$${double.parse(ordersModel.price).toStringAsFixed(2)}'),
       onTap: () {
         GlobalMethods.navigateToProductDetails(
             ctx: context, routeName: ProductDetails.routeName);
@@ -42,17 +62,17 @@ class _OrdersWidgetState extends State<OrdersWidget> {
         clipBehavior: Clip.antiAlias,
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(12.0)),
         child: FancyShimmerImage(
-          imageUrl: 'https://i.ibb.co/F0s3FHQ/Apricots.png',
+          imageUrl: getCurrentProduct.imageUrl,
           boxFit: BoxFit.fill,
         ),
       ),
       title: TextWidget(
-        text: 'Title x12',
+        text: '${getCurrentProduct.title} x${ordersModel.quantity}',
         color: color,
         textSize: 20,
         isTitle: true,
       ),
-      trailing: TextWidget(text: '03/08/2022', color: color, textSize: 16),
+      trailing: TextWidget(text: orderDateToShow, color: color, textSize: 16),
     );
   }
 }

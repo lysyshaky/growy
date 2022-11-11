@@ -11,7 +11,7 @@ import 'package:provider/provider.dart';
 import '../../consts/firebase_consts.dart';
 import '../../inner_screens/product_details.dart';
 import '../../models/product_model.dart';
-import '../../provider/dart_theme_provider.dart';
+import '../../providers/dart_theme_provider.dart';
 import '../../providers/cart_provider.dart';
 import '../../providers/products_provider.dart';
 import '../../providers/wishlist_provider.dart';

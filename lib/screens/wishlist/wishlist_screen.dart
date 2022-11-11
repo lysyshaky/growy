@@ -8,7 +8,7 @@ import 'package:iconly/iconly.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import '../../inner_screens/product_details.dart';
-import '../../provider/dart_theme_provider.dart';
+import '../../providers/dart_theme_provider.dart';
 import '../../services/global_methods.dart';
 import '../../services/utils.dart';
 import '../../widgets/back_widget.dart';

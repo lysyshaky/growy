@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:growy/provider/dart_theme_provider.dart';
+import 'package:growy/providers/dart_theme_provider.dart';
 import 'package:growy/widgets/text_widget.dart';
 import 'package:provider/provider.dart';
 

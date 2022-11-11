@@ -6,7 +6,7 @@ import 'package:growy/widgets/empty_screen.dart';
 import 'package:iconly/iconly.dart';
 import 'package:provider/provider.dart';
 
-import '../../provider/dart_theme_provider.dart';
+import '../../providers/dart_theme_provider.dart';
 import '../../providers/viewed_product_provider.dart';
 import '../../services/global_methods.dart';
 import '../../services/utils.dart';

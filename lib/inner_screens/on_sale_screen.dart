@@ -7,7 +7,7 @@ import 'package:iconly/iconly.dart';
 import 'package:provider/provider.dart';
 
 import '../models/product_model.dart';
-import '../provider/dart_theme_provider.dart';
+import '../providers/dart_theme_provider.dart';
 import '../providers/products_provider.dart';
 import '../services/utils.dart';
 import '../widgets/empty_product_widget.dart';

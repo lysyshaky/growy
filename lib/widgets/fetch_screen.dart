@@ -39,7 +39,7 @@ class _FetchScreenState extends State<FetchScreen> {
         await cartProvider.fetchCart();
         await wishlistProvider.fetchWishlist();
       }
-      // await productsProvider.fetchProducts();
+      await productsProvider.fetchProducts();
 
       Navigator.of(context).pushReplacement(MaterialPageRoute(
         builder: (ctx) => const BottomBarScreen(),

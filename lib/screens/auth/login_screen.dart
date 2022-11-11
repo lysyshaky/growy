@@ -43,10 +43,11 @@ class _LoginScreenState extends State<LoginScreen> {
   void _sumbitFromOnLogin() async {
     final isValid = _formKey.currentState!.validate();
     FocusScope.of(context).unfocus();
-    setState(() {
-      _isLoading = true;
-    });
+
     if (isValid) {
+      setState(() {
+        _isLoading = true;
+      });
       _formKey.currentState!.save();
 
       try {

@@ -6,8 +6,9 @@ import 'package:flutter/services.dart';
 import 'package:growy/inner_screens/cat_screen.dart';
 import 'package:growy/inner_screens/on_sale_screen.dart';
 import 'package:growy/inner_screens/product_details.dart';
-import 'package:growy/provider/dart_theme_provider.dart';
+import 'package:growy/providers/dart_theme_provider.dart';
 import 'package:growy/providers/cart_provider.dart';
+import 'package:growy/providers/orders_provider.dart';
 import 'package:growy/providers/products_provider.dart';
 import 'package:growy/providers/viewed_product_provider.dart';
 import 'package:growy/providers/wishlist_provider.dart';
@@ -99,6 +100,9 @@ class _MyAppState extends State<MyApp> {
               ),
               ChangeNotifierProvider(
                 create: (_) => ViewedProdProvider(),
+              ),
+              ChangeNotifierProvider(
+                create: (_) => OrdersProvider(),
               ),
             ],
             child: Consumer<DarkThemeProvider>(

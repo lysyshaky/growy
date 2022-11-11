@@ -5,7 +5,7 @@ import 'package:growy/services/utils.dart';
 import 'package:growy/widgets/text_widget.dart';
 import 'package:provider/provider.dart';
 
-import '../provider/dart_theme_provider.dart';
+import '../providers/dart_theme_provider.dart';
 import '../widgets/categories_widget.dart';
 
 class CategoriesScreen extends StatelessWidget {

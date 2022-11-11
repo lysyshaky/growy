@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:growy/provider/dart_theme_provider.dart';
+import 'package:growy/providers/dart_theme_provider.dart';
 import 'package:provider/provider.dart';
 
 class Utils {
