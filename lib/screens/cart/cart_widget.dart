@@ -56,8 +56,7 @@ class _CartWidgetState extends State<CartWidget> {
     final cartModel = Provider.of<CartModel>(context);
     final cartProvider = Provider.of<CartProvider>(context);
 
-    final getCurrentProduct =
-        productProvider.findProductById(cartModel.productId);
+    final getCurrentProduct = productProvider.findProdById(cartModel.productId);
     double usedPrice = getCurrentProduct.isOnSale
         ? getCurrentProduct.salePrice
         : getCurrentProduct.price;

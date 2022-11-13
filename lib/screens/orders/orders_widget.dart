@@ -45,7 +45,7 @@ class _OrdersWidgetState extends State<OrdersWidget> {
     final productProvider = Provider.of<ProductsProvider>(context);
 
     final getCurrentProduct =
-        productProvider.findProductById(ordersModel.productId);
+        productProvider.findProdById(ordersModel.productId);
     final Utils utils = Utils(context);
     final Color color = Utils(context).color;
     Size size = Utils(context).getScreenSize;

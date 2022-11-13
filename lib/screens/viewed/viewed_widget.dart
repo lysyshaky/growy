@@ -34,7 +34,7 @@ class _ViewedWidgetState extends State<ViewedWidget> {
     final viewedProdModel = Provider.of<ViewedProdModel>(context);
 
     final getCurrProduct =
-        productProvider.findProductById(viewedProdModel.productId);
+        productProvider.findProdById(viewedProdModel.productId);
     double usedPrice = getCurrProduct.isOnSale
         ? getCurrProduct.salePrice
         : getCurrProduct.price;

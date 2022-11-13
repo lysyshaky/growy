@@ -12,16 +12,18 @@ class CartProvider with ChangeNotifier {
     return _cartItems;
   }
 
-  // void addProductsToCart(
-  //     {required String productId,
-  //     //maybe double
-  //     required double quantity}) {
+  // void addProductsToCart({
+  //   required String productId,
+  //   required int quantity,
+  // }) {
   //   _cartItems.putIfAbsent(
-  //       productId,
-  //       () => CartModel(
-  //           id: DateTime.now().toString(),
-  //           productId: productId,
-  //           quantity: quantity));
+  //     productId,
+  //     () => CartModel(
+  //       id: DateTime.now().toString(),
+  //       productId: productId,
+  //       quantity: quantity,
+  //     ),
+  //   );
   //   notifyListeners();
   // }
 

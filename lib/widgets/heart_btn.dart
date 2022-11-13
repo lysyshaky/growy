@@ -32,7 +32,7 @@ class _HeartBTNState extends State<HeartBTN> {
   Widget build(BuildContext context) {
     final Color color = Utils(context).color;
     final productProvider = Provider.of<ProductsProvider>(context);
-    final getCurrentProduct = productProvider.findProductById(widget.productId);
+    final getCurrentProduct = productProvider.findProdById(widget.productId);
     final wishlistProvider = Provider.of<WishlistProvider>(context);
 
     return GestureDetector(

@@ -50,7 +50,7 @@ class _ProductDetailsState extends State<ProductDetails> {
     bool _isDark = themeState.getDarkTheme;
     final productProvider = Provider.of<ProductsProvider>(context);
     final productId = ModalRoute.of(context)!.settings.arguments as String;
-    final getCurrentProduct = productProvider.findProductById(productId);
+    final getCurrentProduct = productProvider.findProdById(productId);
     double usedPrice = getCurrentProduct.isOnSale
         ? getCurrentProduct.salePrice
         : getCurrentProduct.price;

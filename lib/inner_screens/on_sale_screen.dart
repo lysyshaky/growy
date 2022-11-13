@@ -21,7 +21,7 @@ class OnSaleScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     bool _isEmpty = false;
     final productProviders = Provider.of<ProductsProvider>(context);
-    List<ProductModel> productsOnSale = productProviders.getProducts;
+    List<ProductModel> productsOnSale = productProviders.getOnSaleProducts;
     final Utils utils = Utils(context);
     final Color color = Utils(context).appBarcolor;
     Size size = Utils(context).getScreenSize;
@@ -49,6 +49,7 @@ class OnSaleScreen extends StatelessWidget {
                 padding: EdgeInsets.zero,
                 // crossAxisSpacing: 10,
                 childAspectRatio: size.width / (size.height * 0.45),
+
                 children: List.generate(productsOnSale.length, (index) {
                   return ChangeNotifierProvider.value(
                       value: productsOnSale[index],

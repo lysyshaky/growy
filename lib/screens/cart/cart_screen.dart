@@ -99,11 +99,13 @@ Widget _checkout({required BuildContext context}) {
   Color color = utils.color;
   Size size = Utils(context).getScreenSize;
   final cartProvider = Provider.of<CartProvider>(context);
-  final productProvider = Provider.of<ProductsProvider>(context);
+
+  final productProvider = Provider.of<ProductsProvider>(context, listen: false);
   final ordersProvider = Provider.of<OrdersProvider>(context);
   double total = 0.0;
+
   cartProvider.getCartItems.forEach((key, value) {
-    final getCurrentProduct = productProvider.findProductById(value.productId);
+    final getCurrentProduct = productProvider.findProdById(value.productId);
     total += (getCurrentProduct.isOnSale
             ? getCurrentProduct.salePrice
             : getCurrentProduct.price) *
@@ -126,45 +128,42 @@ Widget _checkout({required BuildContext context}) {
                 User? user = authInstance.currentUser;
 
                 final orderId = const Uuid().v4();
-                final productProvider =
-                    Provider.of<ProductsProvider>(context, listen: false);
 
                 cartProvider.getCartItems.forEach((key, value) async {
-                  final getCurrProduct = productProvider.findProductById(
-                    value.productId,
-                  );
+                  final getCurrentProduct =
+                      productProvider.findProdById(value.productId);
                   try {
                     await FirebaseFirestore.instance
                         .collection('orders')
-                        .doc(orderId)
+                        .doc(getCurrentProduct.id)
                         .set({
                       'orderId': orderId,
                       'userId': user!.uid,
                       'productId': value.productId,
-                      'price': (getCurrProduct.isOnSale
-                              ? getCurrProduct.salePrice
-                              : getCurrProduct.price) *
+                      'price': (getCurrentProduct.isOnSale
+                              ? getCurrentProduct.salePrice
+                              : getCurrentProduct.price) *
                           value.quantity,
                       'totalPrice': total,
                       'quantity': value.quantity,
-                      'imageUrl': getCurrProduct.imageUrl,
+                      'imageUrl': getCurrentProduct.imageUrl,
                       'userName': user.displayName,
                       'orderDate': Timestamp.now(),
                     });
                     await cartProvider.clearOnlineCart();
                     cartProvider.clearLocalCart();
-                    ordersProvider.fetchOrders();
-                    await Fluttertoast.showToast(
-                      msg: "Your order has been placed",
-                      toastLength: Toast.LENGTH_SHORT,
-                      gravity: ToastGravity.CENTER,
-                      backgroundColor: Colors.green,
-                    );
+                    await ordersProvider.fetchOrders();
                   } catch (error) {
                     GlobalMethods.errorDialog(
                         subtitle: error.toString(), context: context);
                   } finally {}
                 });
+                await Fluttertoast.showToast(
+                  msg: "Your order has been placed",
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.CENTER,
+                  backgroundColor: Colors.green,
+                );
               },
               child: Padding(
                 padding: const EdgeInsets.all(8.0),

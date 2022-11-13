@@ -22,8 +22,7 @@ class EmptyProductWidget extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.all(18.0),
-              child: Image.asset(
-                  '/Users/yuralysyshak/growy/assets/images/box.png'),
+              child: Image.asset('assets/images/box.png'),
             ),
             Text(
               text,
