@@ -13,12 +13,13 @@ class OrdersProvider with ChangeNotifier {
   Future<void> fetchOrders() async {
     await FirebaseFirestore.instance
         .collection('orders')
+        .where('userId', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
         .get()
         .then((QuerySnapshot ordersSnapshot) {
       _orders = [];
       //_orders.clear();
       //fix error: The method 'insert' isn't defined for the class 'List<OrderModel>'
-      for (var element in ordersSnapshot.docs) {
+      ordersSnapshot.docs.forEach((element) {
         _orders.insert(
           0,
           OrderModel(
@@ -32,8 +33,13 @@ class OrdersProvider with ChangeNotifier {
             orderDate: element.get('orderDate'),
           ),
         );
-      }
+      });
     });
+    notifyListeners();
+  }
+
+  void clearLocalOrders() {
+    _orders.clear();
     notifyListeners();
   }
 }

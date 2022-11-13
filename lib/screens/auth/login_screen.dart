@@ -14,7 +14,7 @@ import 'package:growy/widgets/text_widget.dart';
 import '../../consts/consts.dart';
 import '../../services/global_methods.dart';
 import '../../widgets/auth_button.dart';
-import '../../widgets/fetch_screen.dart';
+import 'package:growy/fetch_screen.dart';
 import '../../widgets/google_button.dart';
 
 class LoginScreen extends StatefulWidget {

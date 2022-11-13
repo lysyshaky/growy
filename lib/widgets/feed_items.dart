@@ -12,6 +12,7 @@ import 'package:provider/provider.dart';
 
 import '../consts/firebase_consts.dart';
 import '../providers/cart_provider.dart';
+import '../providers/viewed_product_provider.dart';
 import '../providers/wishlist_provider.dart';
 import '../services/global_methods.dart';
 import '../services/utils.dart';
@@ -49,6 +50,7 @@ class _FeedsWidgetState extends State<FeedsWidget> {
     bool? _isInWishlist =
         wishlistProvider.getWishlistItems.containsKey(productModel.id);
     bool? _isInCart = cartProvider.getCartItems.containsKey(productModel.id);
+    final viewedProdProvider = Provider.of<ViewedProdProvider>(context);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Material(
@@ -56,6 +58,7 @@ class _FeedsWidgetState extends State<FeedsWidget> {
         color: Theme.of(context).cardColor,
         child: InkWell(
           onTap: () {
+            viewedProdProvider.addProductToHistory(productId: productModel.id);
             Navigator.pushNamed(context, ProductDetails.routeName,
                 arguments: productModel.id);
             // GlobalMethods.navigateToProductDetails(

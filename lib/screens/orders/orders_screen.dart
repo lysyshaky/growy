@@ -14,10 +14,16 @@ import '../../widgets/text_widget.dart';
 import '../cart/cart_widget.dart';
 import 'orders_widget.dart';
 
-class OrdersScreen extends StatelessWidget {
+//fix issue add couple orders not only one fix click to order and go to product details
+class OrdersScreen extends StatefulWidget {
   static const routeName = '/OrdersScreen';
   const OrdersScreen({Key? key}) : super(key: key);
 
+  @override
+  State<OrdersScreen> createState() => _OrdersScreenState();
+}
+
+class _OrdersScreenState extends State<OrdersScreen> {
   @override
   Widget build(BuildContext context) {
     final themeState = Provider.of<DarkThemeProvider>(context);
@@ -41,22 +47,24 @@ class OrdersScreen extends StatelessWidget {
           return Scaffold(
             appBar: AppBar(
               leading: const BackWidget(),
-              actions: [
+              actions: const [
                 Padding(
-                  padding: const EdgeInsets.only(right: 12),
-                  child: IconButton(
-                    onPressed: () async {
-                      await GlobalMethods.warningDialog(
-                          title: 'Clear orders',
-                          subtitle: 'Do you wanna clear your orders?',
-                          fct: () {},
-                          context: context);
-                    },
-                    icon: Icon(
-                      IconlyLight.delete,
-                      color: appBarcolor,
-                    ),
-                  ),
+                  padding: EdgeInsets.only(right: 12),
+                  // child: IconButton(
+                  //   onPressed: () async {
+                  //     await GlobalMethods.warningDialog(
+                  //         title: 'Clear orders',
+                  //         subtitle: 'Do you wanna clear your orders?',
+                  //         fct: () {
+                  //           ordersProvider.clearLocalOrders();
+                  //         },
+                  //         context: context);
+                  //   },
+                  //   icon: Icon(
+                  //     IconlyLight.delete,
+                  //     color: appBarcolor,
+                  //   ),
+                  // ),
                 )
               ],
               elevation: 0,

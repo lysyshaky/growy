@@ -21,7 +21,7 @@ import 'package:growy/screens/viewed/viewed_screen.dart';
 import 'package:growy/screens/wishlist/wishlist_screen.dart';
 import 'package:growy/services/dark_theme_prefs.dart';
 import 'package:growy/inner_screens/feeds_screen.dart';
-import 'package:growy/widgets/fetch_screen.dart';
+import 'package:growy/fetch_screen.dart';
 import 'package:provider/provider.dart';
 
 import 'consts/theme_data.dart';

@@ -49,30 +49,32 @@ class _OrdersWidgetState extends State<OrdersWidget> {
     final Utils utils = Utils(context);
     final Color color = Utils(context).color;
     Size size = Utils(context).getScreenSize;
-    return ListTile(
-      subtitle:
-          Text('Paid: \$${double.parse(ordersModel.price).toStringAsFixed(2)}'),
-      onTap: () {
-        GlobalMethods.navigateToProductDetails(
-            ctx: context, routeName: ProductDetails.routeName);
-      },
-      leading: Container(
-        height: size.width * 0.2,
-        width: size.width * 0.2,
-        clipBehavior: Clip.antiAlias,
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(12.0)),
-        child: FancyShimmerImage(
-          imageUrl: getCurrentProduct.imageUrl,
-          boxFit: BoxFit.fill,
+    return GestureDetector(
+      child: ListTile(
+        subtitle: Text(
+            'Paid: \$${double.parse(ordersModel.price).toStringAsFixed(2)}'),
+        onTap: () {
+          Navigator.pushNamed(context, ProductDetails.routeName,
+              arguments: ordersModel.productId);
+        },
+        leading: Container(
+          height: size.width * 0.2,
+          width: size.width * 0.2,
+          clipBehavior: Clip.antiAlias,
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(12.0)),
+          child: FancyShimmerImage(
+            imageUrl: getCurrentProduct.imageUrl,
+            boxFit: BoxFit.fill,
+          ),
         ),
+        title: TextWidget(
+          text: '${getCurrentProduct.title} x${ordersModel.quantity}',
+          color: color,
+          textSize: 20,
+          isTitle: true,
+        ),
+        trailing: TextWidget(text: orderDateToShow, color: color, textSize: 16),
       ),
-      title: TextWidget(
-        text: '${getCurrentProduct.title} x${ordersModel.quantity}',
-        color: color,
-        textSize: 20,
-        isTitle: true,
-      ),
-      trailing: TextWidget(text: orderDateToShow, color: color, textSize: 16),
     );
   }
 }

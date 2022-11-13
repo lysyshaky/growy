@@ -14,7 +14,7 @@ import '../../consts/consts.dart';
 import '../../consts/firebase_consts.dart';
 import '../../services/utils.dart';
 import '../../widgets/auth_button.dart';
-import '../../widgets/fetch_screen.dart';
+import 'package:growy/fetch_screen.dart';
 import '../../widgets/google_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 

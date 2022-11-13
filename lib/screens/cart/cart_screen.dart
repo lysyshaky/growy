@@ -80,7 +80,7 @@ class CartScreen extends StatelessWidget {
                 Expanded(
                   child: ListView.builder(
                       itemCount: cartItemsList.length,
-                      itemBuilder: (ctx, index) {
+                      itemBuilder: (context, index) {
                         return ChangeNotifierProvider.value(
                             value: cartItemsList[index],
                             child: CartWidget(
@@ -100,7 +100,7 @@ Widget _checkout({required BuildContext context}) {
   Size size = Utils(context).getScreenSize;
   final cartProvider = Provider.of<CartProvider>(context);
   final productProvider = Provider.of<ProductsProvider>(context);
-  final ordersprovider = Provider.of<OrdersProvider>(context, listen: false);
+  final ordersProvider = Provider.of<OrdersProvider>(context);
   double total = 0.0;
   cartProvider.getCartItems.forEach((key, value) {
     final getCurrentProduct = productProvider.findProductById(value.productId);
@@ -124,13 +124,15 @@ Widget _checkout({required BuildContext context}) {
               borderRadius: BorderRadius.circular(10),
               onTap: () async {
                 User? user = authInstance.currentUser;
+
                 final orderId = const Uuid().v4();
                 final productProvider =
                     Provider.of<ProductsProvider>(context, listen: false);
 
                 cartProvider.getCartItems.forEach((key, value) async {
-                  final getCurrentProduct =
-                      productProvider.findProductById(value.productId);
+                  final getCurrProduct = productProvider.findProductById(
+                    value.productId,
+                  );
                   try {
                     await FirebaseFirestore.instance
                         .collection('orders')
@@ -139,23 +141,21 @@ Widget _checkout({required BuildContext context}) {
                       'orderId': orderId,
                       'userId': user!.uid,
                       'productId': value.productId,
-                      'price': (getCurrentProduct.isOnSale
-                              ? getCurrentProduct.salePrice
-                              : getCurrentProduct.price) *
+                      'price': (getCurrProduct.isOnSale
+                              ? getCurrProduct.salePrice
+                              : getCurrProduct.price) *
                           value.quantity,
                       'totalPrice': total,
                       'quantity': value.quantity,
-                      'imageUrl': getCurrentProduct.imageUrl,
+                      'imageUrl': getCurrProduct.imageUrl,
                       'userName': user.displayName,
                       'orderDate': Timestamp.now(),
-                      // 'orderStatus': 'pending',
                     });
                     await cartProvider.clearOnlineCart();
                     cartProvider.clearLocalCart();
-                    //TODO fetch the order here.
-                    ordersprovider.fetchOrders();
+                    ordersProvider.fetchOrders();
                     await Fluttertoast.showToast(
-                      msg: 'Your order has been placed',
+                      msg: "Your order has been placed",
                       toastLength: Toast.LENGTH_SHORT,
                       gravity: ToastGravity.CENTER,
                       backgroundColor: Colors.green,
@@ -163,9 +163,7 @@ Widget _checkout({required BuildContext context}) {
                   } catch (error) {
                     GlobalMethods.errorDialog(
                         subtitle: error.toString(), context: context);
-                  } finally {
-                    cartProvider.clearLocalCart();
-                  }
+                  } finally {}
                 });
               },
               child: Padding(

@@ -6,7 +6,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:growy/consts/firebase_consts.dart';
-import 'package:growy/widgets/fetch_screen.dart';
+import 'package:growy/fetch_screen.dart';
 import 'package:growy/widgets/text_widget.dart';
 
 import '../screens/btm_bar.dart';

@@ -46,8 +46,8 @@ class _ViewedWidgetState extends State<ViewedWidget> {
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
         onTap: () {
-          GlobalMethods.navigateToProductDetails(
-              ctx: context, routeName: ProductDetails.routeName);
+          Navigator.pushNamed(context, ProductDetails.routeName,
+              arguments: viewedProdModel.productId);
         },
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
