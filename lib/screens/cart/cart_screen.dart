@@ -36,7 +36,7 @@ class CartScreen extends StatelessWidget {
 
     return cartItemsList.isEmpty
         ? const EmptyScreen(
-            title: 'Your car is empty!',
+            title: 'Your cart is empty!',
             subtitle: 'Add something to your cart',
             buttonText: 'Shop now',
             imagePath: 'assets/images/cart.png',

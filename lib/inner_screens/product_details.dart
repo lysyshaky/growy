@@ -94,7 +94,7 @@ class _ProductDetailsState extends State<ProductDetails> {
             flex: 3,
             child: Container(
               decoration: BoxDecoration(
-                color: Theme.of(context).cardColor,
+                color: Colors.green.withOpacity(0.1),
                 borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(40),
                   topRight: Radius.circular(40),
@@ -248,7 +248,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                     padding: const EdgeInsets.symmetric(
                         vertical: 20, horizontal: 30),
                     decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.secondary,
+                      color: Colors.green.withOpacity(0.3),
                       borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(20),
                           topRight: Radius.circular(20)),

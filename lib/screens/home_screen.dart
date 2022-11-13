@@ -123,7 +123,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   TextWidget(
-                    text: 'Our Prouducs',
+                    text: 'Our Products',
                     color: color,
                     textSize: 22,
                     isTitle: true,

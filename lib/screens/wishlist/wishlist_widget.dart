@@ -55,7 +55,7 @@ class WishlistWidget extends StatelessWidget {
         child: Container(
           height: size.height * 0.20,
           decoration: BoxDecoration(
-            color: Theme.of(context).cardColor.withOpacity(0.6),
+            color: Colors.green.withOpacity(0.1),
             border: Border.all(color: color, width: 1),
             borderRadius: BorderRadius.circular(8),
           ),

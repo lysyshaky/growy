@@ -55,7 +55,7 @@ class _FeedsWidgetState extends State<FeedsWidget> {
       padding: const EdgeInsets.all(8.0),
       child: Material(
         borderRadius: BorderRadius.circular(12),
-        color: Theme.of(context).cardColor,
+        color: Colors.green.withOpacity(0.1),
         child: InkWell(
           onTap: () {
             viewedProdProvider.addProductToHistory(productId: productModel.id);
@@ -211,7 +211,7 @@ class _FeedsWidgetState extends State<FeedsWidget> {
                   child: TextWidget(
                     text: _isInCart ? 'In cart' : 'Add to cart',
                     textSize: 20,
-                    color: color,
+                    color: Colors.white,
                     isTitle: true,
                   ),
                   style: ButtonStyle(
