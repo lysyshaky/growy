@@ -9,4 +9,5 @@ class Utils {
   get appBarcolor => getTheme ? Colors.green : Colors.white;
   get color => getTheme ? Colors.white : Colors.black;
   Size get getScreenSize => MediaQuery.of(context).size;
+  get iconColor => getTheme ? Colors.white : Colors.grey;
 }

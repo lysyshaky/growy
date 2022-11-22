@@ -27,6 +27,7 @@ class ProductsProvider with ChangeNotifier {
             ProductModel(
               id: element.get('id'),
               title: element.get('title'),
+              title_uk: element.get('title_uk'),
               imageUrl: element.get('imageUrl'),
               productCategoryName: element.get('productCategoryName'),
               price: double.parse(

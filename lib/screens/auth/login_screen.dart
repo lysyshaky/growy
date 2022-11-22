@@ -16,6 +16,7 @@ import '../../services/global_methods.dart';
 import '../../widgets/auth_button.dart';
 import 'package:growy/fetch_screen.dart';
 import '../../widgets/google_button.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LoginScreen extends StatefulWidget {
   static const routeName = '/LoginScreen';
@@ -59,7 +60,7 @@ class _LoginScreenState extends State<LoginScreen> {
             builder: ((context) => const FetchScreen()),
           ),
         );
-        print('Succefully registered');
+        //print('Succefully registered');
       } on FirebaseException catch (error) {
         GlobalMethods.errorDialog(
             subtitle: '${error.message}', context: context);
@@ -113,14 +114,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   children: [
                     const SizedBox(height: 120.0),
                     TextWidget(
-                      text: "Welcome Back",
+                      text: AppLocalizations.of(context)!.welcome_back,
                       color: Colors.white,
                       textSize: 30,
                       isTitle: true,
                     ),
                     const SizedBox(height: 8.0),
                     TextWidget(
-                      text: "Sign in to continue",
+                      text: AppLocalizations.of(context)!.sign_in_continue,
                       color: Colors.white,
                       textSize: 18,
                       isTitle: false,
@@ -138,19 +139,20 @@ class _LoginScreenState extends State<LoginScreen> {
                             keyboardType: TextInputType.emailAddress,
                             validator: (value) {
                               if (value!.isEmpty || !value.contains('@')) {
-                                return 'Please enter a valid email address';
+                                return AppLocalizations.of(context)!
+                                    .valid_email;
                               } else {
                                 return null;
                               }
                             },
                             style: const TextStyle(color: Colors.white),
-                            decoration: const InputDecoration(
-                              hintText: 'Email',
-                              hintStyle: TextStyle(color: Colors.white),
-                              enabledBorder: UnderlineInputBorder(
+                            decoration: InputDecoration(
+                              hintText: AppLocalizations.of(context)!.email,
+                              hintStyle: const TextStyle(color: Colors.white),
+                              enabledBorder: const UnderlineInputBorder(
                                 borderSide: BorderSide(color: Colors.white),
                               ),
-                              focusedBorder: UnderlineInputBorder(
+                              focusedBorder: const UnderlineInputBorder(
                                 borderSide: BorderSide(color: Colors.green),
                               ),
                             ),
@@ -169,7 +171,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             keyboardType: TextInputType.visiblePassword,
                             validator: (value) {
                               if (value!.isEmpty || value.length < 7) {
-                                return 'Please enter a valid password';
+                                return AppLocalizations.of(context)!
+                                    .valid_password;
                               } else {
                                 return null;
                               }
@@ -188,7 +191,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         : Icons.visibility_off,
                                     color: Colors.white,
                                   )),
-                              hintText: 'Password',
+                              hintText: AppLocalizations.of(context)!.password,
                               hintStyle: const TextStyle(color: Colors.white),
                               enabledBorder: const UnderlineInputBorder(
                                 borderSide: BorderSide(color: Colors.white),
@@ -211,10 +214,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           Navigator.pushReplacementNamed(
                               context, ForgetPasswordScreen.routeName);
                         },
-                        child: const Text(
-                          "Forget password?",
+                        child: Text(
+                          AppLocalizations.of(context)!.forget_password,
                           maxLines: 1,
-                          style: TextStyle(
+                          style: const TextStyle(
                               color: Colors.green,
                               decoration: TextDecoration.underline,
                               fontStyle: FontStyle.italic,
@@ -229,7 +232,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       fct: () {
                         _sumbitFromOnLogin();
                       },
-                      buttonText: 'Login',
+                      buttonText: AppLocalizations.of(context)!.login_btn,
                       primary: Colors.green.withOpacity(0.6),
                     ),
                     const SizedBox(
@@ -251,7 +254,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           width: 5,
                         ),
                         TextWidget(
-                            text: 'OR', color: Colors.white, textSize: 18),
+                            text: AppLocalizations.of(context)!.or,
+                            color: Colors.white,
+                            textSize: 18),
                         const SizedBox(
                           width: 5,
                         ),
@@ -271,7 +276,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => const FetchScreen()));
                       },
-                      buttonText: 'Continue as a guest',
+                      buttonText:
+                          AppLocalizations.of(context)!.continue_guest_btn,
                       primary: Colors.black.withOpacity(0.6),
                     ),
                     const SizedBox(
@@ -279,12 +285,12 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     RichText(
                       text: TextSpan(
-                          text: 'Don\'t have an account?',
+                          text: AppLocalizations.of(context)!.dont_have_account,
                           style: const TextStyle(
                               color: Colors.white, fontSize: 18),
                           children: [
                             TextSpan(
-                                text: '  Sign up',
+                                text: AppLocalizations.of(context)!.sign_up,
                                 style: const TextStyle(
                                     color: Colors.green,
                                     fontSize: 18,

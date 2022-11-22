@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:growy/consts/consts.dart';
+import 'package:growy/providers/locale_provider.dart';
 import 'package:iconly/iconly.dart';
 import 'package:provider/provider.dart';
 
@@ -13,6 +14,7 @@ import '../widgets/back_widget.dart';
 import '../widgets/empty_product_widget.dart';
 import '../widgets/feed_items.dart';
 import '../widgets/text_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CategoryScreen extends StatefulWidget {
   static const routeName = "/CategoryScreen";
@@ -42,6 +44,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
     bool _isDark = themeState.getDarkTheme;
     final productsProvider = Provider.of<ProductsProvider>(context);
     final catName = ModalRoute.of(context)!.settings.arguments as String;
+    final languageProvider = Provider.of<LocaleProvider>(context);
+    final locale = languageProvider.locale;
     List<ProductModel> productByCat = productsProvider.findByCategory(catName);
     return Scaffold(
         appBar: AppBar(
@@ -50,15 +54,18 @@ class _CategoryScreenState extends State<CategoryScreen> {
           backgroundColor: _isDark ? Colors.black12 : Colors.green,
           centerTitle: true,
           title: TextWidget(
-            text: catName,
+            text: locale.languageCode == "en"
+                ? "$catName"
+                : "Продукти" ?? catName,
             color: color,
             textSize: 24,
             isTitle: true,
           ),
         ),
         body: productByCat.isEmpty
-            ? const EmptyProductWidget(
-                text: 'No products belong to this category!')
+            ? EmptyProductWidget(
+                text: AppLocalizations.of(context)!.no_products_by_category,
+              )
             : SingleChildScrollView(
                 child: Column(
                   children: [
@@ -92,7 +99,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                 size: 24,
                                 color: Colors.green,
                               ),
-                              hintText: "What's in your mind",
+                              hintText: AppLocalizations.of(context)!.what_mind,
                               suffixIcon: IconButton(
                                 padding: EdgeInsets.zero,
                                 onPressed: () {
@@ -114,8 +121,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
                     _searchTextController!.text.isNotEmpty &&
                             listProductSearch.isEmpty
                         ? EmptyProductWidget(
-                            text:
-                                'No products found, please try another keyword!')
+                            text: AppLocalizations.of(context)!.no_products,
+                          )
                         : GridView.count(
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),

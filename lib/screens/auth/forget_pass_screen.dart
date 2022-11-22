@@ -13,6 +13,7 @@ import '../../consts/consts.dart';
 import '../../consts/firebase_consts.dart';
 import '../../widgets/auth_button.dart';
 import '../../widgets/text_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ForgetPasswordScreen extends StatefulWidget {
   static const routeName = '/ForgetPassowrdScreen';
@@ -36,7 +37,8 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
     if (_emailTextController.text.isEmpty ||
         !_emailTextController.text.contains('@')) {
       GlobalMethods.errorDialog(
-          subtitle: "Please enter a correct email address", context: context);
+          subtitle: AppLocalizations.of(context)!.valid_email,
+          context: context);
     } else {
       setState(() {
         _isLoading = true;
@@ -45,7 +47,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
         await authInstance.sendPasswordResetEmail(
             email: _emailTextController.text.toLowerCase());
         Fluttertoast.showToast(
-            msg: "An email has been sent to your email address",
+            msg: AppLocalizations.of(context)!.email_send,
             toastLength: Toast.LENGTH_LONG,
             gravity: ToastGravity.BOTTOM,
             timeInSecForIosWeb: 1,
@@ -112,7 +114,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                     ),
                     const SizedBox(height: 40.0),
                     TextWidget(
-                      text: "Forget password",
+                      text: AppLocalizations.of(context)!.forget_password_text,
                       color: Colors.white,
                       textSize: 30,
                       isTitle: true,
@@ -126,19 +128,19 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                       keyboardType: TextInputType.emailAddress,
                       validator: (value) {
                         if (value!.isEmpty || !value.contains('@')) {
-                          return 'Please enter a valid email address';
+                          return AppLocalizations.of(context)!.valid_email;
                         } else {
                           return null;
                         }
                       },
                       style: const TextStyle(color: Colors.white),
-                      decoration: const InputDecoration(
-                        hintText: 'Email',
-                        hintStyle: TextStyle(color: Colors.white),
-                        enabledBorder: UnderlineInputBorder(
+                      decoration: InputDecoration(
+                        hintText: AppLocalizations.of(context)!.email,
+                        hintStyle: const TextStyle(color: Colors.white),
+                        enabledBorder: const UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.white),
                         ),
-                        focusedBorder: UnderlineInputBorder(
+                        focusedBorder: const UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.green),
                         ),
                       ),
@@ -150,7 +152,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                       fct: () {
                         _forgetPasFCT();
                       },
-                      buttonText: 'Reset now',
+                      buttonText: AppLocalizations.of(context)!.reset_btn,
                       primary: Colors.green.withOpacity(0.6),
                     ),
                   ],

@@ -8,6 +8,7 @@ import 'package:growy/screens/home_screen.dart';
 import 'package:growy/screens/user_screen.dart';
 import 'package:iconly/iconly.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../providers/cart_provider.dart';
 import 'cart/cart_screen.dart';
@@ -61,38 +62,41 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
         onTap: _selectedPage,
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-              backgroundColor: _isDark ? Colors.black12 : Colors.green,
-              icon: Icon(
-                  _selectedIndex == 0 ? IconlyBold.home : IconlyLight.home),
-              label: 'Home'),
+            backgroundColor: _isDark ? Colors.black12 : Colors.green,
+            icon:
+                Icon(_selectedIndex == 0 ? IconlyBold.home : IconlyLight.home),
+            label: AppLocalizations.of(context)!.home,
+          ),
           BottomNavigationBarItem(
-              backgroundColor: _isDark ? Colors.black12 : Colors.green,
-              icon: Icon(_selectedIndex == 1
-                  ? IconlyBold.category
-                  : IconlyLight.category),
-              label: 'Categories'),
+            backgroundColor: _isDark ? Colors.black12 : Colors.green,
+            icon: Icon(_selectedIndex == 1
+                ? IconlyBold.category
+                : IconlyLight.category),
+            label: AppLocalizations.of(context)!.categories,
+          ),
           BottomNavigationBarItem(
-              backgroundColor: _isDark ? Colors.black12 : Colors.green,
-              icon: Consumer<CartProvider>(builder: (_, myCart, ch) {
-                return Badge(
-                    toAnimate: true,
-                    shape: BadgeShape.circle,
-                    badgeColor: Colors.red,
-                    borderRadius: BorderRadius.circular(8),
-                    badgeContent: Text(
-                      myCart.getCartItems.length.toString(),
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    child: Icon(_selectedIndex == 2
-                        ? IconlyBold.buy
-                        : IconlyLight.buy));
-              }),
-              label: 'Cart'),
+            backgroundColor: _isDark ? Colors.black12 : Colors.green,
+            icon: Consumer<CartProvider>(builder: (_, myCart, ch) {
+              return Badge(
+                  toAnimate: true,
+                  shape: BadgeShape.circle,
+                  badgeColor: Colors.red,
+                  borderRadius: BorderRadius.circular(8),
+                  badgeContent: Text(
+                    myCart.getCartItems.length.toString(),
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  child: Icon(
+                      _selectedIndex == 2 ? IconlyBold.buy : IconlyLight.buy));
+            }),
+            label: AppLocalizations.of(context)!.cart,
+          ),
           BottomNavigationBarItem(
-              backgroundColor: _isDark ? Colors.black12 : Colors.green,
-              icon: Icon(
-                  _selectedIndex == 3 ? IconlyBold.user_2 : IconlyLight.user),
-              label: 'User'),
+            backgroundColor: _isDark ? Colors.black12 : Colors.green,
+            icon: Icon(
+                _selectedIndex == 3 ? IconlyBold.user_2 : IconlyLight.user),
+            label: AppLocalizations.of(context)!.user,
+          ),
         ],
       ),
     );

@@ -19,6 +19,7 @@ import '../../services/utils.dart';
 import '../../widgets/text_widget.dart';
 import 'cart_widget.dart';
 import '../../widgets/empty_screen.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CartScreen extends StatelessWidget {
   const CartScreen({Key? key}) : super(key: key);
@@ -35,10 +36,10 @@ class CartScreen extends StatelessWidget {
         cartProvider.getCartItems.values.toList().reversed.toList();
 
     return cartItemsList.isEmpty
-        ? const EmptyScreen(
-            title: 'Your cart is empty!',
-            subtitle: 'Add something to your cart',
-            buttonText: 'Shop now',
+        ? EmptyScreen(
+            title: AppLocalizations.of(context)!.your_cart_empty,
+            subtitle: AppLocalizations.of(context)!.add_something_cart,
+            buttonText: AppLocalizations.of(context)!.shop_now_btn,
             imagePath: 'assets/images/cart.png',
           )
         : Scaffold(
@@ -49,8 +50,9 @@ class CartScreen extends StatelessWidget {
                   child: IconButton(
                     onPressed: () async {
                       await GlobalMethods.warningDialog(
-                          title: 'Clear cart',
-                          subtitle: 'Do you wanna clear your cart?',
+                          title: AppLocalizations.of(context)!.clear_cart,
+                          subtitle: AppLocalizations.of(context)!
+                              .do_you_want_to_clear_cart,
                           fct: () async {
                             await cartProvider.clearOnlineCart();
                             cartProvider.clearLocalCart();
@@ -68,7 +70,8 @@ class CartScreen extends StatelessWidget {
               backgroundColor: _isDark ? Colors.black12 : Colors.green,
               centerTitle: true,
               title: TextWidget(
-                text: 'Cart(${cartItemsList.length})',
+                text: AppLocalizations.of(context)!.cart +
+                    "(${cartItemsList.length})",
                 color: color,
                 textSize: 24,
                 isTitle: true,
@@ -159,7 +162,7 @@ Widget _checkout({required BuildContext context}) {
                   } finally {}
                 });
                 await Fluttertoast.showToast(
-                  msg: "Your order has been placed",
+                  msg: AppLocalizations.of(context)!.order_placed,
                   toastLength: Toast.LENGTH_SHORT,
                   gravity: ToastGravity.CENTER,
                   backgroundColor: Colors.green,
@@ -168,7 +171,7 @@ Widget _checkout({required BuildContext context}) {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextWidget(
-                  text: "Order Now",
+                  text: AppLocalizations.of(context)!.order_now,
                   textSize: 20,
                   color: Colors.white,
                 ),
@@ -178,7 +181,8 @@ Widget _checkout({required BuildContext context}) {
           const Spacer(),
           FittedBox(
             child: TextWidget(
-              text: "Total: \$${total.toStringAsFixed(2)}",
+              text: AppLocalizations.of(context)!.total_order +
+                  "${total.toStringAsFixed(2)}",
               color: color,
               textSize: 20,
               isTitle: true,

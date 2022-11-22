@@ -11,11 +11,12 @@ class CategoriesWidget extends StatelessWidget {
   const CategoriesWidget(
       {Key? key,
       required this.catText,
+      required this.catName,
       required this.imgPath,
       required this.passedColor})
       : super(key: key);
 
-  final String catText, imgPath;
+  final String catText, catName, imgPath;
   final Color passedColor;
 
   @override
@@ -27,7 +28,7 @@ class CategoriesWidget extends StatelessWidget {
     return InkWell(
       onTap: () {
         Navigator.pushNamed(context, CategoryScreen.routeName,
-            arguments: catText);
+            arguments: catName);
       },
       child: Container(
         height: _screenWidht * 0.6,

@@ -17,6 +17,11 @@ import 'package:provider/provider.dart';
 import '../consts/firebase_consts.dart';
 import '../providers/dart_theme_provider.dart';
 import '../services/global_methods.dart';
+import "package:flutter_gen/gen_l10n/app_localizations.dart";
+
+import '../services/utils.dart';
+import '../widgets/language_picker_widget.dart';
+import '../widgets/language_widget.dart';
 
 class UserScreen extends StatefulWidget {
   const UserScreen({Key? key}) : super(key: key);
@@ -75,7 +80,7 @@ class _UserScreenState extends State<UserScreen> {
         _isLoading = false;
       });
       GlobalMethods.errorDialog(
-          subtitle: 'Something went wrong, please try again later',
+          subtitle: AppLocalizations.of(context)!.something_went_wrong,
           context: context);
     } finally {
       setState(() {
@@ -95,6 +100,7 @@ class _UserScreenState extends State<UserScreen> {
   Widget build(BuildContext context) {
     final themeState = Provider.of<DarkThemeProvider>(context);
     final Color color = themeState.getDarkTheme ? Colors.white : Colors.black;
+
     return LoadingManager(
       isLoading: _isLoading,
       child: Scaffold(
@@ -108,44 +114,45 @@ class _UserScreenState extends State<UserScreen> {
                 children: [
                   RichText(
                     text: TextSpan(
-                        text: 'Hi, ',
+                        text: AppLocalizations.of(context)!.hi,
                         style: const TextStyle(
                             color: Colors.green,
                             fontSize: 28,
                             fontWeight: FontWeight.bold),
                         children: <TextSpan>[
                           TextSpan(
-                              text: _name == null ? "User" : _name,
+                              text: _name == null
+                                  ? AppLocalizations.of(context)!.user
+                                  : _name,
                               style: TextStyle(
                                   color: color,
                                   fontSize: 24,
                                   fontWeight: FontWeight.bold),
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () {
-                                  print('My name is pressed');
-                                })
+                              recognizer: TapGestureRecognizer()..onTap = () {})
                         ]),
                   ),
                   const SizedBox(
                     height: 8,
                   ),
                   TextWidget(
-                    text: _email == null ? "Email" : _email!,
+                    text: _email == null
+                        ? AppLocalizations.of(context)!.email
+                        : _email!,
                     color: color,
                     textSize: 16,
                     isTitle: false,
                   ),
                   const SizedBox(
-                    height: 20,
+                    height: 10,
                   ),
                   const Divider(
                     thickness: 1.5,
                   ),
                   const SizedBox(
-                    height: 20,
+                    height: 10,
                   ),
                   _listTiles(
-                      title: 'Address',
+                      title: AppLocalizations.of(context)!.address,
                       subtitle: _address,
                       icon: IconlyLight.profile,
                       color: color,
@@ -153,7 +160,7 @@ class _UserScreenState extends State<UserScreen> {
                         await _showAddressDialog();
                       }),
                   _listTiles(
-                      title: 'Orders',
+                      title: AppLocalizations.of(context)!.orders,
                       icon: IconlyLight.wallet,
                       color: color,
                       onPressed: () {
@@ -161,7 +168,7 @@ class _UserScreenState extends State<UserScreen> {
                             ctx: context, routeName: OrdersScreen.routeName);
                       }),
                   _listTiles(
-                      title: 'Wishlist',
+                      title: AppLocalizations.of(context)!.wishlist,
                       icon: IconlyLight.heart,
                       color: color,
                       onPressed: () {
@@ -169,7 +176,7 @@ class _UserScreenState extends State<UserScreen> {
                             ctx: context, routeName: WishlistScreen.routeName);
                       }),
                   _listTiles(
-                      title: 'Viewed',
+                      title: AppLocalizations.of(context)!.viewed,
                       icon: IconlyLight.show,
                       color: color,
                       onPressed: () {
@@ -177,7 +184,7 @@ class _UserScreenState extends State<UserScreen> {
                             ctx: context, routeName: ViewedScreen.routeName);
                       }),
                   _listTiles(
-                      title: 'Forget password',
+                      title: AppLocalizations.of(context)!.forget_password,
                       icon: IconlyLight.unlock,
                       color: color,
                       onPressed: () {
@@ -190,8 +197,8 @@ class _UserScreenState extends State<UserScreen> {
                     child: SwitchListTile(
                       title: TextWidget(
                         text: themeState.getDarkTheme
-                            ? 'Dark mode'
-                            : 'Light mode',
+                            ? AppLocalizations.of(context)!.dark_mode
+                            : AppLocalizations.of(context)!.light_mode,
                         color: color,
                         textSize: 20,
                         isTitle: true,
@@ -207,8 +214,27 @@ class _UserScreenState extends State<UserScreen> {
                       value: themeState.getDarkTheme,
                     ),
                   ),
+                  // LanguagePickerWidget(),
+
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      LanguagePickerWidget(),
+                      const Spacer(),
+                      const Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                        child: LanguageWidget(),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
                   _listTiles(
-                      title: user == null ? 'Login' : 'Logout',
+                      title: user == null
+                          ? AppLocalizations.of(context)!.login
+                          : AppLocalizations.of(context)!.logout,
                       icon:
                           user == null ? IconlyLight.login : IconlyLight.logout,
                       color: color,
@@ -220,8 +246,9 @@ class _UserScreenState extends State<UserScreen> {
                           return;
                         }
                         await GlobalMethods.warningDialog(
-                            title: 'Sign out',
-                            subtitle: 'Do you wanna sign out ?',
+                            title: AppLocalizations.of(context)!.sign_out,
+                            subtitle: AppLocalizations.of(context)!
+                                .do_you_want_to_sing_out,
                             fct: () async {
                               await authInstance.signOut();
                               Navigator.of(context).push(MaterialPageRoute(
@@ -243,8 +270,8 @@ class _UserScreenState extends State<UserScreen> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: const Text(
-              'Update',
+            title: Text(
+              AppLocalizations.of(context)!.update_shipping_address,
             ),
             content: TextField(
               // onChanged: ((value) {
@@ -252,7 +279,9 @@ class _UserScreenState extends State<UserScreen> {
               // }),
               cursorColor: Colors.green,
               controller: _addressTextConroller,
-              decoration: const InputDecoration(hintText: 'Your address'),
+              decoration: InputDecoration(
+                hintText: AppLocalizations.of(context)!.your_address,
+              ),
             ),
             actions: [
               TextButton(
@@ -272,13 +301,13 @@ class _UserScreenState extends State<UserScreen> {
                   } catch (error) {
                     GlobalMethods.errorDialog(
                         subtitle:
-                            'Something went wrong, please try again later',
+                            AppLocalizations.of(context)!.something_went_wrong,
                         context: context);
                   }
                 },
                 child: TextWidget(
                   color: Colors.green,
-                  text: 'Update',
+                  text: AppLocalizations.of(context)!.update_btn,
                   textSize: 18,
                   isTitle: true,
                 ),

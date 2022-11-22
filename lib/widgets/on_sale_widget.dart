@@ -12,11 +12,13 @@ import 'package:provider/provider.dart';
 import '../consts/firebase_consts.dart';
 import '../models/product_model.dart';
 import '../providers/cart_provider.dart';
+import '../providers/locale_provider.dart';
 import '../providers/viewed_product_provider.dart';
 import '../providers/wishlist_provider.dart';
 import '../services/global_methods.dart';
 import '../services/utils.dart';
 import 'heart_btn.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class OnSaleWidget extends StatefulWidget {
   const OnSaleWidget({Key? key}) : super(key: key);
@@ -38,6 +40,8 @@ class _OnSaleWidgetState extends State<OnSaleWidget> {
     bool? _isInWishlist =
         wishlistProvider.getWishlistItems.containsKey(productModel.id);
     final viewedProdProvider = Provider.of<ViewedProdProvider>(context);
+    final languageProvider = Provider.of<LocaleProvider>(context);
+    final locale = languageProvider.locale;
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Material(
@@ -71,7 +75,9 @@ class _OnSaleWidgetState extends State<OnSaleWidget> {
                     Column(
                       children: [
                         TextWidget(
-                          text: productModel.isPiece ? '1 Piece' : '1KG',
+                          text: productModel.isPiece
+                              ? AppLocalizations.of(context)!.one_piece
+                              : AppLocalizations.of(context)!.one_kg,
                           color: color,
                           textSize: 20,
                           isTitle: true,
@@ -87,7 +93,7 @@ class _OnSaleWidgetState extends State<OnSaleWidget> {
                                 if (user == null) {
                                   GlobalMethods.errorDialog(
                                       subtitle:
-                                          "No user found, Please login first",
+                                          AppLocalizations.of(context)!.no_user,
                                       context: context);
                                   return;
                                 }
@@ -122,8 +128,11 @@ class _OnSaleWidgetState extends State<OnSaleWidget> {
                       textPrice: '1',
                       isOnSale: true),
                   const SizedBox(height: 5),
+                  //fix here
                   TextWidget(
-                    text: productModel.title,
+                    text: locale.languageCode == "en"
+                        ? productModel.title
+                        : productModel.title_uk ?? productModel.title,
                     color: color,
                     textSize: 16,
                     isTitle: true,

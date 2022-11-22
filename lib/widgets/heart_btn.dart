@@ -12,6 +12,7 @@ import 'package:growy/providers/wishlist_provider.dart';
 
 import '../services/global_methods.dart';
 import '../services/utils.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HeartBTN extends StatefulWidget {
   const HeartBTN({
@@ -44,7 +45,7 @@ class _HeartBTNState extends State<HeartBTN> {
           final User? user = authInstance.currentUser;
           if (user == null) {
             GlobalMethods.errorDialog(
-                subtitle: "No user found, Please login first",
+                subtitle: AppLocalizations.of(context)!.no_user,
                 context: context);
             return;
           }

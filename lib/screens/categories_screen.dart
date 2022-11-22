@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 
 import '../providers/dart_theme_provider.dart';
 import '../widgets/categories_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CategoriesScreen extends StatelessWidget {
   CategoriesScreen({Key? key}) : super(key: key);
@@ -19,46 +20,52 @@ class CategoriesScreen extends StatelessWidget {
     const Color(0xffFDE598),
     const Color(0xffB7DFF5),
   ];
-  List<Map<String, dynamic>> catInfo = [
-    {
-      'imgPath': 'assets/images/cat/fruits.png',
-      'catText': 'Fruits',
-    },
-    {
-      'imgPath': 'assets/images/cat/veg.png',
-      'catText': 'Vegetables',
-    },
-    {
-      'imgPath': 'assets/images/cat/Spinach.png',
-      'catText': 'Herbs',
-    },
-    {
-      'imgPath': 'assets/images/cat/nuts.png',
-      'catText': 'Nuts',
-    },
-    {
-      'imgPath': 'assets/images/cat/spices.png',
-      'catText': 'Spices',
-    },
-    {
-      'imgPath': 'assets/images/cat/grains.png',
-      'catText': 'Grains',
-    },
-  ];
+
   @override
   Widget build(BuildContext context) {
     final themeState = Provider.of<DarkThemeProvider>(context);
     bool _isDark = themeState.getDarkTheme;
     final utils = Utils(context);
     Color color = utils.appBarcolor;
-
+    List<Map<String, dynamic>> catInfo = [
+      {
+        'imgPath': 'assets/images/cat/fruits.png',
+        'catText': AppLocalizations.of(context)!.fruits,
+        'catName': 'Fruits',
+      },
+      {
+        'imgPath': 'assets/images/cat/veg.png',
+        'catText': AppLocalizations.of(context)!.vegetables,
+        'catName': 'Vegetables',
+      },
+      {
+        'imgPath': 'assets/images/cat/Spinach.png',
+        'catText': AppLocalizations.of(context)!.herbs,
+        'catName': 'Herbs',
+      },
+      {
+        'imgPath': 'assets/images/cat/nuts.png',
+        'catText': AppLocalizations.of(context)!.nuts,
+        'catName': 'Nuts',
+      },
+      {
+        'imgPath': 'assets/images/cat/spices.png',
+        'catText': AppLocalizations.of(context)!.spices,
+        'catName': 'Spices',
+      },
+      {
+        'imgPath': 'assets/images/cat/grains.png',
+        'catText': AppLocalizations.of(context)!.grains,
+        'catName': 'Grains',
+      },
+    ];
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
         backgroundColor: _isDark ? Colors.black12 : Colors.green,
         centerTitle: true,
         title: TextWidget(
-          text: 'Categories',
+          text: AppLocalizations.of(context)!.categories,
           color: color,
           textSize: 24,
           isTitle: true,
@@ -73,6 +80,7 @@ class CategoriesScreen extends StatelessWidget {
           mainAxisSpacing: 24, //Horizotanl spacing
           children: List.generate(6, (index) {
             return CategoriesWidget(
+              catName: catInfo[index]['catName'],
               catText: catInfo[index]['catText'],
               imgPath: catInfo[index]['imgPath'],
               passedColor: gridColor[index],

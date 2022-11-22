@@ -13,11 +13,13 @@ import '../../inner_screens/product_details.dart';
 import '../../models/product_model.dart';
 import '../../providers/dart_theme_provider.dart';
 import '../../providers/cart_provider.dart';
+import '../../providers/locale_provider.dart';
 import '../../providers/products_provider.dart';
 import '../../providers/wishlist_provider.dart';
 import '../../services/global_methods.dart';
 import '../../services/utils.dart';
 import '../../widgets/heart_btn.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class WishlistWidget extends StatelessWidget {
   const WishlistWidget({Key? key}) : super(key: key);
@@ -34,7 +36,8 @@ class WishlistWidget extends StatelessWidget {
     final wishlistProvider = Provider.of<WishlistProvider>(context);
     final wishlistModel = Provider.of<WishlistModel>(context);
     final productProvider = Provider.of<ProductsProvider>(context);
-
+    final languageProvider = Provider.of<LocaleProvider>(context);
+    final locale = languageProvider.locale;
     final getCurrentProduct =
         productProvider.findProdById(wishlistModel.productId);
     double usedPrice = getCurrentProduct.isOnSale
@@ -88,7 +91,7 @@ class WishlistWidget extends StatelessWidget {
                               if (user == null) {
                                 GlobalMethods.errorDialog(
                                     subtitle:
-                                        "No user found, Please login first",
+                                        AppLocalizations.of(context)!.no_user,
                                     context: context);
                                 return;
                               }
@@ -115,7 +118,10 @@ class WishlistWidget extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      getCurrentProduct.title,
+                      locale.languageCode == "en"
+                          ? getCurrentProduct.title
+                          : getCurrentProduct.title_uk ??
+                              getCurrentProduct.title,
                       maxLines: 2,
                       style: TextStyle(
                           color: color,

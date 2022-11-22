@@ -12,11 +12,13 @@ import 'package:iconly/iconly.dart';
 
 import '../../consts/consts.dart';
 import '../../consts/firebase_consts.dart';
+import '../../providers/locale_provider.dart';
 import '../../services/utils.dart';
 import '../../widgets/auth_button.dart';
 import 'package:growy/fetch_screen.dart';
 import '../../widgets/google_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../btm_bar.dart';
 import 'forget_pass_screen.dart';
@@ -85,7 +87,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             builder: ((context) => const FetchScreen()),
           ),
         );
-        print('Succefully registered');
+        // print('Succefully registered');
       } on FirebaseException catch (error) {
         GlobalMethods.errorDialog(
             subtitle: '${error.message}', context: context);
@@ -158,7 +160,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     height: 40.0,
                   ),
                   TextWidget(
-                    text: 'Welcome',
+                    text: AppLocalizations.of(context)!.welcome,
                     color: Colors.white,
                     textSize: 30,
                     isTitle: true,
@@ -167,7 +169,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     height: 8,
                   ),
                   TextWidget(
-                    text: "Sign up to continue",
+                    text: AppLocalizations.of(context)!.sign_up_continue,
                     color: Colors.white,
                     textSize: 18,
                     isTitle: false,
@@ -187,22 +189,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           controller: _fullNameController,
                           validator: (value) {
                             if (value!.isEmpty) {
-                              return "This Field is missing";
+                              return AppLocalizations.of(context)!.field_miss;
                             } else {
                               return null;
                             }
                           },
                           style: const TextStyle(color: Colors.white),
-                          decoration: const InputDecoration(
-                            hintText: 'Full name',
-                            hintStyle: TextStyle(color: Colors.white),
-                            enabledBorder: UnderlineInputBorder(
+                          decoration: InputDecoration(
+                            hintText: AppLocalizations.of(context)!.full_name,
+                            hintStyle: const TextStyle(color: Colors.white),
+                            enabledBorder: const UnderlineInputBorder(
                               borderSide: BorderSide(color: Colors.white),
                             ),
-                            focusedBorder: UnderlineInputBorder(
+                            focusedBorder: const UnderlineInputBorder(
                               borderSide: BorderSide(color: Colors.white),
                             ),
-                            errorBorder: UnderlineInputBorder(
+                            errorBorder: const UnderlineInputBorder(
                               borderSide: BorderSide(color: Colors.red),
                             ),
                           ),
@@ -219,22 +221,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           controller: _emailTextController,
                           validator: (value) {
                             if (value!.isEmpty || !value.contains("@")) {
-                              return "Please enter a valid Email adress";
+                              return AppLocalizations.of(context)!.valid_email;
                             } else {
                               return null;
                             }
                           },
                           style: const TextStyle(color: Colors.white),
-                          decoration: const InputDecoration(
-                            hintText: 'Email',
-                            hintStyle: TextStyle(color: Colors.white),
-                            enabledBorder: UnderlineInputBorder(
+                          decoration: InputDecoration(
+                            hintText: AppLocalizations.of(context)!.email,
+                            hintStyle: const TextStyle(color: Colors.white),
+                            enabledBorder: const UnderlineInputBorder(
                               borderSide: BorderSide(color: Colors.white),
                             ),
-                            focusedBorder: UnderlineInputBorder(
+                            focusedBorder: const UnderlineInputBorder(
                               borderSide: BorderSide(color: Colors.white),
                             ),
-                            errorBorder: UnderlineInputBorder(
+                            errorBorder: const UnderlineInputBorder(
                               borderSide: BorderSide(color: Colors.red),
                             ),
                           ),
@@ -250,7 +252,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           controller: _passTextController,
                           validator: (value) {
                             if (value!.isEmpty || value.length < 7) {
-                              return "Please enter a valid password";
+                              return AppLocalizations.of(context)!
+                                  .valid_password;
                             } else {
                               return null;
                             }
@@ -272,7 +275,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 color: Colors.white,
                               ),
                             ),
-                            hintText: 'Password',
+                            hintText: AppLocalizations.of(context)!.password,
                             hintStyle: const TextStyle(color: Colors.white),
                             enabledBorder: const UnderlineInputBorder(
                               borderSide: BorderSide(color: Colors.white),
@@ -296,7 +299,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           controller: _addressTextController,
                           validator: (value) {
                             if (value!.isEmpty || value.length < 3) {
-                              return "Please enter a valid  address";
+                              return AppLocalizations.of(context)!
+                                  .valid_shipping_address;
                             } else {
                               return null;
                             }
@@ -304,16 +308,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           style: const TextStyle(color: Colors.white),
                           maxLines: 2,
                           textAlign: TextAlign.start,
-                          decoration: const InputDecoration(
-                            hintText: 'Shipping address',
-                            hintStyle: TextStyle(color: Colors.white),
-                            enabledBorder: UnderlineInputBorder(
+                          decoration: InputDecoration(
+                            hintText:
+                                AppLocalizations.of(context)!.shipping_address,
+                            hintStyle: const TextStyle(color: Colors.white),
+                            enabledBorder: const UnderlineInputBorder(
                               borderSide: BorderSide(color: Colors.white),
                             ),
-                            focusedBorder: UnderlineInputBorder(
+                            focusedBorder: const UnderlineInputBorder(
                               borderSide: BorderSide(color: Colors.white),
                             ),
-                            errorBorder: UnderlineInputBorder(
+                            errorBorder: const UnderlineInputBorder(
                               borderSide: BorderSide(color: Colors.red),
                             ),
                           ),
@@ -331,10 +336,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         Navigator.pushReplacementNamed(
                             context, ForgetPasswordScreen.routeName);
                       },
-                      child: const Text(
-                        "Forget password?",
+                      child: Text(
+                        AppLocalizations.of(context)!.forget_password,
                         maxLines: 1,
-                        style: TextStyle(
+                        style: const TextStyle(
                             color: Colors.green,
                             decoration: TextDecoration.underline,
                             fontStyle: FontStyle.italic,
@@ -345,7 +350,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   _isLoading
                       ? const CircularProgressIndicator()
                       : AuthButton(
-                          buttonText: 'Sign up',
+                          buttonText: AppLocalizations.of(context)!.sing_up_btn,
                           fct: () {
                             _submitFormOnRegister();
                           },
@@ -356,12 +361,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   RichText(
                     text: TextSpan(
-                        text: 'Already a user?',
+                        text: AppLocalizations.of(context)!.alredy_user,
                         style:
                             const TextStyle(color: Colors.white, fontSize: 18),
                         children: <TextSpan>[
                           TextSpan(
-                              text: ' Sign in',
+                              text: AppLocalizations.of(context)!.sign_in,
                               style: const TextStyle(
                                   color: Colors.green,
                                   fontSize: 18,

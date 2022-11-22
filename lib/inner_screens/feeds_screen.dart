@@ -13,6 +13,7 @@ import '../widgets/back_widget.dart';
 import '../widgets/empty_product_widget.dart';
 import '../widgets/feed_items.dart';
 import '../widgets/text_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class FeedsScreen extends StatefulWidget {
   static const routeName = "/FeedsScreenState";
@@ -57,7 +58,7 @@ class _FeedsScreenState extends State<FeedsScreen> {
           backgroundColor: _isDark ? Colors.black12 : Colors.green,
           centerTitle: true,
           title: TextWidget(
-            text: 'All products',
+            text: AppLocalizations.of(context)!.all_products,
             color: color,
             textSize: 24,
             isTitle: true,
@@ -96,7 +97,7 @@ class _FeedsScreenState extends State<FeedsScreen> {
                           size: 24,
                           color: Colors.green,
                         ),
-                        hintText: "What's in your mind",
+                        hintText: AppLocalizations.of(context)!.what_mind,
                         suffixIcon: IconButton(
                           padding: EdgeInsets.zero,
                           onPressed: () {
@@ -118,7 +119,8 @@ class _FeedsScreenState extends State<FeedsScreen> {
               _searchTextController!.text.isNotEmpty &&
                       listProductSearch.isEmpty
                   ? EmptyProductWidget(
-                      text: 'No products found, please try another keyword!')
+                      text: AppLocalizations.of(context)!.no_products,
+                    )
                   : GridView.count(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),

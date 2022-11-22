@@ -11,6 +11,7 @@ import 'package:growy/widgets/text_widget.dart';
 
 import '../screens/btm_bar.dart';
 import '../services/global_methods.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class GoogleButton extends StatelessWidget {
   const GoogleButton({Key? key}) : super(key: key);
@@ -80,7 +81,7 @@ class GoogleButton extends StatelessWidget {
             ),
             TextWidget(
               color: Colors.white,
-              text: 'Sign in with google',
+              text: AppLocalizations.of(context)!.google_sign_in,
               textSize: 18,
               isTitle: false,
             )

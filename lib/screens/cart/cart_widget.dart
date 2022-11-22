@@ -14,6 +14,7 @@ import '../../inner_screens/product_details.dart';
 import '../../models/product_model.dart';
 import '../../providers/dart_theme_provider.dart';
 import '../../providers/cart_provider.dart';
+import '../../providers/locale_provider.dart';
 import '../../providers/wishlist_provider.dart';
 import '../../services/global_methods.dart';
 import '../../services/utils.dart';
@@ -55,7 +56,8 @@ class _CartWidgetState extends State<CartWidget> {
     final productProvider = Provider.of<ProductsProvider>(context);
     final cartModel = Provider.of<CartModel>(context);
     final cartProvider = Provider.of<CartProvider>(context);
-
+    final languageProvider = Provider.of<LocaleProvider>(context);
+    final locale = languageProvider.locale;
     final getCurrentProduct = productProvider.findProdById(cartModel.productId);
     double usedPrice = getCurrentProduct.isOnSale
         ? getCurrentProduct.salePrice
@@ -75,7 +77,7 @@ class _CartWidgetState extends State<CartWidget> {
               padding: const EdgeInsets.all(8.0),
               child: Container(
                 decoration: BoxDecoration(
-                  color: Theme.of(context).cardColor.withOpacity(0.8),
+                  color: Colors.green.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Row(
@@ -95,7 +97,10 @@ class _CartWidgetState extends State<CartWidget> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         TextWidget(
-                          text: getCurrentProduct.title,
+                          text: locale.languageCode == "en"
+                              ? getCurrentProduct.title
+                              : getCurrentProduct.title_uk ??
+                                  getCurrentProduct.title,
                           color: color,
                           textSize: 20,
                           isTitle: true,

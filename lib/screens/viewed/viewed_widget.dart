@@ -15,9 +15,11 @@ import '../../consts/firebase_consts.dart';
 import '../../inner_screens/product_details.dart';
 import '../../models/cart_model.dart';
 import '../../providers/cart_provider.dart';
+import '../../providers/locale_provider.dart';
 import '../../providers/products_provider.dart';
 import '../../services/global_methods.dart';
 import '../../services/utils.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ViewedWidget extends StatefulWidget {
   const ViewedWidget({Key? key}) : super(key: key);
@@ -42,6 +44,8 @@ class _ViewedWidgetState extends State<ViewedWidget> {
     bool? _isInCart = cartProvider.getCartItems.containsKey(getCurrProduct.id);
     Color color = Utils(context).color;
     Size size = Utils(context).getScreenSize;
+    final languageProvider = Provider.of<LocaleProvider>(context);
+    final locale = languageProvider.locale;
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
@@ -65,7 +69,9 @@ class _ViewedWidgetState extends State<ViewedWidget> {
             Column(
               children: [
                 TextWidget(
-                  text: getCurrProduct.title,
+                  text: locale.languageCode == "en"
+                      ? getCurrProduct.title
+                      : getCurrProduct.title_uk ?? getCurrProduct.title,
                   color: color,
                   textSize: 24,
                   isTitle: true,
@@ -95,7 +101,8 @@ class _ViewedWidgetState extends State<ViewedWidget> {
                             final User? user = authInstance.currentUser;
                             if (user == null) {
                               GlobalMethods.errorDialog(
-                                  subtitle: "No user found, Please login first",
+                                  subtitle:
+                                      AppLocalizations.of(context)!.no_user,
                                   context: context);
                               return;
                             }

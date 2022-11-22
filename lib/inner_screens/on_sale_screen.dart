@@ -12,6 +12,7 @@ import '../providers/products_provider.dart';
 import '../services/utils.dart';
 import '../widgets/empty_product_widget.dart';
 import '../widgets/text_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class OnSaleScreen extends StatelessWidget {
   static const routeName = "/OnSaleScreen";
@@ -35,15 +36,18 @@ class OnSaleScreen extends StatelessWidget {
           backgroundColor: _isDark ? Colors.black12 : Colors.green,
           centerTitle: true,
           title: TextWidget(
-            text: 'Products on sale',
+            text: AppLocalizations.of(context)!.products_on_sale,
             color: color,
             textSize: 24,
             isTitle: true,
           ),
         ),
         body: productsOnSale.isEmpty
-            ? const EmptyProductWidget(
-                text: 'No products on sale yet!\nStay tuned')
+            ? EmptyProductWidget(
+                text: AppLocalizations.of(context)!.no_products_on_sale +
+                    "\n" +
+                    AppLocalizations.of(context)!.stay_tuned,
+              )
             : GridView.count(
                 crossAxisCount: 2,
                 padding: EdgeInsets.zero,

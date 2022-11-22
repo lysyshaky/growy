@@ -15,12 +15,14 @@ import '../consts/firebase_consts.dart';
 import '../models/product_model.dart';
 import '../providers/dart_theme_provider.dart';
 import '../providers/cart_provider.dart';
+import '../providers/locale_provider.dart';
 import '../providers/viewed_product_provider.dart';
 import '../providers/wishlist_provider.dart';
 import '../services/global_methods.dart';
 import '../services/utils.dart';
 import '../widgets/back_widget.dart';
 import '../widgets/text_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ProductDetails extends StatefulWidget {
   static const routeName = '/ProductsDetails';
@@ -62,6 +64,8 @@ class _ProductDetailsState extends State<ProductDetails> {
     bool? _isInWishlist =
         wishlistProvider.getWishlistItems.containsKey(getCurrentProduct.id);
     final viewedProdProvider = Provider.of<ViewedProdProvider>(context);
+    final languageProvider = Provider.of<LocaleProvider>(context);
+    final locale = languageProvider.locale;
     return WillPopScope(
       onWillPop: () async {
         // viewedProdProvider.addProductToHistory(productId: productId);
@@ -74,7 +78,7 @@ class _ProductDetailsState extends State<ProductDetails> {
           backgroundColor: _isDark ? Colors.black12 : Colors.green,
           centerTitle: true,
           title: TextWidget(
-            text: 'Product details',
+            text: AppLocalizations.of(context)!.product_details,
             color: appBarcolor,
             textSize: 24,
             isTitle: true,
@@ -114,7 +118,10 @@ class _ProductDetailsState extends State<ProductDetails> {
                       children: [
                         Flexible(
                           child: TextWidget(
-                            text: getCurrentProduct.title,
+                            text: locale.languageCode == "en"
+                                ? getCurrentProduct.title
+                                : getCurrentProduct.title_uk ??
+                                    getCurrentProduct.title,
                             color: color,
                             textSize: 24,
                             isTitle: true,
@@ -141,7 +148,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                           isTitle: true,
                         ),
                         TextWidget(
-                          text: getCurrentProduct.isPiece ? "Piece" : "Kg",
+                          text: getCurrentProduct.isPiece
+                              ? AppLocalizations.of(context)!.piece
+                              : AppLocalizations.of(context)!.kg,
                           color: color,
                           textSize: 14,
                         ),
@@ -168,7 +177,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                             color: Colors.green,
                           ),
                           child: TextWidget(
-                            text: 'Free delivery',
+                            text: AppLocalizations.of(context)!.free_delivery,
                             color: Colors.white,
                             textSize: 18,
                           ),
@@ -261,7 +270,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 TextWidget(
-                                  text: "Total",
+                                  text: AppLocalizations.of(context)!.total,
                                   color: Colors.red.shade300,
                                   textSize: 20,
                                   isTitle: true,
@@ -281,7 +290,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                       ),
                                       TextWidget(
                                         text:
-                                            '${_quantityTextController.text} ${getCurrentProduct.isPiece ? "Piece" : "Kg"}',
+                                            '${_quantityTextController.text} ${getCurrentProduct.isPiece ? AppLocalizations.of(context)!.piece : AppLocalizations.of(context)!.kg}',
                                         color: color,
                                         textSize: 16,
                                         isTitle: false,
@@ -308,7 +317,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                                         if (user == null) {
                                           GlobalMethods.errorDialog(
                                               subtitle:
-                                                  "No user found, Please login first",
+                                                  AppLocalizations.of(context)!
+                                                      .no_user,
                                               context: context);
                                           return;
                                         }
@@ -326,7 +336,10 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 child: Padding(
                                   padding: const EdgeInsets.all(12.0),
                                   child: TextWidget(
-                                    text: _isInCart ? 'In cart' : 'Add to cart',
+                                    text: _isInCart
+                                        ? AppLocalizations.of(context)!.in_cart
+                                        : AppLocalizations.of(context)!
+                                            .add_to_cart,
                                     color: Colors.white,
                                     textSize: 20,
                                     isTitle: true,

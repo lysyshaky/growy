@@ -13,6 +13,7 @@ import '../../widgets/empty_screen.dart';
 import '../../widgets/text_widget.dart';
 import '../cart/cart_widget.dart';
 import 'orders_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 //fix issue add couple orders not only one fix click to order and go to product details
 class OrdersScreen extends StatefulWidget {
@@ -38,10 +39,10 @@ class _OrdersScreenState extends State<OrdersScreen> {
       future: ordersProvider.fetchOrders(),
       builder: (context, snapshot) {
         if (ordersList.isEmpty == true) {
-          return const EmptyScreen(
-              buttonText: 'Show now',
-              title: 'You didn\'t place any orders',
-              subtitle: 'Order something',
+          return EmptyScreen(
+              buttonText: AppLocalizations.of(context)!.shop_now_btn,
+              title: AppLocalizations.of(context)!.your_order_empty,
+              subtitle: AppLocalizations.of(context)!.order_something,
               imagePath: 'assets/images/cart.png');
         } else {
           return Scaffold(
@@ -71,7 +72,8 @@ class _OrdersScreenState extends State<OrdersScreen> {
               backgroundColor: _isDark ? Colors.black12 : Colors.green,
               centerTitle: true,
               title: TextWidget(
-                text: 'Orders (${ordersList.length})',
+                text: AppLocalizations.of(context)!.orders +
+                    '(${ordersList.length})',
                 color: appBarcolor,
                 textSize: 24,
                 isTitle: true,

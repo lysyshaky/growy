@@ -6,6 +6,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:growy/inner_screens/product_details.dart';
 import 'package:growy/models/product_model.dart';
+import 'package:growy/providers/locale_provider.dart';
 import 'package:growy/widgets/price_widget.dart';
 import 'package:growy/widgets/text_widget.dart';
 import 'package:provider/provider.dart';
@@ -17,6 +18,7 @@ import '../providers/wishlist_provider.dart';
 import '../services/global_methods.dart';
 import '../services/utils.dart';
 import 'heart_btn.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class FeedsWidget extends StatefulWidget {
   const FeedsWidget({
@@ -51,6 +53,8 @@ class _FeedsWidgetState extends State<FeedsWidget> {
         wishlistProvider.getWishlistItems.containsKey(productModel.id);
     bool? _isInCart = cartProvider.getCartItems.containsKey(productModel.id);
     final viewedProdProvider = Provider.of<ViewedProdProvider>(context);
+    final languageProvider = Provider.of<LocaleProvider>(context);
+    final locale = languageProvider.locale;
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Material(
@@ -81,7 +85,9 @@ class _FeedsWidgetState extends State<FeedsWidget> {
                     Flexible(
                       flex: 3,
                       child: TextWidget(
-                        text: productModel.title,
+                        text: locale.languageCode == "en"
+                            ? productModel.title
+                            : productModel.title_uk ?? productModel.title,
                         color: color,
                         textSize: 18,
                         maxLines: 1,
@@ -136,7 +142,8 @@ class _FeedsWidgetState extends State<FeedsWidget> {
                             keyboardType: TextInputType.number,
                             validator: (value) {
                               if (value!.isEmpty) {
-                                return 'Quantity is missed';
+                                return AppLocalizations.of(context)!
+                                    .quantity_miss;
                               }
                               return null;
                             },
@@ -167,7 +174,9 @@ class _FeedsWidgetState extends State<FeedsWidget> {
                         Flexible(
                           child: FittedBox(
                             child: TextWidget(
-                              text: productModel.isPiece ? 'Piece' : 'KG',
+                              text: productModel.isPiece
+                                  ? AppLocalizations.of(context)!.piece
+                                  : AppLocalizations.of(context)!.kg,
                               color: color,
                               textSize: 20,
                               isTitle: true,
@@ -193,7 +202,7 @@ class _FeedsWidgetState extends State<FeedsWidget> {
                           final User? user = authInstance.currentUser;
                           if (user == null) {
                             GlobalMethods.errorDialog(
-                                subtitle: "No user found, Please login first",
+                                subtitle: AppLocalizations.of(context)!.no_user,
                                 context: context);
                             return;
                           }
@@ -209,7 +218,9 @@ class _FeedsWidgetState extends State<FeedsWidget> {
                           //         double.parse(_quantityTextController.text));
                         }),
                   child: TextWidget(
-                    text: _isInCart ? 'In cart' : 'Add to cart',
+                    text: _isInCart
+                        ? AppLocalizations.of(context)!.in_cart
+                        : AppLocalizations.of(context)!.add_to_cart,
                     textSize: 20,
                     color: Colors.white,
                     isTitle: true,

@@ -17,6 +17,8 @@ import '../providers/products_provider.dart';
 import '../services/utils.dart';
 import '../widgets/text_widget.dart';
 
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -68,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 );
               },
               child: TextWidget(
-                text: 'View all',
+                text: AppLocalizations.of(context)!.view_all,
                 maxLines: 1,
                 color: Colors.green,
                 textSize: 20,
@@ -80,7 +82,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   quarterTurns: -1,
                   child: Row(children: [
                     TextWidget(
-                      text: 'On Sale'.toUpperCase(),
+                      text: AppLocalizations.of(context)!.on_sale,
                       color: Colors.red,
                       textSize: 22,
                       isTitle: true,
@@ -123,7 +125,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   TextWidget(
-                    text: 'Our Products',
+                    text: AppLocalizations.of(context)!.our_products,
                     color: color,
                     textSize: 22,
                     isTitle: true,
@@ -135,7 +137,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ctx: context, routeName: FeedsScreen.routeName);
                     },
                     child: TextWidget(
-                      text: 'Browse all',
+                      text: AppLocalizations.of(context)!.browse_all,
                       maxLines: 1,
                       color: Colors.green,
                       textSize: 20,

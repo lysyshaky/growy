@@ -15,6 +15,7 @@ import '../inner_screens/on_sale_screen.dart';
 import '../screens/auth/register_screen.dart';
 import '../screens/btm_bar.dart';
 import '../widgets/text_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class GlobalMethods {
   static navigateToViewAll(
@@ -87,7 +88,7 @@ class GlobalMethods {
                 },
                 child: TextWidget(
                   color: Colors.green,
-                  text: 'Cancel',
+                  text: AppLocalizations.of(context)!.cancel,
                   textSize: 18,
                   isTitle: true,
                 ),
@@ -101,7 +102,7 @@ class GlobalMethods {
                 },
                 child: TextWidget(
                   color: Colors.red,
-                  text: 'OK',
+                  text: AppLocalizations.of(context)!.ok,
                   textSize: 18,
                   isTitle: true,
                 ),
@@ -126,7 +127,9 @@ class GlobalMethods {
                 const SizedBox(
                   width: 8,
                 ),
-                const Text("An Error occured"),
+                Text(
+                  AppLocalizations.of(context)!.error,
+                ),
               ],
             ),
             content: Text(subtitle),
@@ -139,7 +142,7 @@ class GlobalMethods {
                 },
                 child: TextWidget(
                   color: Colors.green,
-                  text: 'OK',
+                  text: AppLocalizations.of(context)!.ok,
                   textSize: 18,
                   isTitle: true,
                 ),
@@ -164,7 +167,7 @@ class GlobalMethods {
         ])
       });
       await Fluttertoast.showToast(
-          msg: 'Item has been added to cart',
+          msg: AppLocalizations.of(context)!.cart_toast,
           toastLength: Toast.LENGTH_SHORT,
           backgroundColor: Colors.green,
           gravity: ToastGravity.CENTER);
@@ -190,7 +193,7 @@ class GlobalMethods {
         ])
       });
       await Fluttertoast.showToast(
-          msg: 'Item has been added to your wishlist',
+          msg: AppLocalizations.of(context)!.wishlist_toast,
           toastLength: Toast.LENGTH_SHORT,
           backgroundColor: Colors.green,
           gravity: ToastGravity.CENTER);

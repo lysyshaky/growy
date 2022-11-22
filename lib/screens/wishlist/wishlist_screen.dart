@@ -15,6 +15,7 @@ import '../../widgets/back_widget.dart';
 import '../../widgets/empty_screen.dart';
 import '../../widgets/text_widget.dart';
 import '../cart/cart_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class WishlistScreen extends StatelessWidget {
   static const routeName = '/WishlistScreen';
@@ -32,10 +33,10 @@ class WishlistScreen extends StatelessWidget {
         wishlistProvider.getWishlistItems.values.toList().reversed.toList();
 
     return wishlistItemsList.isEmpty
-        ? const EmptyScreen(
-            buttonText: 'Add a wish',
-            title: 'You wishlist is empty',
-            subtitle: 'Add to your wishlist something',
+        ? EmptyScreen(
+            buttonText: AppLocalizations.of(context)!.add_to_wishlist,
+            title: AppLocalizations.of(context)!.your_wishlist_empty,
+            subtitle: AppLocalizations.of(context)!.add_something_wishlist,
             imagePath: 'assets/images/wishlist.png')
         : Scaffold(
             appBar: AppBar(
@@ -46,8 +47,9 @@ class WishlistScreen extends StatelessWidget {
                   child: IconButton(
                     onPressed: () async {
                       await GlobalMethods.warningDialog(
-                          title: 'Clear wishlist',
-                          subtitle: 'Do you wanna clear your wishlist?',
+                          title: AppLocalizations.of(context)!.empty_wishlist,
+                          subtitle: AppLocalizations.of(context)!
+                              .do_you_want_to_clear_wishlist,
                           fct: () async {
                             await wishlistProvider.clearOnlineWishlist();
                             wishlistProvider.clearLocalWishlist();
@@ -65,7 +67,8 @@ class WishlistScreen extends StatelessWidget {
               backgroundColor: _isDark ? Colors.black12 : Colors.green,
               centerTitle: true,
               title: TextWidget(
-                text: 'Wishlist(${wishlistItemsList.length})',
+                text: AppLocalizations.of(context)!.wishlist +
+                    '(${wishlistItemsList.length})',
                 color: color,
                 textSize: 24,
                 isTitle: true,

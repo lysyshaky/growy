@@ -10,6 +10,7 @@ import '../screens/btm_bar.dart';
 import '../services/global_methods.dart';
 import '../services/utils.dart';
 import 'text_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class EmptyScreen extends StatelessWidget {
   const EmptyScreen(
@@ -43,8 +44,8 @@ class EmptyScreen extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              const Text(
-                'Whoops!',
+              Text(
+                AppLocalizations.of(context)!.whops,
                 style: TextStyle(
                     color: Colors.red,
                     fontSize: 40,

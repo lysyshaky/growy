@@ -13,12 +13,14 @@ import 'package:provider/provider.dart';
 
 import '../../inner_screens/product_details.dart';
 import '../../providers/dart_theme_provider.dart';
+import '../../providers/locale_provider.dart';
 import '../../providers/orders_provider.dart';
 import '../../providers/products_provider.dart';
 import '../../services/global_methods.dart';
 import '../../services/utils.dart';
 import '../../widgets/heart_btn.dart';
 import '../../widgets/text_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class OrdersWidget extends StatefulWidget {
   const OrdersWidget({Key? key}) : super(key: key);
@@ -49,10 +51,12 @@ class _OrdersWidgetState extends State<OrdersWidget> {
     final Utils utils = Utils(context);
     final Color color = Utils(context).color;
     Size size = Utils(context).getScreenSize;
+    final languageProvider = Provider.of<LocaleProvider>(context);
+    final locale = languageProvider.locale;
     return GestureDetector(
       child: ListTile(
-        subtitle: Text(
-            'Paid: \$${double.parse(ordersModel.price).toStringAsFixed(2)}'),
+        subtitle: Text(AppLocalizations.of(context)!.paid +
+            '${double.parse(ordersModel.price).toStringAsFixed(2)}'),
         onTap: () {
           Navigator.pushNamed(context, ProductDetails.routeName,
               arguments: ordersModel.productId);
@@ -68,7 +72,8 @@ class _OrdersWidgetState extends State<OrdersWidget> {
           ),
         ),
         title: TextWidget(
-          text: '${getCurrentProduct.title} x${ordersModel.quantity}',
+          text:
+              '${locale.languageCode == "en" ? getCurrentProduct.title : getCurrentProduct.title_uk ?? getCurrentProduct.title} x${ordersModel.quantity}',
           color: color,
           textSize: 20,
           isTitle: true,

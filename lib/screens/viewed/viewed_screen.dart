@@ -12,6 +12,7 @@ import '../../services/global_methods.dart';
 import '../../services/utils.dart';
 import '../../widgets/back_widget.dart';
 import '../../widgets/text_widget.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ViewedScreen extends StatefulWidget {
   static const routeName = '/ViewedScreen';
@@ -35,10 +36,10 @@ class _ViewedScreenState extends State<ViewedScreen> {
         .reversed
         .toList();
     if (viewedProdItemsList.isEmpty) {
-      return const EmptyScreen(
-        title: 'Your history is empty',
-        subtitle: 'No products has been viewed yet!',
-        buttonText: 'Shop now',
+      return EmptyScreen(
+        title: AppLocalizations.of(context)!.your_viewed_empty,
+        subtitle: AppLocalizations.of(context)!.no_viewed,
+        buttonText: AppLocalizations.of(context)!.shop_now_btn,
         imagePath: 'assets/images/history.png',
       );
     } else {
@@ -51,8 +52,9 @@ class _ViewedScreenState extends State<ViewedScreen> {
               child: IconButton(
                 onPressed: () async {
                   await GlobalMethods.warningDialog(
-                      title: 'Empty your history?',
-                      subtitle: 'Are you sure to clear history?',
+                      title: AppLocalizations.of(context)!.empty_hisroty,
+                      subtitle: AppLocalizations.of(context)!
+                          .do_you_want_to_clear_history,
                       fct: () {
                         viewedProdProvider.clearHistory();
                       },
@@ -69,7 +71,7 @@ class _ViewedScreenState extends State<ViewedScreen> {
           backgroundColor: _isDark ? Colors.black12 : Colors.green,
           centerTitle: true,
           title: TextWidget(
-            text: 'History',
+            text: AppLocalizations.of(context)!.history,
             color: color,
             textSize: 24,
             isTitle: true,
