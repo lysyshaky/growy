@@ -1,6 +1,6 @@
 # growy
 
-A new Flutter project.
+
 ![telegram-cloud-document-2-5280758910016300109_AdobeExpress](https://user-images.githubusercontent.com/48721796/209473493-b5fc526f-c58d-468e-91b0-510b28633838.gif)
 
 
