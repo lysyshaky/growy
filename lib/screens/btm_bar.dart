@@ -1,6 +1,7 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:badges/badges.dart' as prefix;
 import 'package:flutter/material.dart';
 import 'package:growy/providers/dart_theme_provider.dart';
 import 'package:growy/screens/categories_screen.dart';
@@ -77,7 +78,7 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
           BottomNavigationBarItem(
             backgroundColor: _isDark ? Colors.black12 : Colors.green,
             icon: Consumer<CartProvider>(builder: (_, myCart, ch) {
-              return Badge(
+              return prefix.Badge(
                   toAnimate: true,
                   shape: BadgeShape.circle,
                   badgeColor: Colors.red,

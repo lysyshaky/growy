@@ -1,6 +1,15 @@
 # growy
 
-A new Flutter project.
+
+
+
+https://user-images.githubusercontent.com/48721796/209473632-b47ca107-212d-4958-94bd-cc5dc8d17d70.mp4
+
+
+
+
+
+
 
 ## Getting Started
 
