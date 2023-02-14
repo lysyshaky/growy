@@ -134,7 +134,7 @@ class _FeedsWidgetState extends State<FeedsWidget> {
                               //<-- SEE HERE
                             ),
                             controller: _quantityTextController,
-                            key: const ValueKey('10 \$'),
+                            key: const ValueKey('10 \₴'),
                             style: TextStyle(
                               color: color,
                               fontSize: 18,

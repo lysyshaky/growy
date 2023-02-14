@@ -298,7 +298,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           onEditingComplete: _submitFormOnRegister,
                           controller: _addressTextController,
                           validator: (value) {
-                            if (value!.isEmpty || value.length < 3) {
+                            if (value!.isEmpty || value.length < 9) {
                               return AppLocalizations.of(context)!
                                   .valid_shipping_address;
                             } else {

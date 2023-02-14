@@ -57,11 +57,13 @@ class ProductsProvider with ChangeNotifier {
 
   List<ProductModel> searchQuery(String searchText) {
     List<ProductModel> _searchList = _productsList
-        .where(
-          (element) => element.title.toLowerCase().contains(
-                searchText.toLowerCase(),
-              ),
-        )
+        .where((element) =>
+            element.title.toLowerCase().contains(
+                  searchText.toLowerCase(),
+                ) ||
+            element.title_uk.toLowerCase().contains(
+                  searchText.toLowerCase(),
+                ))
         .toList();
     return _searchList;
   }
@@ -410,5 +412,4 @@ class ProductsProvider with ChangeNotifier {
       isPiece: false,
     ),
   ]; */
-
 }

@@ -41,6 +41,7 @@ class _FetchScreenState extends State<FetchScreen> {
       } else {
         await productsProvider.fetchProducts();
         await cartProvider.fetchCart();
+        //here some problem could be
         await wishlistProvider.fetchWishlist();
       }
       await productsProvider.fetchProducts();

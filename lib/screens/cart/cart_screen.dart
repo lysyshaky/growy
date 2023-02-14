@@ -182,7 +182,7 @@ Widget _checkout({required BuildContext context}) {
           FittedBox(
             child: TextWidget(
               text: AppLocalizations.of(context)!.total_order +
-                  "${total.toStringAsFixed(2)}",
+                  "${total.toStringAsFixed(2)}\₴",
               color: color,
               textSize: 20,
               isTitle: true,

@@ -7,7 +7,7 @@
     "hi": "Hi, ",
     "user": "User",
     "email": "Email",
-    "address": "Address",
+    "address": "Phone number",
     "orders": "Orders",
     "wishlist": "Wishlist",
     "viewed": "Viewed",
@@ -19,7 +19,7 @@
     "sign_out": "Sign out",
     "do_you_want_to_sing_out": "Do you want to sign out?",
     "update_btn": "Update",
-    "your_address": "Your address",
+    "your_address": "Your phone number",
     "something_went_wrong": "Something went wrong, please try again later",
     "view_all": "View all discounts",
     "on_sale": "ON SALE",
@@ -69,11 +69,11 @@
     "sign_up_continue": "Sign up to continue",
     "field_miss": "This Field is missing",
     "full_name": "Full name",
-    "shipping_address": "Shipping address",
+    "shipping_address": "Phone number",
     "sing_up_btn": "Sign up",
     "alredy_user": "Already a user?",
     "sign_in": "  Sign in",
-    "valid_shipping_address": "Shipping address must be at least 3 characters",
+    "valid_shipping_address": "Phone number must be at least 9 characters",
     "your_cart_empty": "Your cart is empty!",
     "add_something_cart": "Add something to your cart",
     "shop_now_btn": "Shop now",
@@ -81,10 +81,10 @@
     "do_you_want_to_clear_cart": "Do you want to clear your cart?",
     "order_placed": "Your order has been placed",
     "order_now": "Order now",
-    "total_order": "Total: $",
+    "total_order": "Total: ",
     "your_order_empty": "You didn't place any orders",
     "order_something": "Order something",
-    "paid": "Paid: $",
+    "paid": "Paid: ",
     "your_viewed_empty": "Your history is empty",
     "no_viewed": "No products has been viewed yet!",
     "empty_hisroty": "Empty your history?",
@@ -104,7 +104,7 @@
     "whops": "Whooops!",
     "quantity_miss": "Quantity is missed",
     "google_sign_in": "Sign in with Google",
-    "update_shipping_address": "Update shipping address"
+    "update_shipping_address": "Update phone number"
 
 
     

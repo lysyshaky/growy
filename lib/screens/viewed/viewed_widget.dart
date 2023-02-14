@@ -80,7 +80,7 @@ class _ViewedWidgetState extends State<ViewedWidget> {
                   height: 12,
                 ),
                 TextWidget(
-                  text: '\$${usedPrice.toStringAsFixed(2)}',
+                  text: '${usedPrice.toStringAsFixed(2)}\₴',
                   color: color,
                   textSize: 20,
                   isTitle: false,
