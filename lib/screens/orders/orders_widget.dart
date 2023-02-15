@@ -56,7 +56,7 @@ class _OrdersWidgetState extends State<OrdersWidget> {
     return GestureDetector(
       child: ListTile(
         subtitle: Text(AppLocalizations.of(context)!.paid +
-            '${double.parse(ordersModel.price).toStringAsFixed(2)}\₴'),
+            '${double.parse(ordersModel.price).toStringAsFixed(2)}\ ₴'),
         onTap: () {
           Navigator.pushNamed(context, ProductDetails.routeName,
               arguments: ordersModel.productId);

@@ -24,7 +24,8 @@ class PriceWidget extends StatelessWidget {
         child: Row(
       children: [
         TextWidget(
-          text: '${(userPrice * double.parse(textPrice)).toStringAsFixed(2)}\₴',
+          text:
+              '${(userPrice * double.parse(textPrice)).toStringAsFixed(2)}\ ₴',
           color: Colors.green,
           textSize: 24,
         ),
@@ -34,7 +35,7 @@ class PriceWidget extends StatelessWidget {
         Visibility(
           visible: isOnSale ? true : false,
           child: Text(
-            '${(price * double.parse(textPrice)).toStringAsFixed(2)}\₴',
+            '${(price * double.parse(textPrice)).toStringAsFixed(2)}\ ₴',
             style: TextStyle(
               fontSize: 16,
               color: color,
